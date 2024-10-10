@@ -158,7 +158,7 @@
         <h1 class="text-2xl font-bold mb-4">Data Obat</h1>
 
         <!-- Tombol Tambah Data -->
-        <button class="bg-green-800 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800 mb-6">Tambah Data</button>
+        <a href="/apoteku/src/transaksi-penjualan-create.php"class="bg-green-800 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800 mb-6">Tambah Data</a>
 
         <!-- Tabel -->
         <div class=" bg-white shadow-md rounded-lg overflow-x-auto w-full">
