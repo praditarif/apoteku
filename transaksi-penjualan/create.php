@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['submit'])) {
-    include('./database/database.php');
+    include('../src/database/database.php');
     $Tanggal_Waktu = $_POST['Tanggal_Waktu'];
     $Kode_Jenis_Layanan = $_POST['Kode_Jenis_Layanan'];
     $Kode_Provider_CPT = $_POST['Kode_Provider_CPT'];
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 ?>
 <head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link href="./output.css" rel="stylesheet">
+<link href="../src/assets/css/output.css" rel="stylesheet">
 </head>
 <body>
     <!-- testttttt -->
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
     <label for="ID_Karyawan">ID_Karyawan</label>
     <select name="ID_Karyawan"class="input input-bordered input-primary w-full max-w-xs">
                                 <?php
-                                include('./database/database.php');
+                                include('../src/database/database.php');
                                 $sql = "SELECT * FROM karyawan";
                                 $result = mysqli_query($conn, $sql);
                                 if (mysqli_num_rows($result) > 0) {
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
                      <label for="ID_Resep">ID_Resep</label>
      <select name="ID_Resep" class="input input-bordered input-primary w-full max-w-xs">
                                 <?php
-                                include('./database/database.php');
+                                include('../src/database/database.php');
                                 $sql = "SELECT * FROM resep";
                                 $result = mysqli_query($conn, $sql);
                                 if (mysqli_num_rows($result) > 0) {
