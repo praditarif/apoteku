@@ -159,22 +159,24 @@
 
         <!-- Tombol Tambah Data -->
         <a href="/apoteku/src/transaksi-penjualan-create.php"class="bg-green-800 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800 mb-6">Tambah Data</a>
-
-        <!-- Tabel -->
+        
+        
+        
+        <!-- Tabel --> <!-- /Ini diubah dikit -->
         <div class=" bg-white shadow-md rounded-lg overflow-x-auto w-full">
-            <table class="w-full text-left border border-gray-300">
+            <table class="auto w-full text-left border border-gray-300">
                 <thead class="bg-gray-100">
-                    <tr>
-                        <th class="w-1/6 px-6 py-4">ID_Transaksi</th>
-                        <th class="w-1/6 px-6 py-4">ID_karyawan</th>
-                        <th class="w-1/6 px-6 py-4">Tanggal_Waktu</th>
-                        <th class="w-1/6 px-6 py-4">Kode_Jenis_Layanan</th>
-                        <th class="w-1/6 px-6 py-4">Kode_Provider_CPT</th>
-                        <th class="w-1/6 px-6 py-4">Total_Harga_Obat</th>
-                        <th class="w-1/6 px-6 py-4 text-center">Metode_Pembayaran</th>
-                        <th class="w-1/6 px-6 py-4 text-center">Sumber_Pembayaran</th>
-                        <th class="w-1/6 px-6 py-4 text-center">ID Resep</th>
-                        <th class="w-1/6 px-6 py-4 text-center">Aksi</th>
+                    <tr> 
+                    <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
+                    <th class="px-4 py-2 min-w-[120px]">ID Karyawan</th>
+                    <th class="px-4 py-2">Tanggal Waktu</th>
+                    <th class="px-4 py-2 min-w-[130px]">Kode Jenis Layanan</th>
+                    <th class="px-4 py-2 min-w-[150px]">Kode Provider CPT</th>
+                    <th class="px-4 py-2">Total Harga Obat</th>
+                    <th class="px-4 py-2 min-w-[150px] text-center">Metode Pembayaran</th>
+                    <th class="px-4 py-2 min-w-[150px] text-center">Sumber Pembayaran</th>
+                    <th class="px-4 py-2 text-center">ID Resep</th>
+                    <th class="px-4 py-2 text-center">Aksi</th>
                         
                     </tr>
                 </thead>
