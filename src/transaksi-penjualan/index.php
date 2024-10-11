@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apoteku</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="../src/assets/css/output.css" rel="stylesheet">
+    <link href="../../src/assets/css/output.css" rel="stylesheet">
     <script defer>
         // Script untuk mengatur dropdown visibility
         function toggleDropdown(dropdownId) {
@@ -158,7 +158,7 @@
         <h1 class="text-2xl font-bold mb-4">Data Obat</h1>
 
         <!-- Tombol Tambah Data -->
-        <a href="/apoteku/src/transaksi-penjualan-create.php"class="bg-green-800 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800 mb-6">Tambah Data</a>
+        <a href="/apoteku/src/create.php"class="bg-green-800 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800 mb-6">Tambah Data</a>
         
         
         
@@ -182,7 +182,7 @@
                 </thead>
                 <tbody>
                     <?php
-                        include('../src/database/database.php');
+                        include('../../src/database/database.php');
                         $sql = "SELECT t.ID_Transaksi, t.ID_Karyawan, t.Tanggal_Waktu, t.Kode_Jenis_Layanan,t.Kode_Provider_CPT, t.Total_Harga_Obat, t.Metode_Pembayaran, t.Sumber_Pembayaran, t.ID_Resep
                                     FROM transaksi t 
                                     JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
