@@ -1,14 +1,12 @@
 {
   "name": "apoteku",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+    "build": "npx tailwindcss -i ./src/input.css -o ./src/assets/css/output.css --watch"
+
   },
-  "devDependencies": {
-    "daisyui": "^4.12.13",
-    "tailwindcss": "^3.4.13"
-  },
-  "author": "Nama Kamu",
+  "author": "",
   "license": "ISC"
-}qq
+}
