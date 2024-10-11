@@ -165,16 +165,15 @@
             <table class="w-full text-left border border-gray-300">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="w-1/6 px-6 py-4">ID_Transaksi</th>
-                        <th class="w-1/6 px-6 py-4">ID_karyawan</th>
-                        <th class="w-1/6 px-6 py-4">Tanggal_Waktu</th>
-                        <th class="w-1/6 px-6 py-4">Kode_Jenis_Layanan</th>
-                        <th class="w-1/6 px-6 py-4">Kode_Provider_CPT</th>
-                        <th class="w-1/6 px-6 py-4">Total_Harga_Obat</th>
-                        <th class="w-1/6 px-6 py-4 text-center">Metode_Pembayaran</th>
-                        <th class="w-1/6 px-6 py-4 text-center">Sumber_Pembayaran</th>
-                        <th class="w-1/6 px-6 py-4 text-center">ID Resep</th>
-                        <th class="w-1/6 px-6 py-4 text-center">Aksi</th>
+                    <th class="px-4 py-2 text-left">ID_Transaksi</th>
+        <th class="px-4 py-2 text-left">ID_karyawan</th>
+        <th class="px-4 py-2 text-left">Tanggal_Waktu</th>
+        <th class="px-4 py-2 text-left">Kode_Jenis_Layanan</th>
+      <th class="px-4 py-2 text-left">Kode_Provider</th>
+      <th class="px-4 py-2 text-left">CPBTal_Harga_Obat</th>
+      <th class="px-4 py-2 text-left">Metode_Pembayaran</th>
+      <th class="px-4 py-2 text-left">Pembayaran_Resep</th>
+      <th class="px-4 py-2 text-left">Aksi</th>
                         
                     </tr>
                 </thead>
