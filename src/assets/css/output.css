@@ -1784,10 +1784,6 @@ details.collapse summary::-webkit-details-marker {
   margin-left: 16rem;
 }
 
-.mt-10 {
-  margin-top: 2.5rem;
-}
-
 .mt-4 {
   margin-top: 1rem;
 }
@@ -1842,10 +1838,6 @@ details.collapse summary::-webkit-details-marker {
 
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-.grid-rows-1 {
-  grid-template-rows: repeat(1, minmax(0, 1fr));
 }
 
 .items-center {
