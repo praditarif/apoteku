@@ -42,7 +42,7 @@
                 <div id="transaksi-dropdown" class="hidden mt-4">
                     <!-- Data penjualan -->
                     <li class="mb-4 list-none">
-                        <a href="transaksi-penjualan.html"
+                    <a href="transaksi-penjualan/index.php">
                             class="text-white bg-green-700 p-3 rounded-lg flex items-center hover:bg-green-800 transition duration-300">
                             <span>Penjualan</span>
                         </a>

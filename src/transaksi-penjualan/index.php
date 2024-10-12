@@ -76,17 +76,16 @@
 </head>
 
 <body class="bg-green-100 text-gray-900">
-    
-
+<?php include('../template/sidebar.php'); ?>
 
     <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
-    <div class="ml-64 max-w-6xl mx-auto mt-10 p-6">
+    <div class="ml-64 max-w-6xl mx-auto  p-6">
         <!-- Header -->
         <div class="flex items-center justify-between">
             <h1 class="text-2xl font-bold mb-4">Data Obat</h1>
 
             <!-- Tombol Tambah Data diposisikan di bawah teks Data Obat -->
-            <a href="/apoteku/src/create.php"
+            <a href="/apoteku/src/transaksi-penjualan/create.php"
                 class="bg-green-800 text-white py-1 px-3 rounded-lg hover:bg-green-700 text-sm">
                 Tambah Data
             </a>

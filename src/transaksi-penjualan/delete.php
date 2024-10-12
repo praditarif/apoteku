@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET['id'])) {
-    include('../src/database/database.php');
+    include('/../src/database/database.php');
     $id = $_GET['id'];
     $sql = "DELETE FROM transaksi WHERE ID_Transaksi = $id";
     if (mysqli_query($conn, $sql)) {
