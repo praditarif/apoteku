@@ -68,7 +68,7 @@
                 <div id="master-dropdown" class="hidden mt-4">
                     <!-- Data Obat -->
                     <li class="mb-4 list-none">
-                        <a href="dataobat.html"
+                        <a href="dataobat.php"
                             class="text-white p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
                             <span>Data Obat</span>
                         </a>
