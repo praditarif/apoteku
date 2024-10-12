@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apoteku</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="./output.css" rel="stylesheet">
+    <link href="../assets/css/output.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
     <script defer>
         // Script untuk mengatur dropdown visibility
         function toggleDropdown(dropdownId) {
@@ -16,71 +17,10 @@
         }
     </script>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@100..900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
-
-        h1 {
-            font-family: Lexend;
-            font-weight: 500;
-            font-size: 60px;
-        }
-
-        h6 {
-            font-family: Lexend;
-            font-weight: 200;
-            font-size: 14px;
-        }
-
-        p {
-            font-family: Lexend, sans-serif;
-            font-weight: 100;
-            font-size: 16px;
-        }
-
-        /* Custom Tabel Styling */
-        table {
-            border-spacing: 0;
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed; /* Tambahkan properti ini agar kolom presisi */
-        }
-
-        table th, table td {
-            font-size: 14px;
-            font-weight: 500;
-            text-align: left;
-            padding: 12px 16px; /* Konsisten padding untuk presisi */
-            border: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #f3f4f6;
-            font-weight: 600;
-            text-align: center; /* Presisi header tengah */
-        }
-
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto;
-        }
-
-        .action-button {
-            text-align: center;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            table th, table td {
-                font-size: 12px;
-                padding: 8px 10px;
-            }
-        }
-    </style>
     
     <?php
 if (isset($_POST['submit'])) {
-    include('../src/database/dataobat.php');
+    include('../database/dataobat.php');
     $ID_Obat = $_POST['ID_Obat'];
     $Nama_Obat = $_POST['Nama_Obat'];
     $Code = $_POST['Code'];
@@ -111,7 +51,7 @@ if (isset($_POST['submit'])) {
 ?>
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="../src/assets/css/output.css" rel="stylesheet">
+    <link href="../assets/css/output.css" rel="stylesheet">
 </head>
 <body>
         <form method="POST">
@@ -171,7 +111,7 @@ if (isset($_POST['submit'])) {
                 <label for="ID_Supplier">ID Supplier</label>
                 <select name="ID_Supplier" class="input input-bordered input-primary w-full max-w-xs">
                     <?php
-                    include('../src/database/database.php');
+                    include('../database/database.php');
                     $sql = "SELECT * FROM supplier";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {

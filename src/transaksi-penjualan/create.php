@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['submit'])) {
-    include('../src/database/database.php');
+    include('../database/database.php');
     $Tanggal_Waktu = $_POST['Tanggal_Waktu'];
     $Kode_Jenis_Layanan = $_POST['Kode_Jenis_Layanan'];
     $Kode_Provider_CPT = $_POST['Kode_Provider_CPT'];
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
                 <label for="ID_Karyawan">ID Karyawan</label>
                 <select name="ID_Karyawan" class="input input-bordered input-primary w-full max-w-xs">
                     <?php
-                    include('../src/database/database.php');
+                    include('../database/database.php');
                     $sql = "SELECT * FROM karyawan";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
                 <label for="ID_Resep">ID Resep</label>
                 <select name="ID_Resep" class="input input-bordered input-primary w-full max-w-xs">
                     <?php
-                    include('../src/database/database.php');
+                    include('../database/database.php');
                     $sql = "SELECT * FROM resep";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
