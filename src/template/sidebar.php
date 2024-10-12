@@ -24,7 +24,7 @@
             <ul>
                 <!-- Beranda -->
                 <li class="mb-6 list-none">
-                    <a href="index.html"
+                    <a href="/apoteku/src/main.php"
                         class="w-full bg-green-700 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800">
                         <span>Beranda</span>
                     </a>
@@ -49,7 +49,7 @@
                     </li>
                     <!-- Data pembelian -->
                     <li class="list-none">
-                        <a href="datasuplier.html"
+                        <a href="/apoteku/src/transaksi-penjualan/index.php"
                             class="text-white p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
                             <span>Pembelian</span>
                         </a>
