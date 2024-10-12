@@ -96,17 +96,17 @@
             <table class="w-full text-left border border-gray-300">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="px-4 py-2">ID Transaksi</th>
-                        <th class="px-4 py-2">ID Karyawan</th>
-                        <th class="px-4 py-2">Tanggal Waktu</th>
-                        <th class="px-4 py-2">Kode Jenis Layanan</th>
-                        <th class="px-4 py-2">Kode Provider CPT</th>
-                        <th class="px-4 py-2">Total Harga Obat</th>
-                        <th class="px-4 py-2">Metode Pembayaran</th>
-                        <th class="px-4 py-2">Sumber Pembayaran</th>
-                        <th class="px-4 py-2">ID Resep</th>
-                        <th class="px-4 py-2">Aksi</th>
-                    </tr>
+                <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
+                <th class="px-4 py-2 min-w-[120px]">ID Karyawan</th>
+                <th class="px-4 py-2">Tanggal Waktu</th>
+                <th class="px-4 py-2 min-w-[130px]">Kode Jenis Layanan</th>
+                <th class="px-4 py-2 min-w-[150px]">Kode Provider CPT</th>
+                <th class="px-4 py-2">Total Harga Obat</th>
+                <th class="px-4 py-2 min-w-[150px] text-center">Metode Pembayaran</th>
+                <th class="px-4 py-2 min-w-[150px] text-center">Sumber Pembayaran</th>
+                <th class="px-4 py-2 text-center">ID Resep</th>
+                <th class="px-4 py-2 text-center">Aksi</th>
+            </tr>
                 </thead>
                 <tbody>
                     <?php
