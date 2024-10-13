@@ -1609,6 +1609,7 @@ html {
   margin-top: 2rem;
 }
 
+<<<<<<< HEAD
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -1617,6 +1618,8 @@ html {
   display: block;
 }
 
+=======
+>>>>>>> 8975795336a42c3a64e3d2605609ab33bd971a28
 .flex {
   display: flex;
 }

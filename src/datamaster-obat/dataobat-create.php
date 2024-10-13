@@ -18,7 +18,7 @@
     <?php
     if (isset($_POST['submit'])) {
         include('../database/database.php');
-        
+
         $Nama_Obat = $_POST['Nama_Obat'];
         $Code = $_POST['Code'];
         $Formulasi = $_POST['Formulasi'];
@@ -37,7 +37,7 @@
             } else {
                 $sql = "INSERT INTO obat(Nama_Obat, Code, Formulasi, Tanggal_Kadaluarsa, Stok, ID_Supplier, Status, Package, Harga_Beli, Harga_Jual) 
                         VALUES ('$Nama_Obat', '$Code', '$Formulasi', '$Tanggal_Kadaluarsa', '$Stok', '$ID_Supplier', '$Status', '$Package', '$Harga_Beli', '$Harga_Jual')";
-                
+
                 if (mysqli_query($conn, $sql)) {
                     echo "<script>alert('Obat has been created successfully');</script>";
                 } else {
@@ -55,44 +55,51 @@
 
     <div class="flex-grow ml-64 mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Tambah Data Obat</h1>
-        
+
         <form method="POST" class="bg-white p-6 rounded-lg shadow-lg">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
                 <!-- Nama Obat -->
                 <div>
                     <label for="Nama_Obat" class="block text-sm font-medium text-gray-700">Nama Obat</label>
-                    <input type="text" name="Nama_Obat" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="text" name="Nama_Obat"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Code -->
                 <div>
                     <label for="Code" class="block text-sm font-medium text-gray-700">Code</label>
-                    <input type="text" name="Code" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="text" name="Code"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Formulasi -->
                 <div>
                     <label for="Formulasi" class="block text-sm font-medium text-gray-700">Formulasi</label>
-                    <input type="text" name="Formulasi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="text" name="Formulasi"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Tanggal Kadaluarsa -->
                 <div>
-                    <label for="Tanggal_Kadaluarsa" class="block text-sm font-medium text-gray-700">Tanggal Kadaluarsa</label>
-                    <input type="date" name="Tanggal_Kadaluarsa" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <label for="Tanggal_Kadaluarsa" class="block text-sm font-medium text-gray-700">Tanggal
+                        Kadaluarsa</label>
+                    <input type="date" name="Tanggal_Kadaluarsa"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Stok -->
                 <div>
                     <label for="Stok" class="block text-sm font-medium text-gray-700">Stok</label>
-                    <input type="number" name="Stok" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="number" name="Stok"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Supplier -->
                 <div>
                     <label for="ID_Supplier" class="block text-sm font-medium text-gray-700">Supplier</label>
-                    <select name="ID_Supplier" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <select name="ID_Supplier"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
                         include('../database/database.php');
                         $sql = "SELECT * FROM supplier";
@@ -109,30 +116,35 @@
                 <!-- Status -->
                 <div>
                     <label for="Status" class="block text-sm font-medium text-gray-700">Status</label>
-                    <input type="text" name="Status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="text" name="Status"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Package -->
                 <div>
                     <label for="Package" class="block text-sm font-medium text-gray-700">Package</label>
-                    <input type="text" name="Package" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="text" name="Package"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Harga Beli -->
                 <div>
                     <label for="Harga_Beli" class="block text-sm font-medium text-gray-700">Harga Beli</label>
-                    <input type="number" name="Harga_Beli" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="number" name="Harga_Beli"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Harga Jual -->
                 <div>
                     <label for="Harga_Jual" class="block text-sm font-medium text-gray-700">Harga Jual</label>
-                    <input type="number" name="Harga_Jual" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="number" name="Harga_Jual"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Tombol Submit -->
                 <div class="col-span-2">
-                    <button name="submit" type="submit" class="w-full bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <button name="submit" type="submit"
+                        class="w-full bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
                         Create
                     </button>
                 </div>
