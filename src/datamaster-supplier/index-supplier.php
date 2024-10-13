@@ -27,7 +27,7 @@
 
         <!-- Tombol Tambah Data diposisikan di bawah teks Data Obat -->
         <div class="mb-6">
-            <a href="/apoteku/src/transaksi-penjualan/create.php"
+            <a href="/apoteku/src/datamaster-supplier/create-supplier.php"
                 class="bg-green-800 text-white py-3 px-3 rounded-lg hover:bg-green-700 text-sm">
                 Tambah Data
             </a>
