@@ -22,7 +22,7 @@
 <?php include('../template/sidebar.php'); ?>
   
     <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
-    <div class="ml-64 max-w-6xl mx-auto  p-6">
+    <div class="flex-grow ml-64 mx-auto p-6">
          <!-- Header -->
          <div class="flex items-center justify-between">
             <h1 class="text-2xl font-bold mb-4">Data Obat</h1>
