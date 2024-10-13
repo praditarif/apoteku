@@ -1569,6 +1569,10 @@ html {
   margin-right: auto;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -1653,8 +1657,13 @@ html {
   max-width: 72rem;
 }
 
+<<<<<<< HEAD
+.max-w-xs {
+  max-width: 20rem;
+=======
 .max-w-3xl {
   max-width: 48rem;
+>>>>>>> f62891de3c7aed463e56da95090846981967f532
 }
 
 .flex-grow {
