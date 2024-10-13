@@ -69,26 +69,22 @@
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             echo '<tr class="border-b hover:bg-gray-100">
-                <td class="px-6 py-auto">' . $row['ID_Obat'] . '</td>
-                <td class="px-6 py-auto">' . $row['Nama_Obat'] . '</td>
-                <td class="px-6 py-auto">' . $row['Code'] . '</td>
-                <td class="px-6 py-auto">' . $row['Formulasi'] . '</td>
-                <td class="px-6 py-auto">' . $row['Tanggal_Kadaluarsa'] . '</td>
-                <td class="px-6 py-auto">' . $row['Stok'] . '</td>
-                <td class="px-6 py-auto">' . $row['Nama_Supplier'] . '</td>
-                <td class="px-6 py-auto">' . $row['Status'] . '</td>
-                <td class="px-6 py-auto">' . $row['Package'] . '</td>
-                <td class="px-6 py-auto">' . $row['Harga_Beli'] . '</td>
-                <td class="px-6 py-auto">' . $row['Harga_Jual'] . '</td>
+                <td class="px- py-auto">' . $row['ID_Obat'] . '</td>
+                <td class="px- py-auto">' . $row['Nama_Obat'] . '</td>
+                <td class="px- py-auto">' . $row['Code'] . '</td>
+                <td class="px- py-auto">' . $row['Formulasi'] . '</td>
+                <td class="px- py-auto">' . $row['Tanggal_Kadaluarsa'] . '</td>
+                <td class="px- py-auto">' . $row['Stok'] . '</td>
+                <td class="px- py-auto">' . $row['Nama_Supplier'] . '</td>
+                <td class="px- py-auto">' . $row['Status'] . '</td>
+                <td class="px- py-auto">' . $row['Package'] . '</td>
+                <td class="px- py-auto">' . $row['Harga_Beli'] . '</td>
+                <td class="px- py-auto">' . $row['Harga_Jual'] . '</td>
                 <td class="flex gap-x-4 justify-center">
                     <a href="/grancy/src/obat/obat_edit.php?id=' . $row['ID_Obat'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm p-2"">
                         <i class="bi bi-pencil-square transition-all"></i>
                     </a>
-<<<<<<< HEAD
                     <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/obat-delete.php?id=' . $row['ID_Obat'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm p-2">
-=======
-                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="dataobat-delete.php?id=' . $row['ID_Obat'] . '" class="btn bg-red hover:shadow-md hover:bg-red group">
->>>>>>> 8975795336a42c3a64e3d2605609ab33bd971a28
                         <i class="bi bi-trash-fill transition-all"></i>
                     </a>
                 </td>
