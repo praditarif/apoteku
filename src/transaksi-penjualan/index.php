@@ -17,17 +17,17 @@
 </head>
 
 <body class="bg-green-100 text-gray-900">
-<?php include('../template/sidebar.php'); ?>
+    <?php include('../template/sidebar.php'); ?>
 
     <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
-    <div class="ml-64 max-w-6xl mx-auto  p-6">
+    <div class="flex-grow ml-64 mx-auto p-6">
         <!-- Header -->
-        <div class="flex items-center justify-between">
-            <h1 class="text-2xl font-bold mb-4">Data Obat</h1>
+        <h1 class="text-2xl font-bold mb-4">Data Obat</h1>
 
-            <!-- Tombol Tambah Data diposisikan di bawah teks Data Obat -->
+        <!-- Tombol Tambah Data diposisikan di bawah teks Data Obat -->
+        <div class="mb-6">
             <a href="/apoteku/src/transaksi-penjualan/create.php"
-                class="bg-green-800 text-white py-1 px-3 rounded-lg hover:bg-green-700 text-sm">
+                class="bg-green-800 text-white py-3 px-3 rounded-lg hover:bg-green-700 text-sm">
                 Tambah Data
             </a>
         </div>
@@ -37,17 +37,17 @@
             <table class="w-full text-left border border-gray-300">
                 <thead class="bg-gray-100">
                     <tr>
-                <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
-                <th class="px-4 py-2 min-w-[120px]">ID Karyawan</th>
-                <th class="px-4 py-2">Tanggal Waktu</th>
-                <th class="px-4 py-2 min-w-[130px]">Kode Jenis Layanan</th>
-                <th class="px-4 py-2 min-w-[150px]">Kode Provider CPT</th>
-                <th class="px-4 py-2">Total Harga Obat</th>
-                <th class="px-4 py-2 min-w-[150px] text-center">Metode Pembayaran</th>
-                <th class="px-4 py-2 min-w-[150px] text-center">Sumber Pembayaran</th>
-                <th class="px-4 py-2 text-center">ID Resep</th>
-                <th class="px-4 py-2 text-center">Aksi</th>
-            </tr>
+                        <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
+                        <th class="px-4 py-2 min-w-[120px]">ID Karyawan</th>
+                        <th class="px-4 py-2">Tanggal Waktu</th>
+                        <th class="px-4 py-2 min-w-[130px]">Kode Jenis Layanan</th>
+                        <th class="px-4 py-2 min-w-[150px]">Kode Provider CPT</th>
+                        <th class="px-4 py-2">Total Harga Obat</th>
+                        <th class="px-4 py-2 min-w-[150px] text-center">Metode Pembayaran</th>
+                        <th class="px-4 py-2 min-w-[150px] text-center">Sumber Pembayaran</th>
+                        <th class="px-4 py-2 text-center">ID Resep</th>
+                        <th class="px-4 py-2 text-center">Aksi</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <?php
@@ -73,10 +73,10 @@
                                 <td class="px-6 py-4">' . $row['Sumber_Pembayaran'] . '</td>
                                 <td class="px-6 py-4">' . $row['ID_Resep'] . '</td>
                                 <td class="flex gap-x-4 justify-center">
-                                    <a href="/grancy/src/transaksi/transaksi_edit.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm p-2">
+                                    <a href="/grancy/src/transaksi/transaksi_edit.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualan-delete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm p-2">
+                                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualan-delete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
                                         <i class="bi bi-trash-fill"></i>
                                     </a>
                                 </td>
