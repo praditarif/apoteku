@@ -76,7 +76,7 @@
 
                     <!-- Data Suplier -->
                     <li class="list-none">
-                        <a href="datasuplier.html"
+                        <a href="/apoteku/src/datamaster-supplier/index-supplier.php"
                             class="text-white p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
                             <span>Data Suplier</span>
                         </a>
