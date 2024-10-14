@@ -45,7 +45,7 @@
             <th class=" px-6 py-4">Status</th>
             <th class=" px-6 py-4">Package</th>
             <th class=" px-6 py-4">Harga Obat</th>
-            <th class=" px-6 py-4 text-center">Aksi</th>
+            <th class=" px-6 py-4 ">Aksi</th>
         </tr>
 
                 </thead>
