@@ -17,42 +17,44 @@
             dropdown.classList.toggle('hidden');
         }
     </script>
-
-    <?php
-    if (isset($_POST['submit'])) {
-        include('../database/database.php');
-        
-        // Ambil data dari form
-        $Nama_Supplier = $_POST['Nama_Supplier'];
-        $Kontak = $_POST['Kontak'];
-        $Alamat = $_POST['Alamat'];
-       
-        // Validasi input
-        do {
-            if (empty($Nama_Supplier) || empty($Kontak) || empty($Alamat)) {
-                echo "<script>alert('Please fill all the fields')</script>";
-                break;
-            } else {
-                // Query untuk memasukkan data supplier ke dalam tabel supplier
-                $sql = "INSERT INTO supplier (Nama_Supplier, Kontak, Alamat) 
-                        VALUES ('$Nama_Supplier', '$Kontak', '$Alamat')";
-                
-                if (mysqli_query($conn, $sql)) {
-                    echo "<script>alert('Supplier has been created successfully');</script>";
-                    echo "<script>window.location.href = 'index-supplier.php';</script>"; // Redirect setelah berhasil
-                } else {
-                    echo 'Error: ' . $sql . '<br>' . mysqli_error($conn);
-                }
-                mysqli_close($conn);
-            }
-        } while (false);
-    }
-    ?>
-
 </head>
 
 <body class="bg-gray-100">
-    <?php include('../template/sidebar.php'); ?>
+    <?php
+// Include the database connection and sidebar
+include('../template/sidebar.php');
+include('../../src/database/database.php');
+
+if (isset($_POST['submit'])) {
+    // Collect the form data
+    $Nama_Lengkap = $_POST['Nama_Lengkap'];
+    $Nama_Dokter = $_POST['Nama_Dokter'];
+    $Apoteker = $_POST['Apoteker'];
+    $Tanggal_Transaksi = $_POST['Tanggal_Transaksi'];
+    $Tambah_Obat = $_POST['Tambah_Obat']; // This is the ID of the selected drug
+    $Jumlah = $_POST['Jumlah'];
+    $Total_Harga = $_POST['Total_Harga'];
+    $Total_Bayar = $_POST['Total_Bayar'];
+    $Kembali = $_POST['Kembali'];
+    $Sumber = $_POST['Sumber'];
+
+    // Ensure all required fields are filled
+    if (empty($Nama_Lengkap) || empty($Nama_Dokter) || empty($Apoteker) || empty($Tanggal_Transaksi) || empty($Tambah_Obat) || empty($Jumlah) || empty($Total_Harga) || empty($Total_Bayar) || empty($Kembali) || empty($Sumber)) {
+        echo "<script>alert('Please fill all the fields');</script>";
+    } else {
+        // Insert the data into the `detail_resep` table
+        $sql = "INSERT INTO detail_resep (ID_Resep, ID_Obat, Jumlah)
+                VALUES ('$Nama_Lengkap', '$Tambah_Obat', '$Jumlah')";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "<script>alert('Transaction successfully added!');</script>";
+        } else {
+            echo 'Error: ' . $sql . '<br>' . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+    }
+}
+?>
 
     <div class="flex-grow ml-64 mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Tambah Transaksi Penjualan</h1>
@@ -61,8 +63,8 @@
         <form method="POST" class="bg-white p-6 rounded-lg shadow-lg">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                    <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Pasien</label>
-                    <select name="Nama_Dokter" id="select-pasien" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <label for="Nama_Pasien" class="block text-sm font-medium text-gray-700">Nama Pasien</label>
+                    <select name="Nama_Lengkap" id="select-pasien" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
                         // Query untuk mendapatkan data dokter
                         $sql = "SELECT * FROM pasien";
@@ -95,7 +97,7 @@
                 <!-- Nama Apoteker -->
                 <div>
                     <label for="Apoteker" class="block text-sm font-medium text-gray-700">Apoteker</label>
-                    <select name="Jabatan" id="select-apoteker" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <select name="Apoteker" id="select-apoteker" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
                         // Query untuk mendapatkan data apoteker (karyawan)
                         $sql = "SELECT * FROM karyawan";
@@ -109,14 +111,14 @@
                     </select>
                 </div>
                 <div>
-                    <label for="Tanggal_Kadaluarsa" class="block text-sm font-medium text-gray-700">Tanggal
+                    <label for="Tanggal_Transaksi" class="block text-sm font-medium text-gray-700">Tanggal
                         Transaksi</label>
-                    <input type="date" name="Tanggal_Kadaluarsa"
+                    <input type="date" name="Tanggal_Transaksi"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div>
     <label for="select-obat" class="block text-sm font-medium text-gray-700">Tambah Resep Obat</label>
-    <select name="ID_Obat" id="select-obat" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+    <select name="Tambah_Obat" id="select-obat" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         <option value="" disabled selected>Pilih Obat</option>
         <?php
         // Query untuk mendapatkan data obat
@@ -141,27 +143,27 @@
 
                 <div>
                     <label for="Harga_Beli" class="block text-sm font-medium text-gray-700">Jumlah</label>
-                    <input type="number" name="Harga_Beli"
+                    <input type="number" name="Jumlah"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="Harga_Beli" class="block text-sm font-medium text-gray-700">Total Harga</label>
-                    <input type="number" name="Harga_Beli"
+                    <input type="number" name="Total_Harga"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="Harga_Beli" class="block text-sm font-medium text-gray-700">Total Bayar</label>
-                    <input type="number" name="Harga_Beli"
+                    <input type="number" name="Total_Bayar"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="Harga_Beli" class="block text-sm font-medium text-gray-700">Kembali</label>
-                    <input type="number" name="Harga_Beli"
+                    <input type="number" name="Kembali"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="Harga_Beli" class="block text-sm font-medium text-gray-700">Sumber Pembayaran</label>
-                    <input type="text" name="Harga_Beli"
+                    <input type="text" name="Sumber"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <!-- Tombol Submit -->
