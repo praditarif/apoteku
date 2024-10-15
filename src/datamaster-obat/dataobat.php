@@ -38,21 +38,6 @@
         <div class="bg-white shadow-md rounded-lg overflow-x-auto w-full mt-4">
             <table class="w-full text-left border border-gray-300">
                 <thead class="bg-gray-100">
-<<<<<<< HEAD
-        <tr>
-            <th class=" px-6 py-4">ID Obat</th>
-            <th class=" px-6 py-4">Nama Obat</th>
-            <th class=" px-6 py-4">Code</th>
-            <th class=" px-6 py-4">Formulasi</th>
-            <th class=" px-6 py-4">Tanggal Kadaluarsa</th>
-            <th class=" px-6 py-4">Stok</th>
-            <th class=" px-6 py-4">ID Supplier</th>
-            <th class=" px-6 py-4">Status</th>
-            <th class=" px-6 py-4">Package</th>
-            <th class=" px-6 py-4">Harga Obat</th>
-            <th class=" px-6 py-4 ">Aksi</th>
-        </tr>
-=======
                     <tr>
                         <th class=" px-6 py-4">ID Obat</th>
                         <th class=" px-6 py-4">Nama Obat</th>
@@ -67,8 +52,6 @@
                         <th class=" px-6 py-4">Harga Jual</th>
                         <th class=" px-6 py-4" style="width: 150px;">Aksi</th>
                     </tr>
->>>>>>> 199799f167786428550b36151b84f81ce90a2b83
-
                 </thead>
                 <tbody>
                     <?php

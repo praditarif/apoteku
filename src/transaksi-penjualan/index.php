@@ -22,7 +22,7 @@
     <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
     <div class="flex-grow ml-64 mx-auto p-6">
         <!-- Header -->
-        <h1 class="text-2xl font-bold mb-4">Data Obat</h1>
+        <h1 class="text-2xl font-bold mb-4">Transaksi</h1>
 
         <!-- Tombol Tambah Data diposisikan di bawah teks Data Obat -->
         <div class="mb-6">
@@ -38,13 +38,13 @@
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
-                        <th class="px-4 py-2 min-w-[120px]">ID Karyawan</th>
-                        <th class="px-4 py-2">Tanggal Waktu</th>
-                        <th class="px-4 py-2 min-w-[130px]">Kode Jenis Layanan</th>
-                        <th class="px-4 py-2 min-w-[150px]">Kode Provider CPT</th>
-                        <th class="px-4 py-2">Total Harga Obat</th>
-                        <th class="px-4 py-2 min-w-[150px] text-center">Metode Pembayaran</th>
-                        <th class="px-4 py-2 min-w-[150px] text-center">Sumber Pembayaran</th>
+                        <th class="px-4 py-2 min-w-[120px]">Nama Pasien</th>
+                        <th class="px-4 py-2">Nama Karyawan</th>
+                        <th class="px-4 py-2 min-w-[130px]">Tanggal Transaksi</th>
+                        <th class="px-4 py-2 min-w-[150px]">Total harga</th>
+                        <th class="px-4 py-2">Total Bayar</th>
+                        <th class="px-4 py-2 min-w-[150px] text-center">Kembali</th>
+                        <th class="px-4 py-2 min-w-[150px] text-center">Sumber pembayaran</th>
                         <th class="px-4 py-2 text-center">ID Resep</th>
                         <th class="px-4 py-2 text-center">Aksi</th>
                     </tr>
@@ -52,7 +52,7 @@
                 <tbody>
                     <?php
                     include('../../src/database/database.php');
-                    $sql = "SELECT t.ID_Transaksi, t.ID_Karyawan, t.Tanggal_Waktu, t.Kode_Jenis_Layanan, t.Kode_Provider_CPT, t.Total_Harga_Obat, t.Metode_Pembayaran, t.Sumber_Pembayaran, t.ID_Resep
+                    $sql = "SELECT t.ID_Transaksi, t.Nama_Customer, t.ID_Karyawan, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran, t.ID_Resep
                             FROM transaksi t 
                             JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
                             JOIN resep r ON t.ID_Resep = r.ID_Resep";
@@ -64,12 +64,12 @@
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr class="border-b hover:bg-gray-100">
                                 <th>' . $row['ID_Transaksi'] . '</th>
+                                <td class="px-6 py-4">' . $row['Nama_Customer'] . '</td>
                                 <td class="px-6 py-4">' . $row['ID_Karyawan'] . '</td>
-                                <td class="px-6 py-4">' . $row['Tanggal_Waktu'] . '</td>
-                                <td class="px-6 py-4">' . $row['Kode_Jenis_Layanan'] . '</td>
-                                <td class="px-6 py-4">' . $row['Kode_Provider_CPT'] . '</td>
-                                <td class="px-6 py-4">' . $row['Total_Harga_Obat'] . '</td>
-                                <td class="px-6 py-4">' . $row['Metode_Pembayaran'] . '</td>
+                                <td class="px-6 py-4">' . $row['Tanggal_Transaksi'] . '</td>
+                                <td class="px-6 py-4">' . $row['Total_Harga'] . '</td>
+                                <td class="px-6 py-4">' . $row['Total_Bayar'] . '</td>
+                                <td class="px-6 py-4">' . $row['Kembali'] . '</td>
                                 <td class="px-6 py-4">' . $row['Sumber_Pembayaran'] . '</td>
                                 <td class="px-6 py-4">' . $row['ID_Resep'] . '</td>
                                 <td class="flex gap-x-4 justify-center">
