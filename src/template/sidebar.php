@@ -14,6 +14,7 @@
             dropdown.classList.toggle('hidden');
         }
     </script>
+
 <body class="bg-green-100 text-gray-900">
 
     <!-- Sidebar -->
@@ -26,7 +27,7 @@
                 <li class="mb-6 list-none">
                     <a href="/apoteku/src/main.php"
                         class="w-full bg-green-700 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800">
-                        <span>Beranda</span>
+                        <span>Dashboard</span>
                     </a>
                 </li>
 
@@ -39,7 +40,7 @@
                 </div>
 
                 <!-- Dropdown Menu -->
-                <div id="transaksi-dropdown" class="hidden mt-4">   
+                <div id="transaksi-dropdown" class="hidden mt-4">
                     <!-- Data penjualan -->
                     <li class="mb-4 list-none">
                         <a href="/apoteku/src/transaksi-penjualan/index.php"
@@ -86,5 +87,5 @@
         </nav>
     </aside>
 
-   
+
 <body>
