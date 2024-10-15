@@ -46,18 +46,16 @@
                         <th class="px-4 py-2">Total Bayar</th>
                         <th class="px-4 py-2 min-w-[150px] text-center">Kembali</th>
                         <th class="px-4 py-2 min-w-[150px] text-center">Sumber pembayaran</th>
-                        <th class="px-4 py-2 text-center">ID Resep</th>
                         <th class="px-4 py-2 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     include('../../src/database/database.php');
-                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, d.Nama_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran, t.ID_Resep
+                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, d.Nama_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
                             FROM transaksi t 
                             JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
-                            JOIN resep r ON t.ID_Resep = r.ID_Resep
-                            JOIN dokter d ON r.ID_Resep = d.ID_Dokter
+                            JOIN dokter d ON d.ID_Dokter = d.ID_Dokter
                             JOIN pasien p ON p.ID_Pasien = t.ID_Pasien";
                             
                     $result = mysqli_query($conn, $sql);
@@ -76,7 +74,6 @@
                                 <td class="px-6 py-4">' . $row['Total_Bayar'] . '</td>
                                 <td class="px-6 py-4">' . $row['Kembali'] . '</td>
                                 <td class="px-6 py-4">' . $row['Sumber_Pembayaran'] . '</td>
-                                <td class="px-6 py-4">' . $row['ID_Resep'] . '</td>
                                 <td class="flex gap-x-4 justify-center">
                                     <a href="/grancy/src/transaksi/transaksi_edit.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
                                         <i class="bi bi-pencil-square"></i>
