@@ -80,10 +80,10 @@
                 <td class="px- py-auto">' . $row['Harga_Beli'] . '</td>
                 <td class="px- py-auto">' . $row['Harga_Jual'] . '</td>
                 <td class="flex gap-x-4 justify-center">
-                    <a href="/grancy/src/obat/obat_edit.php?id=' . $row['ID_Obat'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
+                    <a href="/apoteku/src/datamaster-obat/dataobat-edit.php?id=' . $row['ID_Obat'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
                         <i class="bi bi-pencil-square transition-all"></i>
                     </a>
-                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/obat-delete.php?id=' . $row['ID_Obat'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
+                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/datamaster-obat/dataobat-delete.php?id=' . $row['ID_Obat'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
                         <i class="bi bi-trash-fill transition-all"></i>
                     </a>
                 </td>
