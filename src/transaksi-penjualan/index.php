@@ -39,6 +39,7 @@
                     <tr>
                         <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
                         <th class="px-4 py-2 min-w-[120px]">Nama Pasien</th>
+                        <th class="px-4 py-2">Nama Dokter</th>
                         <th class="px-4 py-2">Nama Karyawan</th>
                         <th class="px-4 py-2 min-w-[130px]">Tanggal Transaksi</th>
                         <th class="px-4 py-2 min-w-[150px]">Total harga</th>
@@ -52,10 +53,11 @@
                 <tbody>
                     <?php
                     include('../../src/database/database.php');
-                    $sql = "SELECT t.ID_Transaksi, t.Nama_Customer, t.ID_Karyawan, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran, t.ID_Resep
+                    $sql = "SELECT t.ID_Transaksi, t.Nama_Customer, d.Nama_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran, t.ID_Resep
                             FROM transaksi t 
                             JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
-                            JOIN resep r ON t.ID_Resep = r.ID_Resep";
+                            JOIN resep r ON t.ID_Resep = r.ID_Resep
+                            JOIN dokter d ON r.ID_Resep = d.ID_Dokter";
                     $result = mysqli_query($conn, $sql);
                     if (!$result) {
                         die("Query failed: " . mysqli_error($conn));
@@ -65,7 +67,8 @@
                             echo '<tr class="border-b hover:bg-gray-100">
                                 <th>' . $row['ID_Transaksi'] . '</th>
                                 <td class="px-6 py-4">' . $row['Nama_Customer'] . '</td>
-                                <td class="px-6 py-4">' . $row['ID_Karyawan'] . '</td>
+                                <td class="px-6 py-4">' . $row['Nama_Dokter'] . '</td>
+                                <td class="px-6 py-4">' . $row['Nama'] . '</td>
                                 <td class="px-6 py-4">' . $row['Tanggal_Transaksi'] . '</td>
                                 <td class="px-6 py-4">' . $row['Total_Harga'] . '</td>
                                 <td class="px-6 py-4">' . $row['Total_Bayar'] . '</td>
