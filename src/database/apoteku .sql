@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Okt 2024 pada 03.21
--- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.0.28
+-- Generation Time: Oct 15, 2024 at 04:15 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_resep`
+-- Table structure for table `detail_resep`
 --
 
 CREATE TABLE `detail_resep` (
@@ -35,19 +35,17 @@ CREATE TABLE `detail_resep` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `detail_resep`
+-- Dumping data for table `detail_resep`
 --
 
 INSERT INTO `detail_resep` (`ID_Detail_Resep`, `ID_Resep`, `ID_Obat`, `Jumlah`) VALUES
 (1, 1, 1, 10),
-(2, 1, 3, 5),
-(3, 2, 2, 7),
-(4, 2, 3, 4);
+(3, 2, 2, 7);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `dokter`
+-- Table structure for table `dokter`
 --
 
 CREATE TABLE `dokter` (
@@ -66,7 +64,7 @@ CREATE TABLE `dokter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `dokter`
+-- Dumping data for table `dokter`
 --
 
 INSERT INTO `dokter` (`ID_Dokter`, `NPI`, `Nama_Dokter`, `Jenis_Kelamin`, `Tanggal_Lahir`, `No_Telepon`, `Email`, `Alamat`, `Spesialisasi`, `Status_Lisensi`, `Tanggal_Lisensi`, `Nama_Institusi`) VALUES
@@ -76,29 +74,31 @@ INSERT INTO `dokter` (`ID_Dokter`, `NPI`, `Nama_Dokter`, `Jenis_Kelamin`, `Tangg
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `karyawan`
+-- Table structure for table `karyawan`
 --
 
 CREATE TABLE `karyawan` (
   `ID_Karyawan` int(11) NOT NULL,
   `Nama` varchar(100) NOT NULL,
   `No_Telepon` varchar(20) DEFAULT NULL,
-  `Jabatan` varchar(50) DEFAULT NULL
+  `Jabatan` varchar(50) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `karyawan`
+-- Dumping data for table `karyawan`
 --
 
-INSERT INTO `karyawan` (`ID_Karyawan`, `Nama`, `No_Telepon`, `Jabatan`) VALUES
-(1, 'Andi Prasetyo', '081234123456', 'Apoteker'),
-(2, 'Budi Santoso', '081234987654', 'Kasir'),
-(3, 'Citra Dewi', '081234112233', 'Asisten Apoteker');
+INSERT INTO `karyawan` (`ID_Karyawan`, `Nama`, `No_Telepon`, `Jabatan`, `username`, `password`) VALUES
+(1, 'Andi Prasety', '081234123456', 'Apoteker', 'andi', 'Andi123'),
+(2, 'Budi Santoso', '081234987654', 'Kasir', 'budi', 'Budi123'),
+(3, 'Citra Dewi', '081234112233', 'Asisten Apoteker', 'citra', 'Citra123');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `obat`
+-- Table structure for table `obat`
 --
 
 CREATE TABLE `obat` (
@@ -111,22 +111,22 @@ CREATE TABLE `obat` (
   `ID_Supplier` int(11) DEFAULT NULL,
   `Status` varchar(20) DEFAULT NULL,
   `Package` varchar(20) DEFAULT NULL,
-  `Harga_Obat` decimal(10,2) DEFAULT NULL
+  `Harga_Beli` decimal(10,2) DEFAULT NULL,
+  `Harga_Jual` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `obat`
+-- Dumping data for table `obat`
 --
 
-INSERT INTO `obat` (`ID_Obat`, `Nama_Obat`, `Code`, `Formulasi`, `Tanggal_Kadaluarsa`, `Stok`, `ID_Supplier`, `Status`, `Package`, `Harga_Obat`) VALUES
-(1, 'Paracetamol', 'P001', 'Tablet', '2025-12-31', 100, 1, 'Tersedia', 'Strip', 1500.00),
-(2, 'Amoxicillin', 'A001', 'Kapsul', '2024-11-30', 200, 2, 'Tersedia', 'Botol', 2500.00),
-(3, 'Vitamin C', 'V001', 'Tablet', '2026-06-30', 300, 3, 'Tersedia', 'Strip', 1000.00);
+INSERT INTO `obat` (`ID_Obat`, `Nama_Obat`, `Code`, `Formulasi`, `Tanggal_Kadaluarsa`, `Stok`, `ID_Supplier`, `Status`, `Package`, `Harga_Beli`, `Harga_Jual`) VALUES
+(1, 'Paracetamol', 'P001', 'Tablet', '2025-12-31', 100, 1, 'Tersedia', 'Strip', 1500.00, 5000.00),
+(2, 'Amoxicillin', 'A001', 'Kapsul', '2024-11-30', 200, 2, 'Tersedia', 'Botol', 2500.00, 5000.00);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pasien`
+-- Table structure for table `pasien`
 --
 
 CREATE TABLE `pasien` (
@@ -148,7 +148,7 @@ CREATE TABLE `pasien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `pasien`
+-- Dumping data for table `pasien`
 --
 
 INSERT INTO `pasien` (`ID_Pasien`, `ID_Eksternal`, `Nama_Lengkap`, `Nama_Panggilan`, `Jenis_Kelamin`, `Tanggal_Lahir`, `Ras`, `Alamat`, `Kode_Negara`, `No_Telp`, `Bahasa_Utama`, `Status_Pernikahan`, `No_Rekening`, `Kewarganegaraan`, `Indikator_Meninggal`) VALUES
@@ -158,7 +158,7 @@ INSERT INTO `pasien` (`ID_Pasien`, `ID_Eksternal`, `Nama_Lengkap`, `Nama_Panggil
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `resep`
+-- Table structure for table `resep`
 --
 
 CREATE TABLE `resep` (
@@ -171,7 +171,7 @@ CREATE TABLE `resep` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `resep`
+-- Dumping data for table `resep`
 --
 
 INSERT INTO `resep` (`ID_Resep`, `ID_Pasien`, `ID_Karyawan`, `ID_Dokter`, `Tanggal_Resep`, `Catatan_Resep`) VALUES
@@ -181,7 +181,7 @@ INSERT INTO `resep` (`ID_Resep`, `ID_Pasien`, `ID_Karyawan`, `ID_Dokter`, `Tangg
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `supplier`
+-- Table structure for table `supplier`
 --
 
 CREATE TABLE `supplier` (
@@ -192,7 +192,7 @@ CREATE TABLE `supplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `supplier`
+-- Dumping data for table `supplier`
 --
 
 INSERT INTO `supplier` (`ID_Supplier`, `Nama_Supplier`, `Kontak`, `Alamat`) VALUES
@@ -203,35 +203,39 @@ INSERT INTO `supplier` (`ID_Supplier`, `Nama_Supplier`, `Kontak`, `Alamat`) VALU
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi`
+-- Table structure for table `transaksi`
 --
 
 CREATE TABLE `transaksi` (
   `ID_Transaksi` int(11) NOT NULL,
   `ID_Karyawan` int(11) DEFAULT NULL,
-  `Tanggal_Waktu` datetime DEFAULT NULL,
-  `Kode_Jenis_Layanan` varchar(20) DEFAULT NULL,
-  `Kode_Provider_CPT` varchar(20) DEFAULT NULL,
-  `Total_Harga_Obat` decimal(10,2) DEFAULT NULL,
-  `Metode_Pembayaran` varchar(50) DEFAULT NULL,
+  `ID_Pasien` int(11) DEFAULT NULL,
+  `Tanggal_Transaksi` datetime DEFAULT NULL,
+  `Total_Harga` decimal(10,2) DEFAULT NULL,
+  `Total_Bayar` decimal(10,2) DEFAULT NULL,
+  `Kembali` decimal(10,2) GENERATED ALWAYS AS (`Total_Bayar` - `Total_Harga`) VIRTUAL,
   `Sumber_Pembayaran` varchar(50) DEFAULT NULL,
   `ID_Resep` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `transaksi`
+-- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`ID_Transaksi`, `ID_Karyawan`, `Tanggal_Waktu`, `Kode_Jenis_Layanan`, `Kode_Provider_CPT`, `Total_Harga_Obat`, `Metode_Pembayaran`, `Sumber_Pembayaran`, `ID_Resep`) VALUES
-(1, 2, '2024-10-01 14:30:00', 'L001', 'CPT001', 17500.00, 'Cash', 'Pribadi', 1),
-(2, 2, '2024-10-05 10:15:00', 'L002', 'CPT002', 24500.00, 'Debit', 'BPJS', 2);
+INSERT INTO `transaksi` (`ID_Transaksi`, `ID_Karyawan`, `ID_Pasien`, `Tanggal_Transaksi`, `Total_Harga`, `Total_Bayar`, `Sumber_Pembayaran`, `ID_Resep`) VALUES
+(5, 1, 1, '2024-10-03 00:00:00', 75000.00, 100000.00, 'BPJS', 1),
+(6, 1, 1, '2024-10-03 00:00:00', 32.00, NULL, 'dsd', 1),
+(7, 1, 1, '2024-10-03 00:00:00', 32.00, NULL, 'dsd', 1),
+(8, 1, 1, '2024-10-03 00:00:00', 32.00, NULL, 'dsd', 1),
+(9, 1, NULL, '2024-10-03 00:00:00', 32.00, NULL, 'dsd', 1),
+(10, 1, NULL, '2024-10-03 00:00:00', 32.00, NULL, 'dsd', 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `detail_resep`
+-- Indexes for table `detail_resep`
 --
 ALTER TABLE `detail_resep`
   ADD PRIMARY KEY (`ID_Detail_Resep`),
@@ -239,32 +243,32 @@ ALTER TABLE `detail_resep`
   ADD KEY `ID_Obat` (`ID_Obat`);
 
 --
--- Indeks untuk tabel `dokter`
+-- Indexes for table `dokter`
 --
 ALTER TABLE `dokter`
   ADD PRIMARY KEY (`ID_Dokter`);
 
 --
--- Indeks untuk tabel `karyawan`
+-- Indexes for table `karyawan`
 --
 ALTER TABLE `karyawan`
   ADD PRIMARY KEY (`ID_Karyawan`);
 
 --
--- Indeks untuk tabel `obat`
+-- Indexes for table `obat`
 --
 ALTER TABLE `obat`
   ADD PRIMARY KEY (`ID_Obat`),
   ADD KEY `ID_Supplier` (`ID_Supplier`);
 
 --
--- Indeks untuk tabel `pasien`
+-- Indexes for table `pasien`
 --
 ALTER TABLE `pasien`
   ADD PRIMARY KEY (`ID_Pasien`);
 
 --
--- Indeks untuk tabel `resep`
+-- Indexes for table `resep`
 --
 ALTER TABLE `resep`
   ADD PRIMARY KEY (`ID_Resep`),
@@ -273,90 +277,91 @@ ALTER TABLE `resep`
   ADD KEY `ID_Dokter` (`ID_Dokter`);
 
 --
--- Indeks untuk tabel `supplier`
+-- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`ID_Supplier`);
 
 --
--- Indeks untuk tabel `transaksi`
+-- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`ID_Transaksi`),
   ADD KEY `ID_Karyawan` (`ID_Karyawan`),
-  ADD KEY `ID_Resep` (`ID_Resep`);
+  ADD KEY `ID_Resep` (`ID_Resep`),
+  ADD KEY `fk_transaksi_pasien` (`ID_Pasien`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `detail_resep`
+-- AUTO_INCREMENT for table `detail_resep`
 --
 ALTER TABLE `detail_resep`
   MODIFY `ID_Detail_Resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `dokter`
+-- AUTO_INCREMENT for table `dokter`
 --
 ALTER TABLE `dokter`
   MODIFY `ID_Dokter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `karyawan`
+-- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
   MODIFY `ID_Karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `obat`
+-- AUTO_INCREMENT for table `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `ID_Obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_Obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `pasien`
+-- AUTO_INCREMENT for table `pasien`
 --
 ALTER TABLE `pasien`
   MODIFY `ID_Pasien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `resep`
+-- AUTO_INCREMENT for table `resep`
 --
 ALTER TABLE `resep`
   MODIFY `ID_Resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `supplier`
+-- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `ID_Supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_Supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `transaksi`
+-- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `ID_Transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_Transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `detail_resep`
+-- Constraints for table `detail_resep`
 --
 ALTER TABLE `detail_resep`
   ADD CONSTRAINT `detail_resep_ibfk_1` FOREIGN KEY (`ID_Resep`) REFERENCES `resep` (`ID_Resep`),
   ADD CONSTRAINT `detail_resep_ibfk_2` FOREIGN KEY (`ID_Obat`) REFERENCES `obat` (`ID_Obat`);
 
 --
--- Ketidakleluasaan untuk tabel `obat`
+-- Constraints for table `obat`
 --
 ALTER TABLE `obat`
   ADD CONSTRAINT `obat_ibfk_1` FOREIGN KEY (`ID_Supplier`) REFERENCES `supplier` (`ID_Supplier`);
 
 --
--- Ketidakleluasaan untuk tabel `resep`
+-- Constraints for table `resep`
 --
 ALTER TABLE `resep`
   ADD CONSTRAINT `resep_ibfk_1` FOREIGN KEY (`ID_Pasien`) REFERENCES `pasien` (`ID_Pasien`),
@@ -364,9 +369,10 @@ ALTER TABLE `resep`
   ADD CONSTRAINT `resep_ibfk_3` FOREIGN KEY (`ID_Dokter`) REFERENCES `dokter` (`ID_Dokter`);
 
 --
--- Ketidakleluasaan untuk tabel `transaksi`
+-- Constraints for table `transaksi`
 --
 ALTER TABLE `transaksi`
+  ADD CONSTRAINT `fk_transaksi_pasien` FOREIGN KEY (`ID_Pasien`) REFERENCES `pasien` (`ID_Pasien`),
   ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`ID_Karyawan`) REFERENCES `karyawan` (`ID_Karyawan`),
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`ID_Resep`) REFERENCES `resep` (`ID_Resep`);
 COMMIT;
