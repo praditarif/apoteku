@@ -52,7 +52,7 @@
                 <tbody>
                     <?php
                     include('../../src/database/database.php');
-                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, d.Nama_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
+                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, t.ID_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
                             FROM transaksi t
                             JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
                             JOIN dokter d ON d.ID_Dokter = t.ID_Dokter
