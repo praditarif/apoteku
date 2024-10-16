@@ -18,7 +18,7 @@
 
 </head>
 
-<body class="bg-green-100 text-gray-900 ">
+<body class="bg-gray-200 text-gray-900 ">
     <?php include('../template/sidebar.php'); ?>
     <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
     <div class="flex-grow ml-64 mx-auto p-6">
@@ -29,7 +29,7 @@
 
         <div class="mb-6">
             <a href="/apoteku/src/datamaster-supplier/create-supplier.php"
-                class="bg-green-800 text-white py-3 px-3 rounded-lg hover:bg-green-700 text-sm">
+                class="bg-blue-800 text-white py-3 px-3 rounded-lg hover:bg-blue-700 text-sm">
                 Tambah Data
             </a>
         </div>
