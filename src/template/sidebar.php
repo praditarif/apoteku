@@ -49,7 +49,7 @@
                     </li>
                     <!-- Data pembelian -->
                     <li class="list-none">
-                        <a href="/apoteku/src/transaksi-penjualan/index.php"
+                        <a href="/apoteku/src/transaksi-pembelian/index.php"
                             class="text-white p-3 rounded-lg flex items-center hover:bg-blue-800 transition duration-300">
                             <span>Pembelian</span>
                         </a>

@@ -65,7 +65,7 @@
                 <td class="px-6 py-auto">' . $row['Kontak'] . '</td>
                 <td class="px-6 py-auto">' . $row['Alamat'] . '</td>
                 <td class="flex gap-x-4 justify-center">
-                    <a href="/apoteku/src/datamaster-supplier/update_supplier.php?id=' . $row['ID_Supplier'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
+                    <a href="/apoteku/src/datamaster-supplier/update-supplier.php?id=' . $row['ID_Supplier'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
                         <i class="bi bi-pencil-square transition-all"></i>
                     </a>
                     <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="delete-supplier.php?id=' . $row['ID_Supplier'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
