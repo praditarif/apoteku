@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apoteku</title>
-    <link rel="stylesheet" href="../src/assets/css/output.css">
+    <title>Dashboard Apotek</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="../../src/assets/css/output.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer>
         // Script untuk mengatur dropdown visibility
         function toggleDropdown(dropdownId) {
@@ -15,102 +19,93 @@
     </script>
 </head>
 
-<body class="bg-green-100 text-gray-900">
-    <!-- Sidebar -->
-    <?php include('./template/sidebar.php'); ?>
+<body class="bg-green-100 text-gray-900 flex">
+<?php include('template/sidebar.php'); ?>
+    <!-- Main Content -->
+    <div class="flex-1 ml-64 p-6"> <!-- tambahkan margin kiri -->
+        <!-- Header -->
+        <header class="bg-green-600 p-4 text-white text-center w-full rounded-lg">
+            <h1 class="text-3xl font-bold">Dashboard Apotek</h1>
+        </header>
 
-    <!-- Konten Utama -->
-    <div class="flex-grow ml-64 mx-auto p-6">
-        <h1 class="text-3xl font-semibold mb-4">Dashboard</h1>
+        <?php
+        // Include database connection
+        include('database/database.php');
 
-        <!-- Grid Layout untuk Card -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-            <!-- Card 1 -->
-            <div class="bg-white shadow-md rounded-lg p-4 border-t-4 border-red-500">
-                <h2 class="text-blue-500 font-semibold">Penjualan Anda Hari Ini</h2>
-                <p class="text-2xl font-bold text-gray-700">Rp. 56,000</p>
-                <div class="text-gray-400 mt-2 text-right">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
+        // Mengambil data pendapatan bulanan
+        $sql = $pdo->query("
+    SELECT MONTH(Tanggal_Transaksi) AS bulan, SUM(Total_Harga) AS total_pendapatan
+    FROM transaksi
+    WHERE YEAR(Tanggal_Transaksi) = YEAR(CURDATE())
+    GROUP BY MONTH(Tanggal_Transaksi)
+");
+        $pendapatan = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        // Mengambil total pasien, dokter, dan obat
+        $total_pasien_query = $pdo->query("SELECT COUNT(*) AS total_pasien FROM pasien");
+        $pasien = $total_pasien_query->fetch(PDO::FETCH_ASSOC);
+
+        $total_dokter_query = $pdo->query("SELECT COUNT(*) AS total_dokter FROM dokter");
+        $dokter = $total_dokter_query->fetch(PDO::FETCH_ASSOC);
+
+        $total_obat_query = $pdo->query("SELECT COUNT(*) AS total_obat FROM obat");
+        $obat = $total_obat_query->fetch(PDO::FETCH_ASSOC);
+        ?>
+
+        <!-- Cards Section -->
+        <section class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold text-gray-700">Total Pasien</h2>
+                <p class="text-3xl mt-2"><?php echo $pasien['total_pasien']; ?></p>
             </div>
 
-            <!-- Card 2 -->
-            <div class="bg-white shadow-md rounded-lg p-4 border-t-4 border-blue-500">
-                <h2 class="text-blue-500 font-semibold">Penjualan Anda Bulan Ini</h2>
-                <p class="text-2xl font-bold text-gray-700">Rp. 77,000</p>
-                <div class="text-gray-400 mt-2 text-right">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold text-gray-700">Total Dokter</h2>
+                <p class="text-3xl mt-2"><?php echo $dokter['total_dokter']; ?></p>
             </div>
 
-            <!-- Card 3 -->
-            <div class="bg-white shadow-md rounded-lg p-4 border-t-4 border-green-500">
-                <h2 class="text-blue-500 font-semibold">Kadaluwarsa Bulan Ini</h2>
-                <p class="text-2xl font-bold text-gray-700">1 Data</p>
-                <div class="text-gray-400 mt-2 text-right">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold text-gray-700">Total Obat Tersedia</h2>
+                <p class="text-3xl mt-2"><?php echo $obat['total_obat']; ?></p>
             </div>
+        </section>
 
-            <!-- Card 4 -->
-            <div class="bg-white shadow-md rounded-lg p-4 border-t-4 border-yellow-500">
-                <h2 class="text-yellow-500 font-semibold">Total Supplier</h2>
-                <p class="text-2xl font-bold text-gray-700">32 Supplier</p>
-                <div class="text-gray-400 mt-2 text-right">
-                    <i class="fas fa-user"></i>
-                </div>
-            </div>
-        </div>
+        <!-- Chart Section -->
+        <section class="container mx-auto p-6 bg-white rounded-lg shadow-lg mt-6">
+            <h2 class="text-xl font-bold text-gray-700">Pendapatan Bulanan</h2>
+            <canvas id="pendapatanChart" class="mt-4"></canvas>
+        </section>
+
+        <!-- Script for Chart.js -->
+        <script>
+            var ctx = document.getElementById('pendapatanChart').getContext('2d');
+            var pendapatanChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [<?php foreach ($pendapatan as $p) {
+                        echo "'Bulan " . $p['bulan'] . "', ";
+                    } ?>],
+                    datasets: [{
+                        label: 'Pendapatan Bulanan',
+                        data: [<?php foreach ($pendapatan as $p) {
+                            echo $p['total_pendapatan'] . ", ";
+                        } ?>],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
     </div>
 
-    <!-- <?php
-    include('../database/database.php');
-    $query = "SELECT penjualan_hari_ini, penjualan_bulan_ini, kadaluwarsa_bulan_ini, total_supplier FROM transaksi t";
-    $result = $conn->query($query);
-    $data = $result->fetch_assoc();
-
-    $conn->close();
-    ?>
-
-    <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-semibold mb-4">Dashboard</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <!-- Card 1 
-            <div class="bg-white shadow-md rounded-lg p-4 border-t-4 border-red-500">
-                <h2 class="text-blue-500 font-semibold">Penjualan Anda Hari Ini</h2>
-                <p class="text-2xl font-bold text-gray-700">Rp.
-                    <?php echo number_format($data['penjualan_hari_ini'], 0, ',', '.'); ?></p>
-                <div class="text-gray-400 mt-2 text-right">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
-            </div>
-            <!-- Card 2 
-            <div class="bg-white shadow-md rounded-lg p-4 border-t-4 border-blue-500">
-                <h2 class="text-blue-500 font-semibold">Penjualan Anda Bulan Ini</h2>
-                <p class="text-2xl font-bold text-gray-700">Rp.
-                    <?php echo number_format($data['penjualan_bulan_ini'], 0, ',', '.'); ?></p>
-                <div class="text-gray-400 mt-2 text-right">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
-            </div>
-            <!-- Card 3 
-            <div class="bg-white shadow-md rounded-lg p-4 border-t-4 border-green-500">
-                <h2 class="text-blue-500 font-semibold">Kadaluwarsa Bulan Ini</h2>
-                <p class="text-2xl font-bold text-gray-700"><?php echo $data['kadaluwarsa_bulan_ini']; ?> Data</p>
-                <div class="text-gray-400 mt-2 text-right">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-            </div>
-            <!-- Card 4 
-            <div class="bg-white shadow-md rounded-lg p-4 border-t-4 border-yellow-500">
-                <h2 class="text-yellow-500 font-semibold">Total Supplier</h2>
-                <p class="text-2xl font-bold text-gray-700"><?php echo $data['total_supplier']; ?> Supplier</p>
-                <div class="text-gray-400 mt-2 text-right">
-                    <i class="fas fa-user"></i>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </body>
 
 </html>

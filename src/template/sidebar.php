@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apoteku</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="../../src/assets/css/output.css" rel="stylesheet">
     <script defer>
         // Script untuk mengatur dropdown visibility
@@ -14,20 +15,19 @@
             dropdown.classList.toggle('hidden');
         }
     </script>
+
 <body class="bg-green-100 text-gray-900">
 
     <!-- Sidebar -->
     <aside class="w-64 h-screen bg-green-600 fixed top-0 left-0 p-6 shadow-lg">
-        <h1 class="text-3xl font-bold mb-8 text-white">Apoteku</h1>
-
-        <nav>
-            <ul>
-                <!-- Beranda -->
-                <li class="mb-6 list-none">
-                    <a href="/apoteku/src/main.php"
-                        class="w-full bg-green-700 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800">
-                        <span>Beranda</span>
-                    </a>
+    <h1 class="text-3xl font-bold mb-8 text-white">Apoteku</h1>
+    <nav>
+        <ul>
+            <li class="mb-6 list-none">
+                <a href="/apoteku/src/main.php"
+                    class="w-full bg-green-700 text-white p-3 rounded-lg flex items-center justify-center hover:bg-green-800">
+                    <span>Dashboard</span>
+                </a>
                 </li>
 
                 <!-- Transaksi Section -->
@@ -39,7 +39,7 @@
                 </div>
 
                 <!-- Dropdown Menu -->
-                <div id="transaksi-dropdown" class="hidden mt-4">   
+                <div id="transaksi-dropdown" class="hidden mt-4">
                     <!-- Data penjualan -->
                     <li class="mb-4 list-none">
                         <a href="/apoteku/src/transaksi-penjualan/index.php"
@@ -86,5 +86,5 @@
         </nav>
     </aside>
 
-   
+
 <body>

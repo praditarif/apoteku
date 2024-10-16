@@ -53,15 +53,12 @@
                     <?php
                     include('../../src/database/database.php');
                     $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, d.Nama_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
-                            FROM transaksi t 
+                            FROM transaksi t
                             JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
-                            JOIN dokter d ON d.ID_Dokter = d.ID_Dokter
-                            JOIN pasien p ON p.ID_Pasien = t.ID_Pasien";
+                            JOIN dokter d ON d.ID_Dokter = t.ID_Dokter
+                            JOIN pasien p ON p.ID_Pasien = t.ID_Pasien;";
                             
                     $result = mysqli_query($conn, $sql);
-                    if (!$result) {
-                        die("Query failed: " . mysqli_error($conn));
-                    }
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr class="border-b hover:bg-gray-100">
