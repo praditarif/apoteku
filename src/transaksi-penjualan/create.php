@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="../assets/css/output.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script defer>
@@ -17,25 +18,25 @@
         }
 
         $(document).ready(function () {
-    let totalHarga = 0; // Total harga transaksi
+            let totalHarga = 0; // Total harga transaksi
 
-    // Add an item to the list of drugs (cards)
-    $('#add-obat').click(function () {
-        const obatID = $('#select-obat').val();
-        const obatName = $('#select-obat option:selected').text();
-        const jumlah = $('#Jumlah').val();
-        const hargaObat = parseInt($('#select-obat option:selected').data('harga')); // Get the price of the selected drug
+            // Add an item to the list of drugs (cards)
+            $('#add-obat').click(function () {
+                const obatID = $('#select-obat').val();
+                const obatName = $('#select-obat option:selected').text();
+                const jumlah = $('#Jumlah').val();
+                const hargaObat = parseInt($('#select-obat option:selected').data('harga')); // Get the price of the selected drug
 
-        if (!obatID || !jumlah || jumlah <= 0) {
-            alert('Please select a valid drug and quantity.');
-            return;
-        }
+                if (!obatID || !jumlah || jumlah <= 0) {
+                    alert('Please select a valid drug and quantity.');
+                    return;
+                }
 
-        // Calculate the price for this drug
-        const totalObatHarga = hargaObat * jumlah;
+                // Calculate the price for this drug
+                const totalObatHarga = hargaObat * jumlah;
 
-        // Add the drug to the card list
-        $('#obat-list').append(`
+                // Add the drug to the card list
+                $('#obat-list').append(`
             <div class="card mb-2 flex items-center justify-between p-2 bg-gray-200 rounded">
                 <span>${obatName} - ${jumlah} x Rp ${hargaObat.toLocaleString()} = Rp ${totalObatHarga.toLocaleString()}</span>
                 <button class="remove-obat bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Hapus</button>
@@ -45,25 +46,33 @@
             </div>
         `);
 
-        // Update the total transaction price
-        totalHarga += totalObatHarga;
-        $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
+                // Update the total transaction price
+                totalHarga += totalObatHarga;
+                $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
 
-        // Update hidden input to store total price
-        $('#total-harga-input').val(totalHarga);
+                // Update hidden input to store total price
+                $('#total-harga-input').val(totalHarga);
+            });
+
+            // Function to remove a drug from the list
+            $('#obat-list').on('click', '.remove-obat', function () {
+                const obatHarga = parseInt($(this).closest('.card').find('input[name="obat_harga[]"]').val());
+                $(this).closest('.card').remove();
+                totalHarga -= obatHarga;
+                $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
+
+                // Update hidden input to store total price
+                $('#total-harga-input').val(totalHarga);
+            });
+        });
+
+        $(document).ready(function () {
+        $('#select-pasien').select2();
+        $('#select-dokter').select2();
+        $('#select-apoteker').select2();
+        $('#select-obat').select2();
+        $('#select-pembayaran').select2();
     });
-
-    // Function to remove a drug from the list
-    $('#obat-list').on('click', '.remove-obat', function () {
-        const obatHarga = parseInt($(this).closest('.card').find('input[name="obat_harga[]"]').val());
-        $(this).closest('.card').remove();
-        totalHarga -= obatHarga;
-        $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
-
-        // Update hidden input to store total price
-        $('#total-harga-input').val(totalHarga);
-    });
-});
 
     </script>
 </head>
@@ -76,7 +85,6 @@
 
     if (isset($_POST['submit'])) {
         // Collect the form data
-
         $ID_Pasien = $_POST['ID_Pasien'];
         $ID_Dokter = $_POST['ID_Dokter'];
         $ID_karyawan = $_POST['ID_Karyawan'];
@@ -93,7 +101,7 @@
             // Check if the ID_Karyawan exists in the karyawan table
             $check_karyawan = "SELECT * FROM karyawan WHERE ID_Karyawan = '$ID_karyawan'";
             $result_karyawan = mysqli_query($conn, $check_karyawan);
-            
+
             if (mysqli_num_rows($result_karyawan) == 0) {
                 echo "<script>alert('ID Karyawan tidak valid!');</script>";
             } else {
@@ -106,22 +114,22 @@
                 } else {
                     echo 'Error: ' . $sql . '<br>' . mysqli_error($conn);
                 }
-            }   
+            }
             mysqli_close($conn);
         }
     }
     ?>
 
     <div class="flex-grow ml-64 mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-6 text-gray-800">Tambah Transaksi Penjualan</h1>
+        <h1 class="text-3xl font-bold mb-6 text-gray-800 p-4 rounded-lg shadow">Tambah Transaksi Penjualan</h1>
 
         <!-- Form untuk menambah transaksi penjualan -->
-        <form method="POST" class="bg-white p-6 rounded-lg shadow-lg">
+        <form method="POST" class="bg-white p-6 rounded-lg shadow-lg space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <!-- Nama Pasien -->
                 <div>
-                    <label for="Nama_Pasien" class="block text-sm font-medium text-gray-700">Nama Pasien</label>
-                    <select name="ID_Pasien" id="select-pasien" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <label for="ID_Pasien" class="block text-sm font-medium text-gray-700">Nama Pasien</label>
+                    <select name="ID_Pasien" id="select-pasien" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
                         // Query untuk mendapatkan data pasien
                         $sql = "SELECT * FROM pasien";
@@ -137,12 +145,12 @@
 
                 <!-- Nama Dokter -->
                 <div>
-                    <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
-                    <select name="ID_Dokter" id="select-dokter" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <label for="ID_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
+                    <select name="ID_Dokter" id="select-dokter" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
                         // Query untuk mendapatkan data dokter
                         $sql = "SELECT * FROM dokter";
-                        $result = mysqli_query( $conn, $sql);
+                        $result = mysqli_query($conn, $sql);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo '<option value="' . $row['ID_Dokter'] . '">' . $row['Nama_Dokter'] . '</option>';
@@ -154,8 +162,8 @@
 
                 <!-- Nama Apoteker -->
                 <div>
-                    <label for="Apoteker" class="block text-sm font-medium text-gray-700">Apoteker</label>
-                    <select name="ID_Karyawan" id="select-apoteker" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <label for="ID_Karyawan" class="block text-sm font-medium text-gray-700">Apoteker</label>
+                    <select name="ID_Karyawan" id="select-apoteker" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
                         // Query untuk mendapatkan data apoteker (karyawan)
                         $sql = "SELECT * FROM karyawan";
@@ -172,13 +180,13 @@
                 <!-- Tanggal Transaksi -->
                 <div>
                     <label for="Tanggal_Transaksi" class="block text-sm font-medium text-gray-700">Tanggal Transaksi</label>
-                    <input type="date" name="Tanggal_Transaksi" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <input type="date" name="Tanggal_Transaksi" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
             </div>
 
             <div class="mt-6">
                 <label for="select-obat" class="block text-sm font-medium text-gray-700">Obat</label>
-                <select id="select-obat" class="select2 p-3 text-lg w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <select id="select-obat" class="select2 p-3 text-lg w-full rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500">
                     <?php
                     $sql = "SELECT * FROM obat";
                     $result = mysqli_query($conn, $sql);
@@ -193,7 +201,7 @@
 
             <div class="mt-4">
                 <label for="Jumlah" class="block text-sm font-medium text-gray-700">Jumlah</label>
-                <input type="number" id="Jumlah" name="Jumlah" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Masukkan jumlah obat">
+                <input type="number" id="Jumlah" name="Jumlah" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Masukkan jumlah obat">
             </div>
 
             <div class="mt-6">
@@ -204,33 +212,31 @@
                 <!-- Obat yang sudah ditambahkan akan muncul di sini -->
             </div>
 
-           <!-- Total Harga -->
-<div class="mt-4 flex justify-between">
-    <label for="Total_Harga" class="block text-sm font-medium text-gray-700">Total Harga</label>
-    <span id="total-harga" class="text-lg font-bold">Rp 0</span>
-    <!-- Input hidden untuk menyimpan total harga yang dikirim ke server -->
-    <input type="hidden" name="Total_Harga" id="total-harga-input">
-</div>
-
-
+            <!-- Total Harga -->
+            <div class="mt-4 flex justify-between items-center">
+                <label for="Total_Harga" class="block text-sm font-medium text-gray-700">Total Harga</label>
+                <span id="total-harga" class="text-lg font-bold">Rp 0</span>
+                <input type="hidden" name="Total_Harga" id="total-harga-input">
+            </div>
 
             <div class="mt-4">
                 <label for="Total_Bayar" class="block text-sm font-medium text-gray-700">Total Bayar</label>
-                <input type="number" name="Total_Bayar" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                <input type="number" name="Total_Bayar" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
             </div>
 
-             <div>
-                    <label for="Kembali" class="block text-sm font-medium text-gray-700">Kembalian</label>
-                    <input type="number" name="Kembali" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
-                <div>
-                    <label for="Sumber_Pembayaran" class="block text-sm font-medium text-gray-700">Sumber Pembayaran</label>
-                    <select name="Sumber_Pembayaran" id="select-pembayaran" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        <option value="Cash">Cash</option>
-                        <option value="Transfer">Transfer</option>
-                        <option value="BPJS">BPJS</option>
-                    </select>
-                </div>
+            <div class="mt-4">
+                <label for="Kembali" class="block text-sm font-medium text-gray-700">Kembalian</label>
+                <input type="number" name="Kembali" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            </div>
+
+            <div>
+                <label for="Sumber_Pembayaran" class="block text-sm font-medium text-gray-700">Sumber Pembayaran</label>
+                <select name="Sumber_Pembayaran" id="select-pembayaran" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <option value="Cash">Cash</option>
+                    <option value="Transfer">Transfer</option>
+                    <option value="BPJS">BPJS</option>
+                </select>
+            </div>
 
             <div class="mt-6 flex justify-between">
                 <button type="submit" name="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Submit</button>
@@ -241,18 +247,4 @@
 </body>
 
 
-    <!-- Skrip untuk menambahkan fungsi Select2 -->
-    <script>
-        $(document).ready(function() {
-            $('#select-pasien').select2();
-            $('#select-dokter').select2();
-            $('#select-apoteker').select2();
-            $('#select-obat').select2();
-            $('#select-pembayaran').select2();
-        });
-    </script>
-
-</body>
-
 </html>
-
