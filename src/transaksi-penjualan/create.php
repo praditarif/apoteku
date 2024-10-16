@@ -71,7 +71,7 @@
 <body class="bg-gray-100">
     <?php
     // Include the database connection and sidebar
-    include('../template/sidebar.php');
+    include('../template/sid ebar.php');
     include('../../src/database/database.php');
 
     if (isset($_POST['submit'])) {
