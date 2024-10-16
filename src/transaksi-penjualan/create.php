@@ -77,7 +77,7 @@
     </script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-green-100">
     <?php
     // Include the database connection and sidebar
     include('../template/sidebar.php');
@@ -205,7 +205,7 @@
             </div>
 
             <div class="mt-6">
-                <button type="button" id="add-obat" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Tambah Obat</button>
+                <button type="button" id="add-obat" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Tambah Obat</button>
             </div>
 
             <div id="obat-list" class="mt-6 space-y-4">
@@ -239,7 +239,7 @@
             </div>
 
             <div class="mt-6 flex justify-between">
-                <button type="submit" name="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Submit</button>
+                <button type="submit" name="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
                 <button type="reset" class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded">Reset</button>
             </div>
         </form>

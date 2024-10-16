@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <link href="../assets/css/style.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-green-100 text-gray-900">
     <?php include('../template/sidebar.php'); ?>
 
     <!-- Container utama -->
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             </div>
 
             <div class="sm:col-span-2 flex justify-end">
-                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500">Update</button>
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Update</button>
             </div>
         </form>
     </div>

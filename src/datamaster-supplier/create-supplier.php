@@ -48,7 +48,7 @@
     ?>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-green-100">
     <?php include('../template/sidebar.php'); ?>
 
     <div class="flex-grow ml-64 mx-auto p-6">
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="sm:col-span-2 p-6 flex justify-end">
-                    <button name="submit" type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500">
+                    <button name="submit" type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
                         Create
                     </button>
                 </div>
