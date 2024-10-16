@@ -137,7 +137,7 @@
 
                 <!-- Nama Dokter -->
                 <div>
-                    <label for="ID_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
+                    <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
                     <select name="ID_Dokter" id="select-dokter" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
                         // Query untuk mendapatkan data dokter

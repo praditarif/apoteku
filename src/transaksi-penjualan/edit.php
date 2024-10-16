@@ -1,83 +1,85 @@
 <?php
-include('../../src/database/database.php'); // Sesuaikan path ini sesuai dengan struktur folder Anda
+include('../database/database.php');
 
-// Cek apakah ID diterima dari URL
-if (isset($_GET['id'])) {
-    $id_transaksi = $_GET['id'];
+// Inisialisasi variabel
+$id_obat = $nama_obat = $code = $formulasi = $tanggal_kadaluarsa = $stok = $supplier = $status = $package = $harga_beli = $harga_jual = '';
+$successMessage = '';
 
-    // Sanitasi ID untuk mencegah SQL injection
-    $id_transaksi = mysqli_real_escape_string($conn, $id_transaksi);
-
-    // Query untuk mengambil data transaksi berdasarkan ID
-    $sql = "SELECT t.ID_Transaksi, t.ID_Karyawan, t.ID_Pasien, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
-            FROM transaksi t
-            WHERE t.ID_Transaksi = '$id_transaksi'";
-
-    $result = mysqli_query($conn, $sql);
-    $transaksi = mysqli_fetch_assoc($result);
-
-    // Jika transaksi tidak ditemukan
-    if (!$transaksi) {
-        echo "<script>alert('Data transaksi tidak ditemukan!'); window.location.href='index.php';</script>";
-        exit();
-    }
-} else {
-    echo "<script>alert('ID transaksi tidak valid!'); window.location.href='index.php';</script>";
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Mengambil data dari formulir
-    $id_karyawan = $_POST['id_karyawan'];
-    $id_pasien = $_POST['id_pasien'];
-    $tanggal_transaksi = $_POST['tanggal_transaksi'];
-    $total_harga = $_POST['total_harga'];
-    $total_bayar = $_POST['total_bayar'];
-    $kembali = $_POST['kembali'];
-    $sumber_pembayaran = $_POST['sumber_pembayaran'];
-
-    // Sanitasi input untuk mencegah SQL injection
-    $id_karyawan = mysqli_real_escape_string($conn, $id_karyawan);
-    $id_pasien = mysqli_real_escape_string($conn, $id_pasien);
-    $tanggal_transaksi = mysqli_real_escape_string($conn, $tanggal_transaksi);
-    $total_harga = mysqli_real_escape_string($conn, $total_harga);
-    $total_bayar = mysqli_real_escape_string($conn, $total_bayar);
-    $kembali = mysqli_real_escape_string($conn, $kembali);
-    $sumber_pembayaran = mysqli_real_escape_string($conn, $sumber_pembayaran);
-
-    // Validasi ID Karyawan
-    $check_karyawan_sql = "SELECT * FROM karyawan WHERE ID_Karyawan = '$id_karyawan'";
-    $check_karyawan_result = mysqli_query($conn, $check_karyawan_sql);
-
-    // Validasi ID Pasien
-    $check_pasien_sql = "SELECT * FROM pasien WHERE ID_Pasien = '$id_pasien'";
-    $check_pasien_result = mysqli_query($conn, $check_pasien_sql);
-
-    if (mysqli_num_rows($check_karyawan_result) == 0) {
-        echo "<script>alert('ID Karyawan tidak valid!'); window.location.href='index.php';</script>";
-        exit();
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (!isset($_GET['id'])) {
+        header('Location: /apoteku/src/datamaster-obat/dataobat.php');
+        exit;
     }
 
-    if (mysqli_num_rows($check_pasien_result) == 0) {
-        echo "<script>alert('ID Pasien tidak valid!'); window.location.href='index.php';</script>";
-        exit();
+    $id_obat = $_GET['id'];
+
+    $sql = "SELECT * FROM obat WHERE ID_Obat = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_obat);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 0) {
+        header('Location: /apoteku/src/datamaster-obat/dataobat.php');
+        exit;
     }
 
-    // Query untuk memperbarui data transaksi
-    $sql_update = "UPDATE transaksi SET 
-                    ID_Karyawan = '$id_karyawan',
-                    ID_Pasien = '$id_pasien',
-                    Tanggal_Transaksi = '$tanggal_transaksi',
-                    Total_Harga = '$total_harga',
-                    Total_Bayar = '$total_bayar',
-                    Kembali = '$kembali',
-                    Sumber_Pembayaran = '$sumber_pembayaran'
-                    WHERE ID_Transaksi = '$id_transaksi'";
+    $row = $result->fetch_assoc();
 
-    if (mysqli_query($conn, $sql_update)) {
-        echo "<script>alert('Data berhasil diperbarui!'); window.location.href='index.php';</script>";
+    $nama_obat = $row['Nama_Obat'];
+    $code = $row['Code'];
+    $formulasi = $row['Formulasi'];
+    $tanggal_kadaluarsa = $row['Tanggal_Kadaluarsa'];
+    $stok = $row['Stok'];
+    $supplier = $row['ID_Supplier'];
+    $status = $row['Status'];
+    $package = $row['Package'];
+    $harga_beli = $row['Harga_Beli'];
+    $harga_jual = $row['Harga_Jual'];
+} else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id_obat = $_POST['ID_Obat'];
+    $nama_obat = $_POST['Nama_Obat'];
+    $code = $_POST['Code'];
+    $formulasi = $_POST['Formulasi'];
+    $tanggal_kadaluarsa = $_POST['Tanggal_Kadaluarsa'];
+    $stok = $_POST['Stok'];
+    $supplier = $_POST['Supplier'];
+    $status = $_POST['Status'];
+    $package = $_POST['Package'];
+    $harga_beli = $_POST['Harga_Beli'];
+    $harga_jual = $_POST['Harga_Jual'];
+
+    if (empty($nama_obat) || empty($code) || empty($formulasi) || empty($tanggal_kadaluarsa) || empty($stok) || empty($supplier) || empty($status) || empty($package) || empty($harga_beli) || empty($harga_jual)) {
+        echo "<script>alert('Please fill all the fields')</script>";
     } else {
-        echo 'Error: ' . mysqli_error($conn);
+        $sql = "UPDATE obat SET 
+            Nama_Obat = ?, Code = ?, Formulasi = ?, Tanggal_Kadaluarsa = ?, Stok = ?, ID_Supplier = ?, Status = ?, Package = ?, Harga_Beli = ?, Harga_Jual = ?
+            WHERE ID_Obat = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param(
+            "ssssisssddi",
+            $nama_obat,
+            $code,
+            $formulasi,
+            $tanggal_kadaluarsa,
+            $stok,
+            $supplier,
+            $status,
+            $package,
+            $harga_beli,
+            $harga_jual,
+            $id_obat
+        );
+
+        if ($stmt->execute()) {
+            $successMessage = 'Obat berhasil diupdate!';
+            header('Location: /apoteku/src/datamaster-obat/dataobat.php');
+            exit;
+        } else {
+            echo "<script>alert('Failed to update obat')</script>";
+            die("Error in query: " . mysqli_error($conn));
+        }
     }
 }
 ?>
@@ -88,50 +90,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Transaksi</title>
+    <title>Apoteku - Edit Data Obat</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="../assets/css/output.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-200 text-gray-900">
-    <div class="flex-grow mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-4">Edit Transaksi</h1>
+<body class="bg-gray-100">
+    <?php include('../template/sidebar.php'); ?>
 
-        <form method="POST" action="">
-            <input type="hidden" name="id_transaksi" value="<?php echo $transaksi['ID_Transaksi']; ?>">
-            <div class="mb-4">
-                <label for="id_karyawan" class="block text-sm font-medium text-gray-700">ID Karyawan</label>
-                <input type="text" name="id_karyawan" id="id_karyawan" value="<?php echo $transaksi['ID_Karyawan']; ?>" required class="mt-1 block w-full p-2 border border-gray-300 rounded">
+    <div class="flex-grow ml-64 mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Edit Data Obat</h1>
+
+        <form action="dataobat-edit.php" method="POST" class="bg-white p-6 rounded-lg shadow-lg">
+            <input type="hidden" name="ID_Obat" value="<?php echo $id_obat; ?>">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                <div>
+                    <label for="Nama_Obat" class="block text-sm font-medium text-gray-700">Nama Obat</label>
+                    <input type="text" name="Nama_Obat" value="<?php echo $nama_obat; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Code" class="block text-sm font-medium text-gray-700">Code</label>
+                    <input type="text" name="Code" value="<?php echo $code; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Formulasi" class="block text-sm font-medium text-gray-700">Formulasi</label>
+                    <input type="text" name="Formulasi" value="<?php echo $formulasi; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Tanggal_Kadaluarsa" class="block text-sm font-medium text-gray-700">Tanggal Kadaluarsa</label>
+                    <input type="date" name="Tanggal_Kadaluarsa" value="<?php echo $tanggal_kadaluarsa; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Stok" class="block text-sm font-medium text-gray-700">Stok</label>
+                    <input type="number" name="Stok" value="<?php echo $stok; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Supplier" class="block text-sm font-medium text-gray-700">Supplier</label>
+                    <input type="text" name="Supplier" value="<?php echo $supplier; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <input type="text" name="Status" value="<?php echo $status; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Package" class="block text-sm font-medium text-gray-700">Package</label>
+                    <input type="text" name="Package" value="<?php echo $package; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Harga_Beli" class="block text-sm font-medium text-gray-700">Harga Beli</label>
+                    <input type="number" name="Harga_Beli" value="<?php echo $harga_beli; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label for="Harga_Jual" class="block text-sm font-medium text-gray-700">Harga Jual</label>
+                    <input type="number" name="Harga_Jual" value="<?php echo $harga_jual; ?>"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+
+                <div class="sm:col-span-2 flex justify-end">
+                    <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500">Update</button>
+                </div>
             </div>
-            <div class="mb-4">
-                <label for="id_pasien" class="block text-sm font-medium text-gray-700">ID Pasien</label>
-                <input type="text" name="id_pasien" id="id_pasien" value="<?php echo $transaksi['ID_Pasien']; ?>" required class="mt-1 block w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
-                <label for="tanggal_transaksi" class="block text-sm font-medium text-gray-700">Tanggal Transaksi</label>
-                <input type="date" name="tanggal_transaksi" id="tanggal_transaksi" value="<?php echo $transaksi['Tanggal_Transaksi']; ?>" required class="mt-1 block w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
-                <label for="total_harga" class="block text-sm font-medium text-gray-700">Total Harga</label>
-                <input type="number" name="total_harga" id="total_harga" value="<?php echo $transaksi['Total_Harga']; ?>" required class="mt-1 block w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
-                <label for="total_bayar" class="block text-sm font-medium text-gray-700">Total Bayar</label>
-                <input type="number" name="total_bayar" id="total_bayar" value="<?php echo $transaksi['Total_Bayar']; ?>" required class="mt-1 block w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
-                <label for="kembali" class="block text-sm font-medium text-gray-700">Kembali</label>
-                <input type="number" name="kembali" id="kembali" value="<?php echo $transaksi['Kembali']; ?>" required class="mt-1 block w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
-                <label for="sumber_pembayaran" class="block text-sm font-medium text-gray-700">Sumber Pembayaran</label>
-                <input type="text" name="sumber_pembayaran" id="sumber_pembayaran" value="<?php echo $transaksi['Sumber_Pembayaran']; ?>" required class="mt-1 block w-full p-2 border border-gray-300 rounded">
-            </div>
-            <button type="submit" class="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-800">Update</button>
-            <a href="index.php" class="bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400">Cancel</a>
         </form>
     </div>
+
 </body>
 
 </html>
