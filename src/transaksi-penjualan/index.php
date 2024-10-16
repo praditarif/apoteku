@@ -52,7 +52,7 @@
                 <tbody>
                     <?php
                     include('../../src/database/database.php');
-                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, d.Nama_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
+                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, t.ID_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
                             FROM transaksi t
                             JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
                             JOIN dokter d ON d.ID_Dokter = t.ID_Dokter
@@ -75,11 +75,7 @@
                                     <a href="/apoteku/src/transaksi-penjualan/edit.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-<<<<<<< HEAD
-                                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualandelete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
-=======
                                     <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
->>>>>>> a03124c4f6f82ca0a19e98e542e37936e3e085bf
                                         <i class="bi bi-trash-fill"></i>
                                     </a>
                                 </td>

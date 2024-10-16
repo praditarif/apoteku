@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <link href="../assets/css/style.css" rel="stylesheet">
 </head>
 
-<body class="bg-green-100 text-gray-900">
+<body class="bg-gray-100 text-gray-900">
     <?php include('../template/sidebar.php'); ?>
 
     <!-- Container utama -->
@@ -102,8 +102,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <input type="text" name="Alamat" value="<?php echo $alamat; ?>" class="border border-gray-300 rounded-lg w-full p-2">
             </div>
 
-            <div>
-                <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500">Update</button>
+            <div class="sm:col-span-2 flex justify-end">
+                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500">Update</button>
             </div>
         </form>
     </div>

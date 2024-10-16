@@ -19,7 +19,7 @@
 <body class="bg-blue-100 text-gray-900">
 
     <!-- Sidebar -->
-    <aside class="w-64 h-screen bg-blue-500 fixed top-0 left-0 p-6 shadow-lg">
+    <aside class="w-64 h-screen bg-blue-700 fixed top-0 left-0 p-6 shadow-lg">
     <h1 class="text-3xl font-bold mb-8 text-white">Apoteku</h1>
     <nav>
         <ul>
