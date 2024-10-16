@@ -71,8 +71,8 @@
 <body class="bg-gray-100">
     <?php
     // Include the database connection and sidebar
-    include('../template/sid ebar.php');
-    include('../../src/database/database.php');
+    include('../template/sidebar.php');
+    include('../database/database.php');
 
     if (isset($_POST['submit'])) {
         // Collect the form data
@@ -231,7 +231,7 @@
                 </div>
 
             <div class="mt-6 flex justify-between">
-                <button type="submit" name="submit" class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded">Submit</button>
+                <button type="submit" name="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Submit</button>
                 <button type="reset" class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded">Reset</button>
             </div>
         </form>

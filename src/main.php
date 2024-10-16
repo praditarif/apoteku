@@ -19,13 +19,13 @@
     </script>
 </head>
 
-<body class="bg-green-100 text-gray-900 flex">
-<?php include('template/sidebar.php'); ?>
+<body class="bg-gray-200 text-gray-900 flex">
+    <?php include('template/sidebar.php'); ?>
     <!-- Main Content -->
     <div class="flex-1 ml-64 p-6"> <!-- tambahkan margin kiri -->
         <!-- Header -->
-        <header class="bg-green-600 p-4 text-white text-center w-full rounded-lg">
-            <h1 class="text-3xl font-bold">Dashboard Apotek</h1>
+        <header>
+            <h1 class="text-3xl font-bold text-gray-700">Dashboard Apotek</h1>
         </header>
 
         <?php
@@ -41,9 +41,16 @@
 ");
         $pendapatan = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-        // Mengambil total pasien, dokter, dan obat
+        // Mengambil total harga untuk transaksi pada hari ini
+        $total_harga_query = $pdo->query("SELECT SUM(Total_Harga) AS total_harga 
+        FROM transaksi 
+        WHERE DATE(Tanggal_Transaksi) = CURDATE()");
+        $transaksi = $total_harga_query->fetch(PDO::FETCH_ASSOC);
+
+
         $total_pasien_query = $pdo->query("SELECT COUNT(*) AS total_pasien FROM pasien");
         $pasien = $total_pasien_query->fetch(PDO::FETCH_ASSOC);
+
 
         $total_dokter_query = $pdo->query("SELECT COUNT(*) AS total_dokter FROM dokter");
         $dokter = $total_dokter_query->fetch(PDO::FETCH_ASSOC);
@@ -53,7 +60,15 @@
         ?>
 
         <!-- Cards Section -->
-        <section class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold text-gray-700">Penjualan Hari Ini</h2>
+                <div class="flex items-center text-3xl mt-2">
+                    <p>Rp.</p>
+                    <p class="ml-1"><?php echo $transaksi['total_harga']; ?></p>
+                </div>
+            </div>
+
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-xl font-bold text-gray-700">Total Pasien</h2>
                 <p class="text-3xl mt-2"><?php echo $pasien['total_pasien']; ?></p>
@@ -68,6 +83,7 @@
                 <h2 class="text-xl font-bold text-gray-700">Total Obat Tersedia</h2>
                 <p class="text-3xl mt-2"><?php echo $obat['total_obat']; ?></p>
             </div>
+
         </section>
 
         <!-- Chart Section -->
@@ -90,8 +106,8 @@
                         data: [<?php foreach ($pendapatan as $p) {
                             echo $p['total_pendapatan'] . ", ";
                         } ?>],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(255, 255, 102, 0.2)', // Warna kuning muda dengan transparansi 0.2
+                        borderColor: 'rgba(255, 255, 102, 1)', // Warna kuning muda solid
                         borderWidth: 1
                     }]
                 },
@@ -104,6 +120,7 @@
                 }
             });
         </script>
+
     </div>
 
 </body>
