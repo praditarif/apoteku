@@ -64,7 +64,7 @@
                             echo '<tr class="border-b hover:bg-gray-100">
                                 <th>' . $row['ID_Transaksi'] . '</th>
                                 <td class="px-6 py-4">' . $row['Nama_Lengkap'] . '</td>
-                                <td class="px-6 py-4">' . $row['Nama_Dokter'] . '</td>
+                                <td class="px-6 py-4">' . $row['ID_Dokter'] . '</td>
                                 <td class="px-6 py-4">' . $row['Nama'] . '</td>
                                 <td class="px-6 py-4">' . $row['Tanggal_Transaksi'] . '</td>
                                 <td class="px-6 py-4">' . $row['Total_Harga'] . '</td>
@@ -75,7 +75,7 @@
                                     <a href="/grancy/src/transaksi/transaksi_edit.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualan-delete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
+                                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualandelete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
                                         <i class="bi bi-trash-fill"></i>
                                     </a>
                                 </td>
