@@ -18,7 +18,7 @@
 
 </head>
 
-<body class="bg-green-100 text-gray-900 ">
+<body class="bg-gray-200 text-gray-900 ">
     <?php include('../template/sidebar.php'); ?>
     <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
     <div class="flex-grow ml-64 mx-auto p-6">
@@ -29,7 +29,7 @@
 
         <div class="mb-6">
             <a href="/apoteku/src/datamaster-supplier/create-supplier.php"
-                class="bg-green-800 text-white py-3 px-3 rounded-lg hover:bg-green-700 text-sm">
+                class="bg-blue-800 text-white py-3 px-3 rounded-lg hover:bg-blue-700 text-sm">
                 Tambah Data
             </a>
         </div>
@@ -65,7 +65,7 @@
                 <td class="px-6 py-auto">' . $row['Kontak'] . '</td>
                 <td class="px-6 py-auto">' . $row['Alamat'] . '</td>
                 <td class="flex gap-x-4 justify-center">
-                    <a href="/apoteku/src/datamaster-supplier/update_supplier.php?id=' . $row['ID_Supplier'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
+                    <a href="/apoteku/src/datamaster-supplier/update-supplier.php?id=' . $row['ID_Supplier'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
                         <i class="bi bi-pencil-square transition-all"></i>
                     </a>
                     <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="delete-supplier.php?id=' . $row['ID_Supplier'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
