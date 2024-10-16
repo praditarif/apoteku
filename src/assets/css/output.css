@@ -1422,6 +1422,12 @@ html {
   outline-offset: 2px;
 }
 
+.mockup-phone .display {
+  overflow: hidden;
+  border-radius: 40px;
+  margin-top: -25px;
+}
+
 .mockup-browser .mockup-browser-toolbar .input {
   position: relative;
   margin-left: auto;
@@ -1813,6 +1819,10 @@ html {
   max-width: 20rem;
 }
 
+.max-w-5xl {
+  max-width: 64rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1845,6 +1855,14 @@ html {
 
 .items-center {
   align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-center {
@@ -1911,6 +1929,14 @@ html {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
+<<<<<<< HEAD
+.border-gray-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
+=======
+>>>>>>> 713afe3981d53f0a3d36c9d1dc409e4ad62046e8
 .bg-blue-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(219 234 254 / var(--tw-bg-opacity));
@@ -1926,6 +1952,14 @@ html {
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 
+<<<<<<< HEAD
+.bg-blue-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 64 175 / var(--tw-bg-opacity));
+}
+
+=======
+>>>>>>> 713afe3981d53f0a3d36c9d1dc409e4ad62046e8
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -1979,6 +2013,16 @@ html {
 .bg-yellow-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
 }
 
 .p-2 {
@@ -2162,6 +2206,13 @@ html {
   outline-offset: 2px;
 }
 
+<<<<<<< HEAD
+.outline {
+  outline-style: solid;
+}
+
+=======
+>>>>>>> 713afe3981d53f0a3d36c9d1dc409e4ad62046e8
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -2213,13 +2264,16 @@ html {
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-green-700:hover {
+.hover\:bg-green-900:hover {
   --tw-bg-opacity: 1;
+<<<<<<< HEAD
+=======
   background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-green-900:hover {
   --tw-bg-opacity: 1;
+>>>>>>> 713afe3981d53f0a3d36c9d1dc409e4ad62046e8
   background-color: rgb(20 83 45 / var(--tw-bg-opacity));
 }
 
@@ -2236,6 +2290,11 @@ html {
 .hover\:bg-yellow-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(202 138 4 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .hover\:opacity-100:hover {
@@ -2283,6 +2342,13 @@ html {
 }
 
 @media (min-width: 640px) {
+<<<<<<< HEAD
+  .sm\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
+=======
+>>>>>>> 713afe3981d53f0a3d36c9d1dc409e4ad62046e8
   .sm\:mx-auto {
     margin-left: auto;
     margin-right: auto;
