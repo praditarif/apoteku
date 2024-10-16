@@ -48,7 +48,7 @@
     ?>
 </head>
 
-<body class="bg-green-100">
+<body class="bg-blue-100">
     <?php include('../template/sidebar.php'); ?>
 
     <div class="flex-grow ml-64 mx-auto p-6">

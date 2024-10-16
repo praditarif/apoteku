@@ -19,7 +19,7 @@
     </script>
 </head>
 
-<body class="bg-green-100 text-gray-900">
+<body class="bg-blue-100 text-gray-900">
     <?php include('template/sidebar.php'); ?>
     <!-- Main Content -->
     <div class="flex-1 ml-64 p-6"> <!-- tambahkan margin kiri -->

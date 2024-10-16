@@ -77,7 +77,7 @@
     </script>
 </head>
 
-<body class="bg-green-100">
+<body class="bg-blue-100">
     <?php
     // Include the database connection and sidebar
     include('../template/sidebar.php');

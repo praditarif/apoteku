@@ -18,7 +18,7 @@
 
 </head>
 
-<body class="bg-green-100 text-gray-900 ">
+<body class="bg-blue-100 text-gray-900 ">
     <?php include('../template/sidebar.php'); ?>
 
     <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->

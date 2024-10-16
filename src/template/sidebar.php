@@ -20,13 +20,13 @@
 <body class="bg-gray-100 text-gray-900 flex">
 
     <!-- Sidebar -->
-    <aside class="w-64 h-screen bg-green-500 fixed top-0 left-0 p-6 shadow-lg">
+    <aside class="w-64 h-screen bg-blue-500 fixed top-0 left-0 p-6 shadow-lg">
         <h1 class="text-3xl font-bold mb-8 text-white">Apoteku</h1>
         <nav>
             <ul>
                 <li class="mb-6 list-none">
                     <a href="/apoteku/src/main.php"
-                        class="w-full bg-green-600 text-white p-3 rounded-lg flex items-center hover:bg-green-700">
+                        class="w-full bg-blue-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                                 fill="#FFFFFF">
@@ -41,7 +41,7 @@
                 <!-- Transaksi Section -->
                 <div class="mt-8">
                     <button onclick="toggleDropdown('transaksi-dropdown')"
-                        class="w-full bg-green-600 text-white p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
+                        class="w-full bg-blue-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                                 fill="#FFFFFF">
@@ -57,7 +57,7 @@
                 <div id="transaksi-dropdown" class="hidden mt-4">
                     <li class="mb-4 list-none">
                         <a href="/apoteku/src/transaksi-penjualan/index.php"
-                            class="text-white bg-green-600 p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
+                            class="text-white bg-blue-600 p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                             <div class="flex items-center">
                                 <span>Penjualan</span>
                             </div>
@@ -65,7 +65,7 @@
                     </li>
                     <li class="list-none">
                         <a href="/apoteku/src/transaksi-pembelian/index.php"
-                            class="text-white p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
+                            class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                             <div class="flex items-center">
                                 <span>Pembelian</span>
                             </div>
@@ -76,7 +76,7 @@
                 <!-- Data Master Section -->
                 <div class="mt-8">
                     <button onclick="toggleDropdown('master-dropdown')"
-                        class="w-full bg-green-600 text-white p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
+                        class="w-full bg-blue-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                                 fill="#FFFFFF">
@@ -92,7 +92,7 @@
                 <div id="master-dropdown" class="hidden mt-4">
                     <li class="mb-4 list-none">
                         <a href="/apoteku/src/datamaster-obat/dataobat.php"
-                            class="text-white p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
+                            class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                             <div class="flex items-center">
                                 <span>Data Obat</span>
                             </div>
@@ -101,7 +101,7 @@
 
                     <li class="list-none">
                         <a href="/apoteku/src/datamaster-supplier/index-supplier.php"
-                            class="text-white p-3 rounded-lg flex items-center hover:bg-green-700 transition duration-300">
+                            class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                             <div class="flex items-center">
                                 <span>Data Suplier</span>
                         </a>
