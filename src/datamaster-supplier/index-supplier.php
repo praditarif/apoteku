@@ -25,7 +25,7 @@
         <!-- Header -->
         <h1 class="text-2xl font-bold mb-4">Data Supplier</h1>
 
-</button>
+        <!-- Tombol Tambah Data diposisikan di bawah teks Data Obat -->
 
         <div class="mb-6">
             <a href="/apoteku/src/datamaster-supplier/create-supplier.php"
