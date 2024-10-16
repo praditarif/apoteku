@@ -23,7 +23,7 @@
     <h1 class="text-3xl font-bold mb-8 text-white">Apoteku</h1>
     <nav>
         <ul>
-            <li class="mb-6 list-none">
+                <li class="mb-6 list-none">
                 <a href="/apoteku/src/main.php"
                     class="w-full bg-blue-700 text-white p-3 rounded-lg flex items-center justify-center hover:bg-blue-800">
                     <span>Dashboard</span>
@@ -79,9 +79,18 @@
                         <a href="/apoteku/src/datamaster-supplier/index-supplier.php"
                             class="text-white p-3 rounded-lg flex items-center hover:bg-blue-800  transition duration-300">
                             <span>Data Suplier</span>
+
+
+                            
                         </a>
                     </li>
                 </div>
+                <li class="mb-6 list-none">
+                <a href="/apoteku/src/login.php"
+                    class="w-full bg-red-600 text-white p-3 rounded-lg flex items-center justify-center hover:bg-red-800">
+                    <span>Logout</span>
+                </a>
+                </li>
             </ul>
         </nav>
     </aside>
