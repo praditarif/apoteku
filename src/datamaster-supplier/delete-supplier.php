@@ -37,4 +37,3 @@ if (isset($_GET['id'])) {
     $stmt->close();
     mysqli_close($conn);
 }
-?>
