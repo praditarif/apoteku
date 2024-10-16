@@ -72,11 +72,7 @@
     <?php
     // Include the database connection and sidebar
     include('../template/sidebar.php');
-<<<<<<< HEAD
     include('../database/database.php');
-=======
-    include('../../src/database/database.php');
->>>>>>> bc8b571a8fa6e15bf640acc2208f6b6307166d68
 
     if (isset($_POST['submit'])) {
         // Collect the form data
