@@ -75,11 +75,7 @@
                                     <a href="/apoteku/src/transaksi-penjualan/edit.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-<<<<<<< HEAD
                                     <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualandelete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
-=======
-                                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
->>>>>>> a03124c4f6f82ca0a19e98e542e37936e3e085bf
                                         <i class="bi bi-trash-fill"></i>
                                     </a>
                                 </td>

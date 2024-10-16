@@ -72,12 +72,8 @@
     <?php
     // Include the database connection and sidebar
     include('../template/sidebar.php');
-<<<<<<< HEAD
     include('../database/database.php');
 
-=======
-    include('../../src/database/database.php');
->>>>>>> a03124c4f6f82ca0a19e98e542e37936e3e085bf
     if (isset($_POST['submit'])) {
         // Collect the form data
         $ID_karyawan = $_POST['ID_Karyawan'];
