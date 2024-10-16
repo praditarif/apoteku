@@ -1,3 +1,35 @@
+<?php
+
+session_start();
+
+require 'C:\xampp\htdocs\apoteku\src\database\database.php';
+
+$error= "";
+
+if (isset($_POST["login"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $result = mysqli_query($conn, "SELECT * FROM karyawan WHERE username = '$username'");
+if (mysqli_num_rows($result) === 1) {
+    $row = mysqli_fetch_assoc($result);
+    if ($password === $row["password"]) {  // Bandingkan langsung
+        $_SESSION["login"] = true;
+        $_SESSION["user"] = $username;
+        header("Location: main.php");
+        exit;
+    } else {
+      $error = "Login gagal! Password salah.";
+  }
+} else {
+  $error = "Login gagal! Username tidak ditemukan.";
+}
+} else {
+$error = "Silakan masukkan username dan password.";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,11 +50,11 @@
 
 <body class="flex items-center justify-center h-screen bg-white">
     <div class="w-full max-w-xs">
-        <form action="login.php" method="post" class="bg-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="" method="POST" class="bg-blue-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
             
 <div class="relative py-3 sm:max-w-xs sm:mx-auto">
   <div
-    class="min-h-96 px-8 py-6 mt-4 text-left bg-green-600 dark:bg-gray-900 rounded-xl shadow-lg"
+    class="min-h-96 px-8 py-6 mt-4 text-left bg-blue-700 dark:bg-gray-900 rounded-xl shadow-lg"
   >
     <div class="flex flex-col justify-center items-center h-full select-none">
       <div class="flex flex-col items-center justify-center gap-2 mb-8">
@@ -36,6 +68,7 @@
         <input
           placeholder="Username"
           class="border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+          type="text" name="username" required
         />
       </div>
     </div>
@@ -44,17 +77,20 @@
       <input
         placeholder="••••••••"
         class="border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
-        type="password"
+        type="password" name="password" required
       />
     </div>
     <div>
       <button
-        class="py-1 px-8 bg-green-800 hover:bg-green-900 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg cursor-pointer select-none"
-      >
+        class="py-1 px-8 bg-blue-900 hover:bg-blue-950 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg cursor-pointer select-none"
+        type="submit" name="login">
         Login
       </button>
     </div>
   </div>
+  <p class="font-semibold text-xs text-white"><?php if (isset($_POST["login"])) { echo $error; } ?>
+
+  </p>
 </div>
         </form>
         <p class="text-center text-gray-500 text-xs">
@@ -62,59 +98,4 @@
         </p>
     </div>
 </body>
-
-
-<?php
-session_start(); // Memulai session
-
-// Sertakan file untuk koneksi database
-include('C:\xampp\htdocs\apoteku\src\database\database.php');
-
-// Memeriksa apakah form telah dikirimkan dengan metode POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Memeriksa apakah input username dan password ada
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        $user = $_POST['username'];
-        $pass = $_POST['password'];
-
-        // Menggunakan prepared statement untuk menghindari SQL Injection
-        $sql = "SELECT * FROM karyawan WHERE username = ? AND password = ?";
-        $stmt = $conn->prepare($sql);
-
-        // Memeriksa apakah statement berhasil dipersiapkan
-        if (!$stmt) {
-            die("Kesalahan dalam query: " . $conn->error);
-        }
-        
-        // Bind parameter (ss = string, string)
-        $stmt->bind_param("ss", $user, $pass);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        // Memeriksa apakah ada kecocokan
-        if ($result->num_rows > 0) {
-            // Login sukses
-            $row = $result->fetch_assoc();
-            $_SESSION['username'] = $row['username']; // Menyimpan username dalam sesi
-            
-            // Redirect ke halaman main.php
-            header("Location: main.php");
-            exit();
-        } else {
-            // Pesan jika login gagal
-            echo "Username atau kata sandi salah!";
-        }
-
-        // Menutup statement dan koneksi
-        $stmt->close();
-        $conn->close();
-    } else {
-        echo "Username dan password harus diisi!";
-    }
-} else {
-    echo "Form harus dikirim menggunakan metode POST.";
-}
-?>
-
-
 </html>
