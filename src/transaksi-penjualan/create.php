@@ -76,8 +76,10 @@
 
     if (isset($_POST['submit'])) {
         // Collect the form data
-        $ID_karyawan = $_POST['ID_Karyawan'];
+
         $ID_Pasien = $_POST['ID_Pasien'];
+        $ID_Dokter = $_POST['ID_Dokter'];
+        $ID_karyawan = $_POST['ID_Karyawan'];
         $Tanggal_Transaksi = $_POST['Tanggal_Transaksi'];
         $Total_Harga = $_POST['Total_Harga'];
         $Total_Bayar = $_POST['Total_Bayar'];
@@ -85,7 +87,7 @@
         $Sumber_Pembayaran = $_POST['Sumber_Pembayaran'];
 
         // Ensure all required fields are filled
-        if (empty($ID_karyawan) || empty($ID_Pasien) || empty($Tanggal_Transaksi) || empty($Total_Bayar) || empty($Kembali) || empty($Sumber_Pembayaran)) {
+        if (empty($ID_karyawan) || empty($ID_Pasien) || empty($Tanggal_Transaksi) || empty($Total_Bayar) || empty($Kembali) || empty($Sumber_Pembayaran) || empty($ID_Dokter)) {
             echo "<script>alert('Please fill all the fields');</script>";
         } else {
             // Check if the ID_Karyawan exists in the karyawan table
@@ -96,8 +98,8 @@
                 echo "<script>alert('ID Karyawan tidak valid!');</script>";
             } else {
                 // Insert the data into the `transaksi` table
-                $sql = "INSERT INTO transaksi (ID_Karyawan, ID_Pasien, Tanggal_Transaksi, Total_Harga, Total_Bayar, Kembali, Sumber_Pembayaran)
-                        VALUES ('$ID_karyawan', '$ID_Pasien', '$Tanggal_Transaksi', $Total_Harga, $Total_Bayar, $Kembali, '$Sumber_Pembayaran')";
+                $sql = "INSERT INTO transaksi (ID_Karyawan, ID_Pasien, ID_Dokter, Tanggal_Transaksi, Total_Harga, Total_Bayar, Kembali, Sumber_Pembayaran)
+                        VALUES ('$ID_karyawan', '$ID_Pasien', '$ID_Dokter', '$Tanggal_Transaksi', '$Total_Harga', '$Total_Bayar', '$Kembali', '$Sumber_Pembayaran')";
 
                 if (mysqli_query($conn, $sql)) {
                     echo "<script>alert('Transaction successfully added!');</script>";
@@ -135,12 +137,12 @@
 
                 <!-- Nama Dokter -->
                 <div>
-                    <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
-                    <select name="Nama_Dokter" id="select-dokter" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <label for="ID_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
+                    <select name="ID_Dokter" id="select-dokter" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
                         // Query untuk mendapatkan data dokter
                         $sql = "SELECT * FROM dokter";
-                        $result = mysqli_query($conn, $sql);
+                        $result = mysqli_query( $conn, $sql);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo '<option value="' . $row['ID_Dokter'] . '">' . $row['Nama_Dokter'] . '</option>';
