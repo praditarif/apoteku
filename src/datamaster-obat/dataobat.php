@@ -8,17 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="../assets/css/output.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
-    <script defer>
-        // Script untuk mengatur dropdown visibility
-        function toggleDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId);
-            dropdown.classList.toggle('hidden');
-        }
-    </script>
-
 </head>
 
-<body class="bg-blue-100 text-gray-900 ">
+<body class="bg-blue-100 text-gray-900">
     <?php include('../template/sidebar.php'); ?>
 
     <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
@@ -35,63 +27,79 @@
         </div>
 
         <!-- Tabel -->
-        <div class="bg-white shadow-md rounded-lg overflow-x-auto w-full mt-4">
-            <table class="w-full text-left border border-gray-300">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class=" px-6 py-4">ID Obat</th>
-                        <th class=" px-6 py-4">Nama Obat</th>
-                        <th class=" px-6 py-4">Code</th>
-                        <th class=" px-6 py-4">Formulasi</th>
-                        <th class=" px-6 py-4">Tanggal Kadaluarsa</th>
-                        <th class=" px-6 py-4">Stok</th>
-                        <th class=" px-6 py-4">Supplier</th>
-                        <th class=" px-6 py-4">Status</th>
-                        <th class=" px-6 py-4">Package</th>
-                        <th class=" px-6 py-4">Harga Beli</th>
-                        <th class=" px-6 py-4">Harga Jual</th>
-                        <th class=" px-6 py-4" style="width: 150px;">Aksi</th>
+        <div class="bg-white shadow-md rounded-lg w-full mt-4 overflow-x-auto">
+            <table class="min-w-full table-auto">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-700">
+                        <th class="px-6 py-4 text-left">ID Obat</th>
+                        <th class="px-6 py-4 text-left">Nama Obat</th>
+                        <th class="px-6 py-4 text-left">Code</th>
+                        <th class="px-6 py-4 text-left">Formulasi</th>
+                        <th class="px-6 py-4 text-left">Tanggal Kadaluarsa</th>
+                        <th class="px-6 py-4 text-left">Stok</th>
+                        <th class="px-6 py-4 text-left">Supplier</th>
+                        <th class="px-6 py-4 text-left">Status</th>
+                        <th class="px-6 py-4 text-left">Package</th>
+                        <th class="px-6 py-4 text-left">Harga Beli</th>
+                        <th class="px-6 py-4 text-left">Harga Jual</th>
+                        <th class="px-6 py-4 text-left">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white divide-y divide-gray-200">
                     <?php
                     include('../database/database.php');
-                    // Query untuk menampilkan data dengan kolom Harga_Beli dan Harga_Jual
+
+                    // Mengupdate status jika tanggal kadaluarsa lebih kecil atau sama dengan tanggal sekarang
+                    $updateStatusSQL = "UPDATE obat 
+                                        SET Status = 'Kadaluarsa' 
+                                        WHERE Tanggal_Kadaluarsa <= CURDATE() AND Status != 'Kadaluarsa'";
+                    mysqli_query($conn, $updateStatusSQL);
+
+                    // Query untuk menampilkan data obat
                     $sql = "SELECT t.ID_Obat, t.Nama_Obat, t.Code, t.Formulasi, t.Tanggal_Kadaluarsa, t.Stok, k.Nama_Supplier, t.Status, t.Package, t.Harga_Beli, t.Harga_Jual
-            FROM obat t 
-            JOIN supplier k ON t.ID_Supplier = k.ID_Supplier";  // Sesuaikan dengan kolom relasi yang benar
+                            FROM obat t 
+                            JOIN supplier k ON t.ID_Supplier = k.ID_Supplier";  
+
                     $result = mysqli_query($conn, $sql);
                     if (!$result) {
-                        // Tampilkan error jika query gagal
                         die("Query failed: " . mysqli_error($conn));
                     }
+                    
+                    // Menampilkan data obat
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<tr class="border-b hover:bg-gray-100">
-                <td class="px- py-auto">' . $row['ID_Obat'] . '</td>
-                <td class="px- py-auto">' . $row['Nama_Obat'] . '</td>
-                <td class="px- py-auto">' . $row['Code'] . '</td>
-                <td class="px- py-auto">' . $row['Formulasi'] . '</td>
-                <td class="px- py-auto">' . $row['Tanggal_Kadaluarsa'] . '</td>
-                <td class="px- py-auto">' . $row['Stok'] . '</td>
-                <td class="px- py-auto">' . $row['Nama_Supplier'] . '</td>
-                <td class="px- py-auto">' . $row['Status'] . '</td>
-                <td class="px- py-auto">' . $row['Package'] . '</td>
-                <td class="px- py-auto">' . $row['Harga_Beli'] . '</td>
-                <td class="px- py-auto">' . $row['Harga_Jual'] . '</td>
-                <td class="flex gap-x-4 justify-center">
-                    <a href="/apoteku/src/datamaster-obat/dataobat-edit.php?id=' . $row['ID_Obat'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
-                        <i class="bi bi-pencil-square transition-all"></i>
-                    </a>
-                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/datamaster-obat/dataobat-delete.php?id=' . $row['ID_Obat'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
-                        <i class="bi bi-trash-fill transition-all"></i>
-                    </a>
-                </td>
-            </tr>';
+                            echo '<tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['ID_Obat'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Nama_Obat'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Code'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Formulasi'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Tanggal_Kadaluarsa'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Stok'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Nama_Supplier'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Status'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Package'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Harga_Beli'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">' . $row['Harga_Jual'] . '</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex space-x-2 justify-center">
+                                        <a href="/apoteku/src/datamaster-obat/dataobat-edit.php?id=' . $row['ID_Obat'] . '" 
+                                           class="bg-yellow-500 text-white p-2 rounded-md hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="/apoteku/src/datamaster-obat/dataobat-delete.php?id=' . $row['ID_Obat'] . '" 
+                                           class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition duration-300 transform hover:scale-105" onclick="return confirm(\'Are you sure you want to delete this Data?\');">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>';
                         }
                     }
                     ?>
-
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>

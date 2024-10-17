@@ -24,16 +24,16 @@
         <!-- Header -->
         <h1 class="text-2xl font-bold mb-4">Transaksi</h1>
 
-        <!-- Tombol Tambah Data diposisikan di bawah teks Data Obat -->
+        <!-- Tombol Tambah Data diposisikan di bawah teks Transaksi -->
         <div class="mb-6">
             <a href="/apoteku/src/transaksi-penjualan/create.php"
-                class="bg-blue-500 text-white py-3 px-3 rounded-lg hover:bg-blue-600 text-sm">
+                class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 text-sm transition duration-300 ease-in-out transform hover:scale-105">
                 Tambah Data
             </a>
         </div>
 
-        <!-- Tabel -->
-        <div class="bg-white shadow-md rounded-lg overflow-x-auto w-full mt-4">
+        <!-- Tabel dengan overflow-x-auto -->
+        <div class="bg-white shadow-md rounded-lg mt-4 overflow-x-auto">
             <table class="w-full text-left border border-gray-300">
                 <thead class="bg-gray-100">
                     <tr>
@@ -57,12 +57,12 @@
                             JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
                             JOIN dokter d ON d.ID_Dokter = t.ID_Dokter
                             JOIN pasien p ON p.ID_Pasien = t.ID_Pasien;";
-                            
+                    
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr class="border-b hover:bg-gray-100">
-                                <th>' . $row['ID_Transaksi'] . '</th>
+                                <th class="px-6 py-4">' . $row['ID_Transaksi'] . '</th>
                                 <td class="px-6 py-4">' . $row['Nama_Lengkap'] . '</td>
                                 <td class="px-6 py-4">' . $row['Nama_Dokter'] . '</td>
                                 <td class="px-6 py-4">' . $row['Nama'] . '</td>
@@ -71,13 +71,20 @@
                                 <td class="px-6 py-4">' . $row['Total_Bayar'] . '</td>
                                 <td class="px-6 py-4">' . $row['Kembali'] . '</td>
                                 <td class="px-6 py-4">' . $row['Sumber_Pembayaran'] . '</td>
-                                <td class="flex gap-x-4 justify-center">
-                                    <a href="/apoteku/src/transaksi-penjualan/edit.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-yellow-500 hover:shadow-md hover:bg-yellow-600 group text-sm">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" class="btn bg-red-500 hover:shadow-md hover:bg-red-600 group text-sm">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </a>
+                                <td class="px-6 py-4 text-center">
+                                    <div class="flex justify-center gap-x-4">
+                                        <!-- Tombol Edit -->
+                                        <a href="/apoteku/src/transaksi-penjualan/edit.php?id=' . $row['ID_Transaksi'] . '" 
+                                           class="bg-yellow-500 text-white p-2 rounded-md hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        
+                                        <!-- Tombol Delete -->
+                                        <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" 
+                                           class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>';
                         }

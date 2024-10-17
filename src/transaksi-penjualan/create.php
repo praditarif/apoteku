@@ -37,7 +37,6 @@
 
                 // Add the drug to the card list
                 $('#obat-list').append(`
-<<<<<<< HEAD
                 <div class="card mb-2 flex items-center justify-between p-2 bg-gray-200 rounded">
                     <span>${obatName} - ${jumlah} x Rp ${hargaObat.toLocaleString()} = Rp ${totalObatHarga.toLocaleString()}</span>
                     <button class="remove-obat bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Hapus</button>
@@ -46,16 +45,6 @@
                     <input type="hidden" name="obat_harga[]" value="${totalObatHarga}">
                 </div>
             `);
-=======
-            <div class="card mb-2 flex items-center justify-between p-2 bg-gray-200 rounded">
-                <span>${obatName} - ${jumlah} x Rp ${hargaObat.toLocaleString()} = Rp ${totalObatHarga.toLocaleString()}</span>
-                <button class="remove-obat bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Hapus</button>
-                <input type="hidden" name="obat_ids[]" value="${obatID}">
-                <input type="hidden" name="obat_jumlah[]" value="${jumlah}">
-                <input type="hidden" name="obat_harga[]" value="${totalObatHarga}">
-            </div>
-        `);
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
 
                 // Update the total transaction price
                 totalHarga += totalObatHarga;
@@ -64,7 +53,6 @@
                 // Update hidden input to store total price
                 $('#total-harga-input').val(totalHarga);
             });
-<<<<<<< HEAD
 
             // Function to remove a drug from the list
             $('#obat-list').on('click', '.remove-obat', function () {
@@ -78,29 +66,6 @@
             });
         });
 
-=======
-
-            // Function to remove a drug from the list
-            $('#obat-list').on('click', '.remove-obat', function () {
-                const obatHarga = parseInt($(this).closest('.card').find('input[name="obat_harga[]"]').val());
-                $(this).closest('.card').remove();
-                totalHarga -= obatHarga;
-                $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
-
-                // Update hidden input to store total price
-                $('#total-harga-input').val(totalHarga);
-            });
-        });
-
-        $(document).ready(function () {
-        $('#select-pasien').select2();
-        $('#select-dokter').select2();
-        $('#select-apoteker').select2();
-        $('#select-obat').select2();
-        $('#select-pembayaran').select2();
-    });
-
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
     </script>
 </head>
 
@@ -166,14 +131,9 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <!-- Nama Pasien -->
                 <div>
-<<<<<<< HEAD
                     <label for="Nama_Pasien" class="block text-sm font-medium text-gray-700">Nama Pasien</label>
                     <select name="ID_Pasien" id="select-pasien"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-=======
-                    <label for="ID_Pasien" class="block text-sm font-medium text-gray-700">Nama Pasien</label>
-                    <select name="ID_Pasien" id="select-pasien" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
                         <?php
                         // Query untuk mendapatkan data pasien
                         $sql = "SELECT * FROM pasien";
@@ -189,14 +149,9 @@
 
                 <!-- Nama Dokter -->
                 <div>
-<<<<<<< HEAD
                     <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
                     <select name="ID_Dokter" id="select-dokter"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-=======
-                    <label for="ID_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
-                    <select name="ID_Dokter" id="select-dokter" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
                         <?php
                         // Query untuk mendapatkan data dokter
                         $sql = "SELECT * FROM dokter";
@@ -212,14 +167,9 @@
 
                 <!-- Nama Apoteker -->
                 <div>
-<<<<<<< HEAD
                     <label for="Apoteker" class="block text-sm font-medium text-gray-700">Apoteker</label>
                     <select name="ID_Karyawan" id="select-apoteker"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-=======
-                    <label for="ID_Karyawan" class="block text-sm font-medium text-gray-700">Apoteker</label>
-                    <select name="ID_Karyawan" id="select-apoteker" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
                         <?php
                         // Query untuk mendapatkan data apoteker (karyawan)
                         $sql = "SELECT * FROM karyawan";
@@ -235,32 +185,23 @@
 
                 <!-- Tanggal Transaksi -->
                 <div>
-<<<<<<< HEAD
                     <label for="Tanggal_Transaksi" class="block text-sm font-medium text-gray-700">Tanggal
                         Transaksi</label>
                     <input type="date" name="Tanggal_Transaksi"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-=======
-                    <label for="Tanggal_Transaksi" class="block text-sm font-medium text-gray-700">Tanggal Transaksi</label>
-                    <input type="date" name="Tanggal_Transaksi" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
                 </div>
             </div>
 
             <div class="mt-6">
                 <label for="select-obat" class="block text-sm font-medium text-gray-700">Obat</label>
-<<<<<<< HEAD
                 <select id="select-obat"
                     class="select2 p-3 text-lg w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-=======
-                <select id="select-obat" class="select2 p-3 text-lg w-full rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500">
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
                     <?php
                     $sql = "SELECT * FROM obat";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<option value="' . $row['ID_Obat'] . '" data-harga="' . $row['Harga_Jual'] . '">' . $row['Nama_Obat'] . '</option>';
+                            echo '<option value="' . $row['ID_Obat'] . '" data-harga="' . $row['Harga_Jual'] . '">' . $row['Nama_Obat']. " | " . $row['Status']. '</option>';
                         }
                     }
                     ?>
@@ -269,7 +210,6 @@
 
             <div class="mt-4">
                 <label for="Jumlah" class="block text-sm font-medium text-gray-700">Jumlah</label>
-<<<<<<< HEAD
                 <input type="number" id="Jumlah" name="Jumlah"
                     class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     placeholder="Masukkan jumlah obat">
@@ -278,13 +218,6 @@
             <div class="mt-6">
                 <button type="button" id="add-obat"
                     class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Tambah Obat</button>
-=======
-                <input type="number" id="Jumlah" name="Jumlah" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Masukkan jumlah obat">
-            </div>
-
-            <div class="mt-6">
-                <button type="button" id="add-obat" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Tambah Obat</button>
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
             </div>
 
             <div id="obat-list" class="mt-6 space-y-4">
@@ -292,7 +225,6 @@
             </div>
 
             <!-- Total Harga -->
-<<<<<<< HEAD
             <div class="mt-4 flex justify-between">
                 <label for="Total_Harga" class="block text-sm font-medium text-gray-700">Total Harga</label>
                 <span id="total-harga" class="text-lg font-bold">Rp 0</span>
@@ -318,27 +250,6 @@
                 <label for="Sumber_Pembayaran" class="block text-sm font-medium text-gray-700">Sumber Pembayaran</label>
                 <select name="Sumber_Pembayaran" id="select-pembayaran"
                     class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-=======
-            <div class="mt-4 flex justify-between items-center">
-                <label for="Total_Harga" class="block text-sm font-medium text-gray-700">Total Harga</label>
-                <span id="total-harga" class="text-lg font-bold">Rp 0</span>
-                <input type="hidden" name="Total_Harga" id="total-harga-input">
-            </div>
-
-            <div class="mt-4">
-                <label for="Total_Bayar" class="block text-sm font-medium text-gray-700">Total Bayar</label>
-                <input type="number" name="Total_Bayar" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-            </div>
-
-            <div class="mt-4">
-                <label for="Kembali" class="block text-sm font-medium text-gray-700">Kembalian</label>
-                <input type="number" name="Kembali" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-            </div>
-
-            <div>
-                <label for="Sumber_Pembayaran" class="block text-sm font-medium text-gray-700">Sumber Pembayaran</label>
-                <select name="Sumber_Pembayaran" id="select-pembayaran" class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
                     <option value="Cash">Cash</option>
                     <option value="Transfer">Transfer</option>
                     <option value="BPJS">BPJS</option>
@@ -346,12 +257,8 @@
             </div>
 
             <div class="mt-6 flex justify-between">
-<<<<<<< HEAD
                 <button type="submit" name="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Submit</button>
-=======
-                <button type="submit" name="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
                 <button type="reset" class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded">Reset</button>
             </div>
         </form>
@@ -359,7 +266,6 @@
 </body>
 
 
-<<<<<<< HEAD
 <!-- Skrip untuk menambahkan fungsi Select2 -->
 <script>
     $(document).ready(function () {
@@ -373,6 +279,4 @@
 
 </body>
 
-=======
->>>>>>> 87abee7ee1dd409d9967e2757ab09dfe39abf777
 </html>
