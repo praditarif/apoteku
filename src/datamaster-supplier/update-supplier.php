@@ -102,8 +102,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <input type="text" name="Alamat" value="<?php echo $alamat; ?>" class="border border-gray-300 rounded-lg w-full p-2">
             </div>
 
-            <div>
-                <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500">Update</button>
+            <div class="sm:col-span-2 flex justify-end">
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Update</button>
             </div>
         </form>
     </div>

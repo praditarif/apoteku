@@ -48,36 +48,32 @@
     ?>
 </head>
 
-<body class="bg-green-100 text-gray-900">
+<body class="bg-blue-100">
     <?php include('../template/sidebar.php'); ?>
 
-    <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
     <div class="flex-grow ml-64 mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-4">Tambah Data Supplier</h1>
-        <form method="POST">
-            <div class="grid grid-cols-1 gap-4">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Tambah Data Supplier</h1>
 
-                <!-- Nama Supplier -->
-                <div>
-                    <label for="Nama_Supplier" class="block mb-2 font-medium">Nama Supplier</label>
-                    <input type="text" name="Nama_Supplier" class="input input-bordered input-primary w-full max-w-xs" required>
+        <form method="POST" class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="grid-cols-1 gap-6">
+
+                <div class="mb-6">
+                    <label for="Nama_Supplier" class="block text-sm font-medium text-gray-700">Nama Supplier</label>
+                    <input type="text" name="Nama_Supplier" class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                 </div>
 
-                <!-- Kontak -->
-                <div>
-                    <label for="Kontak" class="block mb-2 font-medium">Kontak</label>
-                    <input type="text" name="Kontak" class="input input-bordered input-primary w-full max-w-xs" required>
+                <div class="mb-6">
+                    <label for="Kontak" class="block text-sm font-medium text-gray-700">Kontak</label>
+                    <input type="text" name="Kontak" class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                 </div>
 
-                <!-- Alamat -->
-                <div>
-                    <label for="Alamat" class="block mb-2 font-medium">Alamat</label>
-                    <input type="text" name="Alamat" class="input input-bordered input-primary w-full max-w-xs" required>
+                <div class="mb-6">
+                    <label for="Alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
+                    <input type="text" name="Alamat" class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                 </div>
 
-                <!-- Tombol Submit -->
-                <div>
-                    <button name="submit" type="submit" class="bg-green-500 opacity-95 text-white btn hover:bg-green-600 hover:opacity-100">
+                <div class="sm:col-span-2 p-6 flex justify-end">
+                    <button name="submit" type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
                         Create
                     </button>
                 </div>
