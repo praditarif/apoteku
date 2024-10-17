@@ -64,7 +64,7 @@
                         </a>
                     </li>
                     <li class="list-none">
-                        <a href="/apoteku/src/transaksi-pembelian/index.php"
+                        <a href="/apoteku/src/transaksi-pembelian/index-pembelian.php"
                             class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                             <div class="flex items-center">
                                 <span>Pembelian</span>
@@ -107,6 +107,14 @@
                         </a>
                     </li>
                 </div>
+                <li class="mb-6 list-none">
+                    <a href="/apoteku/src/login.php"
+                        class="w-full bg-red-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700">
+                        <div class="flex items-center">
+                            <span class="ml-2">Logout</span>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </nav>
     </aside>
