@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require 'C:\xampp2\htdocs\apoteku\src\database\database.php';
+require 'C:\xampp\htdocs\apoteku\src\database\database.php';
 
 $error = "";
 
