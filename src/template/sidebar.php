@@ -19,24 +19,24 @@
 
 <body class="bg-gray-100 text-gray-900 flex">
 
-<aside class="w-64 h-screen bg-blue-500 fixed top-0 left-0 p-6 shadow-lg flex flex-col justify-between">
-    <div>
-        <h1 class="text-3xl font-bold mb-8 text-white">Apoteku</h1>
-        <nav>
-            <ul>
-                <li class="mb-6 list-none">
-                    <a href="/apoteku/src/main.php"
-                        class="w-full bg-blue-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700">
-                        <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                                fill="#FFFFFF">
-                                <path
-                                    d="M80-120v-80h800v80H80Zm40-120v-280h120v280H120Zm200 0v-480h120v480H320Zm200 0v-360h120v360H520Zm200 0v-600h120v600H720Z" />
-                            </svg>
-                            <span class="ml-2">Dashboard</span>
-                        </div>
-                    </a>
-                </li>
+    <aside class="w-64 h-screen bg-blue-500 fixed top-0 left-0 p-6 shadow-lg flex flex-col justify-between">
+        <div>
+            <h1 class="text-3xl font-bold mb-8 text-white">Apoteku</h1>
+            <nav>
+                <ul>
+                    <li class="mb-6 list-none">
+                        <a href="/apoteku/src/main.php"
+                            class="w-full bg-blue-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#FFFFFF">
+                                    <path
+                                        d="M80-120v-80h800v80H80Zm40-120v-280h120v280H120Zm200 0v-480h120v480H320Zm200 0v-360h120v360H520Zm200 0v-600h120v600H720Z" />
+                                </svg>
+                                <span class="ml-2">Dashboard</span>
+                            </div>
+                        </a>
+                    </li>
 
                     <!-- Transaksi Section -->
                     <div class="mt-8">
@@ -99,25 +99,30 @@
                             </a>
                         </li>
 
-                    <li class="list-none">
-                        <a href="/apoteku/src/datamaster-supplier/index-supplier.php"
-                            class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
-                            <div class="flex items-center">
-                                <span>Data Suplier</span>
-                        </a>
-                    </li>
+                        <li class="list-none">
+                            <a href="/apoteku/src/datamaster-supplier/index-supplier.php"
+                                class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
+                                <div class="flex items-center">
+                                    <span>Data Suplier</span>
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+        <!-- Tombol Logout di bagian bawah -->
+        <li class="mb-6 list-none">
+            <a href="/apoteku/src/login.php"
+                class="w-full bg-red-600 text-white p-3 rounded-lg flex items-center justify-center hover:bg-red-700">
+                <div class="flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#FFFFFF">
+                        <path
+                            d="M806-440H320v-80h486l-62-62 56-58 160 160-160 160-56-58 62-62ZM600-600v-160H200v560h400v-160h80v160q0 33-23.5 56.5T600-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h400q33 0 56.5 23.5T680-760v160h-80Z" />
+                    </svg>
+                    <span class="ml-2">Logout</span>
                 </div>
-            </ul>
-        </nav>
-    </div>
+            </a>
+        </li>
 
-    <!-- Tombol Logout di bagian bawah -->
-    <li class="mb-6 list-none">
-        <a href="/apoteku/src/login.php"
-            class="w-full bg-red-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700">
-            <div class="flex items-center">
-                <span class="ml-2">Logout</span>
-            </div>
-        </a>
-    </li>
-</aside>
+    </aside>
