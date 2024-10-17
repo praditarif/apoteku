@@ -109,44 +109,45 @@
         </form>
 
         <!-- Proses Form -->
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Ambil data dari form
-            $id_obat = $_POST['id_obat'];
-            $stok = $_POST['stok'];
-            $harga_beli = $_POST['harga_beli'];  // Harga Beli
-            $supplier = $_POST['supplier'];
-            $package = $_POST['package'];
-            $status = $_POST['status'];  // Status tidak digunakan untuk update stok obat
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Ambil data dari form
+    $id_obat = $_POST['id_obat'];   // Menggunakan sesuai dengan name di form
+    $stok = $_POST['stok'];
+    $harga_beli = $_POST['harga_beli'];
+    $supplier = $_POST['supplier'];
+    $package = $_POST['package'];
+    $status = $_POST['status'];  // Status bisa digunakan untuk menandai transaksi pembayaran
+    
+    // Validasi input
+    if (empty($id_obat) || empty($stok) || empty($harga_beli) || empty($supplier) || empty($package)) {
+        echo "<p class='mt-4 text-red-500'>Semua kolom wajib diisi.</p>";
+    } else {
+        // Query untuk menyimpan data transaksi ke dalam tabel pembelian
+        $sql = "INSERT INTO pembelian (ID_Obat, Jumlah_Obat, Harga_Beli, ID_Supplier, Package, Status) 
+                VALUES ('$id_obat', '$stok', '$harga_beli', '$supplier', '$package', '$status')";
 
-            // Validasi input
-            if (empty($id_obat) || empty($stok) || empty($harga_beli) || empty($supplier) || empty($package)) {
-                echo "<p class='mt-4 text-red-500'>Semua kolom wajib diisi.</p>";
-            } else {
-                // Query untuk menyimpan data transaksi ke dalam tabel pembelian
-                $sql = "INSERT INTO pembelian (ID_Obat, Jumlah_Obat, Harga_Beli, ID_Supplier, Package, Status) 
-                        VALUES ('$id_obat', '$stok', '$harga_beli', '$supplier', '$package', '$status')";
+        if (mysqli_query($conn, $sql)) {
+            echo "<p class='mt-4 text-green-500'>Transaksi berhasil ditambahkan.</p>";
 
-                if (mysqli_query($conn, $sql)) {
-                    echo "<p class='mt-4 text-green-500'>Transaksi berhasil ditambahkan.</p>";
+            // Update stok obat di tabel obat
+            $sql_update_stok = "UPDATE obat SET Stok = Stok + $stok WHERE ID_Obat = '$id_obat'";
+if (mysqli_query($conn, $sql_update_stok)) {
+    echo "<p class='mt-2 text-green-500'>Stok obat berhasil diperbarui.</p>";
+} else {
+    echo "<p class='mt-2 text-red-500'>Error memperbarui stok: " . mysqli_error($conn) . "</p>";
+}
 
-                    // Update stok obat di tabel obat
-                    $sql_update_stok = "UPDATE obat SET Stok = Stok + $stok WHERE ID_Obat = '$id_obat'";
-                    if (mysqli_query($conn, $sql_update_stok)) {
-                        echo "<p class='mt-2 text-green-500'>Stok obat berhasil diperbarui.</p>";
-                    } else {
-                        // Tampilkan error jika gagal memperbarui stok
-                        echo "<p class='mt-2 text-red-500'>Error memperbarui stok: " . mysqli_error($conn) . "</p>";
-                    }
-                } else {
-                    // Tampilkan error jika query insert gagal
-                    echo "<p class='mt-4 text-red-500'>Error menambahkan transaksi: " . mysqli_error($conn) . "</p>";
-                }
-            }
-
-            mysqli_close($conn);
+        } else {
+            // Tampilkan error jika query insert gagal
+            echo "<p class='mt-4 text-red-500'>Error menambahkan transaksi: " . mysqli_error($conn) . "</p>";
         }
-        ?>
+    }
+
+    mysqli_close($conn);
+}
+?>
+
     </div>
 </body>
 
