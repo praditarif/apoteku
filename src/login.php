@@ -38,10 +38,10 @@ if (isset($_POST["login"])) {
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-blue-100 flex items-center justify-center min-h-screen">
 
     <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6">Login to Apoteku</h2>
+        <h2 class="text-3xl font-semibold text-center text-blue-600 mb-6">Login</h2>
 
         <!-- Login Form -->
         <form action="" method="POST">
