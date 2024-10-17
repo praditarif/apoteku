@@ -52,7 +52,7 @@
                 <tbody>
                     <?php
                     include('../../src/database/database.php');
-                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, t.ID_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
+                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, d.Nama_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
                             FROM transaksi t
                             JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
                             JOIN dokter d ON d.ID_Dokter = t.ID_Dokter
@@ -64,7 +64,7 @@
                             echo '<tr class="border-b hover:bg-gray-100">
                                 <th>' . $row['ID_Transaksi'] . '</th>
                                 <td class="px-6 py-4">' . $row['Nama_Lengkap'] . '</td>
-                                <td class="px-6 py-4">' . $row['ID_Dokter'] . '</td>
+                                <td class="px-6 py-4">' . $row['Nama_Dokter'] . '</td>
                                 <td class="px-6 py-4">' . $row['Nama'] . '</td>
                                 <td class="px-6 py-4">' . $row['Tanggal_Transaksi'] . '</td>
                                 <td class="px-6 py-4">' . $row['Total_Harga'] . '</td>
