@@ -19,8 +19,8 @@
 
 <body class="bg-gray-100 text-gray-900 flex">
 
-    <!-- Sidebar -->
-    <aside class="w-64 h-screen bg-blue-500 fixed top-0 left-0 p-6 shadow-lg">
+<aside class="w-64 h-screen bg-blue-500 fixed top-0 left-0 p-6 shadow-lg flex flex-col justify-between">
+    <div>
         <h1 class="text-3xl font-bold mb-8 text-white">Apoteku</h1>
         <nav>
             <ul>
@@ -107,17 +107,17 @@
                         </a>
                     </li>
                 </div>
-                <li class="mb-6 list-none">
-                    <a href="/apoteku/src/login.php"
-                        class="w-full bg-red-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700">
-                        <div class="flex items-center">
-                            <span class="ml-2">Logout</span>
-                        </div>
-                    </a>
-                </li>
             </ul>
         </nav>
-    </aside>
+    </div>
 
-
-    </body>
+    <!-- Tombol Logout di bagian bawah -->
+    <li class="mb-6 list-none">
+        <a href="/apoteku/src/login.php"
+            class="w-full bg-red-600 text-white p-3 rounded-lg flex items-center hover:bg-blue-700">
+            <div class="flex items-center">
+                <span class="ml-2">Logout</span>
+            </div>
+        </a>
+    </li>
+</aside>
