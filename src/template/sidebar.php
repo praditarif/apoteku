@@ -57,7 +57,7 @@
                     <div id="transaksi-dropdown" class="hidden mt-4">
                         <li class="mb-4 list-none">
                             <a href="/apoteku/src/transaksi-penjualan/index.php"
-                                class="text-white bg-blue-600 p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
+                                class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                                 <div class="flex items-center">
                                     <span>Penjualan</span>
                                 </div>
@@ -90,7 +90,7 @@
 
                     <!-- Dropdown Menu -->
                     <div id="master-dropdown" class="hidden mt-4">
-                        <li class="mb-4 list-none">
+                        <li class="list-none">
                             <a href="/apoteku/src/datamaster-obat/dataobat.php"
                                 class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                                 <div class="flex items-center">
@@ -104,6 +104,7 @@
                                 class="text-white p-3 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
                                 <div class="flex items-center">
                                     <span>Data Suplier</span>
+                                </div>
                             </a>
                         </li>
                     </div>
