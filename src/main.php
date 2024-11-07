@@ -1,3 +1,19 @@
+<?php
+// URL endpoint API pasien dan dokter
+$apiUrlPasien = "https://rawat-jalan.pockethost.io/api/collections/pasien/records";
+// $apiUrlDokter = "https://0sr024r8-3000.asse.devtunnels.ms/api/dokter/";
+
+// Mengambil data dari API pasien
+$responsePasien = file_get_contents($apiUrlPasien);
+$dataPasien = json_decode($responsePasien, true);
+$totalPasien = isset($dataPasien['items']) ? count($dataPasien['items']) : 0;
+
+// Mengambil data dari API dokter
+$responseDokter = file_get_contents($apiUrlDokter);
+$dataDokter = json_decode($responseDokter, true);
+$totalDokter = isset($dataDokter['items']) ? count($dataDokter['items']) : 0;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,13 +64,13 @@
         $transaksi = $total_harga_query->fetch(PDO::FETCH_ASSOC);
 
 
-        $total_pasien_query = $pdo->query("SELECT COUNT(*) AS total_pasien FROM pasien");
-        $pasien = $total_pasien_query->fetch(PDO::FETCH_ASSOC);
+        // $total_pasien_query = $pdo->query("SELECT COUNT(*) AS total_pasien FROM pasien");
+        // $pasien = $total_pasien_query->fetch(PDO::FETCH_ASSOC);
+        
 
-
-        $total_dokter_query = $pdo->query("SELECT COUNT(*) AS total_dokter FROM dokter");
-        $dokter = $total_dokter_query->fetch(PDO::FETCH_ASSOC);
-
+        // $total_dokter_query = $pdo->query("SELECT COUNT(*) AS total_dokter FROM dokter");
+        // $dokter = $total_dokter_query->fetch(PDO::FETCH_ASSOC);
+        
         $total_obat_query = $pdo->query("SELECT COUNT(*) AS total_obat FROM obat");
         $obat = $total_obat_query->fetch(PDO::FETCH_ASSOC);
         ?>
@@ -81,7 +97,7 @@
                 class="bg-gradient-to-r from-green-400 to-blue-500 p-6 rounded-lg shadow-lg flex items-center justify-between">
                 <div>
                     <h2 class="text-xl font-bold text-white">Total Pasien</h2>
-                    <p class="text-3xl mt-2 text-white"><?php echo $pasien['total_pasien']; ?></p>
+                    <p class="text-3xl mt-2 text-white"><?php echo $totalPasien; ?></p>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"
                     fill="#FFFFFF">
@@ -94,7 +110,7 @@
                 class="bg-gradient-to-r from-green-400 to-blue-500 p-6 rounded-lg shadow-lg flex items-center justify-between">
                 <div>
                     <h2 class="text-xl font-bold text-white">Total Dokter</h2>
-                    <p class="text-3xl mt-2 text-white"><?php echo $dokter['total_dokter']; ?></p>
+                    <p class="text-3xl mt-2 text-white"><?php echo $totalDokter; ?></p>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"
                     fill="#FFFFFF">
