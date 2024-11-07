@@ -1,3 +1,40 @@
+<?php
+// URL endpoint API
+$apiUrl = "https://rawat-jalan.pockethost.io/api/collections/pasien/records";
+
+// Mengambil data dari API
+$response = file_get_contents($apiUrl);
+
+// Mengonversi JSON response menjadi array PHP
+$data = json_decode($response, true);
+$items = $data['items'];
+?>
+<?php
+// URL endpoint API untuk data dokter
+$apiUrlDokter = "https://0sr024r8-3000.asse.devtunnels.ms/api/dokter/";
+
+// Mengambil data dari API dokter dengan penanganan error
+$responseDokter = @file_get_contents($apiUrlDokter);
+
+// Memeriksa apakah respons berhasil diambil
+if ($responseDokter === false) {
+    echo '<div>Error: Tidak dapat mengakses API dokter. Pastikan URL API benar atau server aktif.</div>';
+    $itemsDokter = []; // Kosongkan array untuk menghindari error di bagian berikutnya
+} else {
+    // Mengonversi JSON response dokter menjadi array PHP
+    $dataDokter = json_decode($responseDokter, true);
+    
+    // Memastikan data dokter valid dan payload tersedia
+    if (isset($dataDokter['payload']) && is_array($dataDokter['payload'])) {
+        $itemsDokter = $dataDokter['payload'];
+    } else {
+        echo '<div>Error: Format data API dokter tidak sesuai.</div>';
+        $itemsDokter = []; // Kosongkan array untuk menghindari error di bagian berikutnya
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 
 <head>
@@ -11,6 +48,7 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js" integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer>
         function toggleDropdown(dropdownId) {
             const dropdown = document.getElementById(dropdownId);
@@ -65,7 +103,6 @@
                 $('#total-harga-input').val(totalHarga);
             });
         });
-
     </script>
 </head>
 
@@ -135,36 +172,43 @@
                     <select name="ID_Pasien" id="select-pasien"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
-                        // Query untuk mendapatkan data pasien
-                        $sql = "SELECT * FROM pasien";
-                        $result = mysqli_query($conn, $sql);
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<option value="' . $row['ID_Pasien'] . '">' . $row['Nama_Lengkap'] . " | " . $row['ID_Eksternal'] . '</option>';
+                            // Memeriksa apakah data berhasil diambil
+                            if ($data) {
+                                foreach ($items as $item) {
+                                    echo '<option value="' . $item['id'] . '">' . $item['nama_lengkap'] . ' | ' . $item['id_eksternal'] . '</option>';
+                                }
+                            } else {
+                                echo '<option>Error mengambil data dari API</option>';
                             }
-                        }
-                        ?>
+                            ?>
+                        <script>
+
+                        </script>
                     </select>
                 </div>
 
-                <!-- Nama Dokter -->
-                <div>
-                    <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
-                    <select name="ID_Dokter" id="select-dokter"
-                        class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        <?php
-                        // Query untuk mendapatkan data dokter
-                        $sql = "SELECT * FROM dokter";
-                        $result = mysqli_query($conn, $sql);
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<option value="' . $row['ID_Dokter'] . '">' . $row['Nama_Dokter'] . '</option>';
-                            }
+                  <!-- Nama Dokter -->
+    <div>
+        <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
+        <select name="ID_Dokter" id="select-dokter"
+            class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            <?php
+                // Memeriksa apakah data dokter berhasil diambil dan items ada
+                if (!empty($itemsDokter)) {
+                    foreach ($itemsDokter as $dokter) {
+                        // Memastikan 'id' dan 'Nama' ada di setiap item
+                        if (isset($dokter['ID_Dokter']) && isset($dokter['Nama'])) {
+                            echo '<option value="' . htmlspecialchars($dokter['ID_Dokter']) . '">' . htmlspecialchars($dokter['Nama']) . '</option>';
+                        } else {
+                            echo '<option>Error: Data dokter tidak lengkap.</option>';
                         }
-                        ?>
-                    </select>
-                </div>
-
+                    }
+                } else {
+                    echo '<option>Error: Data dokter tidak tersedia.</option>';
+                }
+            ?>
+        </select>
+    </div>
                 <!-- Nama Apoteker -->
                 <div>
                     <label for="Apoteker" class="block text-sm font-medium text-gray-700">Apoteker</label>
@@ -275,6 +319,10 @@
         $('#select-obat').select2();
         $('#select-pembayaran').select2();
     });
+
+    const url = "https://rawat-jalan.pockethost.io/api/collections/pasien/records";
+
+    const pasienSelect = document.getElementById('select-pasien');
 </script>
 
 </body>
