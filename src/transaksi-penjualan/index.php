@@ -33,8 +33,8 @@
         </div>
 
         <!-- Tabel dengan overflow-x-auto -->
-        <div class="bg-white shadow-md rounded-lg mt-4 overflow-x-auto">
-            <table class="w-full text-left border border-gray-300">
+        <div class="bg-white shadow-md rounded-lg mt-4 ">
+            <table class="w-full text-left border border-gray-300 overflow-x-auto">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
@@ -59,10 +59,6 @@
                             JOIN pasien p ON p.ID_Pasien = t.ID_Pasien;";
                     
                     $result = mysqli_query($conn, $sql);
-if (!$result) {
-    die("Error in query: " . mysqli_error($conn));
-}
-
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr class="border-b hover:bg-gray-100">

@@ -9,6 +9,30 @@ $response = file_get_contents($apiUrl);
 $data = json_decode($response, true);
 $items = $data['items'];
 ?>
+<?php
+// URL endpoint API untuk data dokter
+$apiUrlDokter = "https://0sr024r8-3000.asse.devtunnels.ms/api/dokter/";
+
+// Mengambil data dari API dokter dengan penanganan error
+$responseDokter = @file_get_contents($apiUrlDokter);
+
+// Memeriksa apakah respons berhasil diambil
+if ($responseDokter === false) {
+    echo '<div>Error: Tidak dapat mengakses API dokter. Pastikan URL API benar atau server aktif.</div>';
+    $itemsDokter = []; // Kosongkan array untuk menghindari error di bagian berikutnya
+} else {
+    // Mengonversi JSON response dokter menjadi array PHP
+    $dataDokter = json_decode($responseDokter, true);
+    
+    // Memastikan data dokter valid dan payload tersedia
+    if (isset($dataDokter['payload']) && is_array($dataDokter['payload'])) {
+        $itemsDokter = $dataDokter['payload'];
+    } else {
+        echo '<div>Error: Format data API dokter tidak sesuai.</div>';
+        $itemsDokter = []; // Kosongkan array untuk menghindari error di bagian berikutnya
+    }
+}
+?>
 
 
 <!DOCTYPE html>
@@ -86,7 +110,7 @@ $items = $data['items'];
 <body class="bg-blue-100">
     <?php
     // Include the database connection and sidebar
-    // include('../template/sidebar.php');
+     include('../template/sidebar.php');
     include('../database/database.php');
 
     if (isset($_POST['submit'])) {
@@ -164,24 +188,28 @@ $items = $data['items'];
                     </select>
                 </div>
 
-                <!-- Nama Dokter -->
-                <div>
-                    <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
-                    <select name="ID_Dokter" id="select-dokter"
-                        class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        <?php
-                        // Query untuk mendapatkan data dokter
-                        $sql = "SELECT * FROM dokter";
-                        $result = mysqli_query($conn, $sql);
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<option value="' . $row['ID_Dokter'] . '">' . $row['Nama_Dokter'] . '</option>';
-                            }
+               <!-- Nama Dokter -->
+    <div>
+        <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
+        <select name="ID_Dokter" id="select-dokter"
+            class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            <?php
+                // Memeriksa apakah data dokter berhasil diambil dan items ada
+                if (!empty($itemsDokter)) {
+                    foreach ($itemsDokter as $dokter) {
+                        // Memastikan 'id' dan 'Nama' ada di setiap item
+                        if (isset($dokter['ID_Dokter']) && isset($dokter['Nama'])) {
+                            echo '<option value="' . htmlspecialchars($dokter['ID_Dokter']) . '">' . htmlspecialchars($dokter['Nama']) . '</option>';
+                        } else {
+                            echo '<option>Error: Data dokter tidak lengkap.</option>';
                         }
-                        ?>
-                    </select>
-                </div>
-
+                    }
+                } else {
+                    echo '<option>Error: Data dokter tidak tersedia.</option>';
+                }
+            ?>
+        </select>
+    </div>
                 <!-- Nama Apoteker -->
                 <div>
                     <label for="Apoteker" class="block text-sm font-medium text-gray-700">Apoteker</label>
