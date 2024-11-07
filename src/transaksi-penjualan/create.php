@@ -23,7 +23,7 @@ if ($responseDokter === false) {
 } else {
     // Mengonversi JSON response dokter menjadi array PHP
     $dataDokter = json_decode($responseDokter, true);
-    
+
     // Memastikan data dokter valid dan payload tersedia
     if (isset($dataDokter['payload']) && is_array($dataDokter['payload'])) {
         $itemsDokter = $dataDokter['payload'];
@@ -38,7 +38,7 @@ if ($responseDokter === false) {
 <!DOCTYPE html>
 
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apoteku - Transaksi</title>
@@ -49,7 +49,9 @@ if ($responseDokter === false) {
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js" integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"
+        integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer>
         function toggleDropdown(dropdownId) {
             const dropdown = document.getElementById(dropdownId);
@@ -76,14 +78,14 @@ if ($responseDokter === false) {
 
                 // Add the drug to the card list
                 $('#obat-list').append(`
-                <div class="card mb-2 flex items-center justify-between p-2 bg-gray-200 rounded">
-                    <span>${obatName} - ${jumlah} x Rp ${hargaObat.toLocaleString()} = Rp ${totalObatHarga.toLocaleString()}</span>
-                    <button class="remove-obat bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Hapus</button>
-                    <input type="hidden" name="obat_ids[]" value="${obatID}">
-                    <input type="hidden" name="obat_jumlah[]" value="${jumlah}">
-                    <input type="hidden" name="obat_harga[]" value="${totalObatHarga}">
-                </div>
-            `);
+                    <div class="card mb-2 flex items-center justify-between p-2 bg-gray-200 rounded">
+                        <span>${obatName} - ${jumlah} x Rp ${hargaObat.toLocaleString()} = Rp ${totalObatHarga.toLocaleString()}</span>
+                        <button class="remove-obat bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Hapus</button>
+                        <input type="hidden" name="obat_ids[]" value="${obatID}">
+                        <input type="hidden" name="obat_jumlah[]" value="${jumlah}">
+                        <input type="hidden" name="obat_harga[]" value="${totalObatHarga}">
+                    </div>
+                `);
 
                 // Update the total transaction price
                 totalHarga += totalObatHarga;
@@ -110,7 +112,7 @@ if ($responseDokter === false) {
 <body class="bg-blue-100">
     <?php
     // Include the database connection and sidebar
-     include('../template/sidebar.php');
+    include('../template/sidebar.php');
     include('../database/database.php');
 
     if (isset($_POST['submit'])) {
@@ -138,7 +140,7 @@ if ($responseDokter === false) {
             } else {
                 // Insert the data into the `transaksi` table
                 $sql = "INSERT INTO transaksi (ID_Karyawan, ID_Pasien, ID_Dokter, Tanggal_Transaksi, Total_Harga, Total_Bayar, Kembali, Sumber_Pembayaran)
-                            VALUES ('$ID_karyawan', '$ID_Pasien', '$ID_Dokter', '$Tanggal_Transaksi', '$Total_Harga', '$Total_Bayar', '$Kembali', '$Sumber_Pembayaran')";
+                                VALUES ('$ID_karyawan', '$ID_Pasien', '$ID_Dokter', '$Tanggal_Transaksi', '$Total_Harga', '$Total_Bayar', '$Kembali', '$Sumber_Pembayaran')";
 
                 if (mysqli_query($conn, $sql)) {
                     // Reduce stock for each drug in the transaction
@@ -173,43 +175,43 @@ if ($responseDokter === false) {
                     <select name="ID_Pasien" id="select-pasien"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
-                            // Memeriksa apakah data berhasil diambil
-                            if ($data) {
-                                foreach ($items as $item) {
-                                    echo '<option value="' . $item['id'] . '">' . $item['nama_lengkap'] . ' | ' . $item['id_eksternal'] . '</option>';
-                                }
-                            } else {
-                                echo '<option>Error mengambil data dari API</option>';
+                        // Memeriksa apakah data berhasil diambil
+                        if ($data) {
+                            foreach ($items as $item) {
+                                echo '<option value="' . $item['id'] . '">' . $item['nama_lengkap'] . ' | ' . $item['id_eksternal'] . '</option>';
                             }
-                            ?>
+                        } else {
+                            echo '<option>Error mengambil data dari API</option>';
+                        }
+                        ?>
                         <script>
 
                         </script>
                     </select>
                 </div>
 
-               <!-- Nama Dokter -->
-    <div>
-        <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
-        <select name="ID_Dokter" id="select-dokter"
-            class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-            <?php
-                // Memeriksa apakah data dokter berhasil diambil dan items ada
-                if (!empty($itemsDokter)) {
-                    foreach ($itemsDokter as $dokter) {
-                        // Memastikan 'id' dan 'Nama' ada di setiap item
-                        if (isset($dokter['ID_Dokter']) && isset($dokter['Nama'])) {
-                            echo '<option value="' . htmlspecialchars($dokter['ID_Dokter']) . '">' . htmlspecialchars($dokter['Nama']) . '</option>';
+                <!-- Nama Dokter -->
+                <div>
+                    <label for="Nama_Dokter" class="block text-sm font-medium text-gray-700">Nama Dokter</label>
+                    <select name="ID_Dokter" id="select-dokter"
+                        class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        <?php
+                        // Memeriksa apakah data dokter berhasil diambil dan items ada
+                        if (!empty($itemsDokter)) {
+                            foreach ($itemsDokter as $dokter) {
+                                // Memastikan 'id' dan 'Nama' ada di setiap item
+                                if (isset($dokter['ID_Dokter']) && isset($dokter['Nama'])) {
+                                    echo '<option value="' . htmlspecialchars($dokter['ID_Dokter']) . '">' . htmlspecialchars($dokter['Nama']) . '</option>';
+                                } else {
+                                    echo '<option>Error: Data dokter tidak lengkap.</option>';
+                                }
+                            }
                         } else {
-                            echo '<option>Error: Data dokter tidak lengkap.</option>';
+                            echo '<option>Error: Data dokter tidak tersedia.</option>';
                         }
-                    }
-                } else {
-                    echo '<option>Error: Data dokter tidak tersedia.</option>';
-                }
-            ?>
-        </select>
-    </div>
+                        ?>
+                    </select>
+                </div>
                 <!-- Nama Apoteker -->
                 <div>
                     <label for="Apoteker" class="block text-sm font-medium text-gray-700">Apoteker</label>
@@ -246,7 +248,7 @@ if ($responseDokter === false) {
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<option value="' . $row['ID_Obat'] . '" data-harga="' . $row['Harga_Jual'] . '">' . $row['Nama_Obat']. " | " . $row['Status']. '</option>';
+                            echo '<option value="' . $row['ID_Obat'] . '" data-harga="' . $row['Harga_Jual'] . '">' . $row['Nama_Obat'] . " | " . $row['Status'] . '</option>';
                         }
                     }
                     ?>
