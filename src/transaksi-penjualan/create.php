@@ -5,36 +5,10 @@ $apiUrl = "https://rawat-jalan.pockethost.io/api/collections/pasien/records";
 // Mengambil data dari API pasien
 $response = file_get_contents($apiUrl);
 
-// Memeriksa apakah respons tidak kosong dan berhasil didekode
-$items = [];
-if ($response !== false) {
-    $data = json_decode($response, true);
-    // Memeriksa apakah data memiliki kunci 'items' dan apakah itu array
-    if (isset($data['items']) && is_array($data['items'])) {
-        $items = $data['items'];
-    }
-}
+// Mengonversi JSON response menjadi array PHP
+$data = json_decode($response, true);
+$items = $data['items'];
 ?>
-
-<?php
-// URL endpoint API dokter
-$apiUrlDokter = "https://0sr024r8-3000.asse.devtunnels.ms/api/dokter/";
-
-// Mengambil data dari API dokter
-$responseDokter = file_get_contents($apiUrlDokter);
-
-// Memeriksa apakah respons tidak kosong dan berhasil didekode
-$itemsDokter = [];
-if ($responseDokter !== false) {
-    $dataDokter = json_decode($responseDokter, true);
-    // Memeriksa apakah data dokter memiliki kunci 'items' dan apakah itu array
-    if (isset($dataDokter['items']) && is_array($dataDokter['items'])) {
-        $itemsDokter = $dataDokter['items'];
-    }
-}
-?>
-
-
 
 
 <!DOCTYPE html>
@@ -196,22 +170,14 @@ if ($responseDokter !== false) {
                     <select name="ID_Dokter" id="select-dokter"
                         class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         <?php
-    if (!empty($itemsDokter)) {
-        foreach ($itemsDokter as $itemDokter) {
-            echo '<option value="' . $itemDokter['id'] . '">' . $itemDokter['nama'] . '</option>';
-        }
-    } else {
-        echo '<option>Error mengambil data dokter dari API</option>';
-    }
-            
-                                    // // Query untuk mendapatkan data dokter
-                        // $sql = "SELECT * FROM dokter";
-                        // $result = mysqli_query($conn, $sql);
-                        // if (mysqli_num_rows($result) > 0) {
-                        //     while ($row = mysqli_fetch_assoc($result)) {
-                        //         echo '<option value="' . $row['ID_Dokter'] . '">' . $row['Nama_Dokter'] . '</option>';
-                        //     }
-                        // }
+                        // Query untuk mendapatkan data dokter
+                        $sql = "SELECT * FROM dokter";
+                        $result = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo '<option value="' . $row['ID_Dokter'] . '">' . $row['Nama_Dokter'] . '</option>';
+                            }
+                        }
                         ?>
                     </select>
                 </div>

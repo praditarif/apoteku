@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tailwindcss -i ./src/input.css -o ./src/assets/css/output.css --watch"
-
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "daisyui": "^4.12.14"
+  }
 }
