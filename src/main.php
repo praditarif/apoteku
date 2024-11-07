@@ -1,17 +1,38 @@
 <?php
 // URL endpoint API pasien dan dokter
 $apiUrlPasien = "https://rawat-jalan.pockethost.io/api/collections/pasien/records";
-// $apiUrlDokter = "https://0sr024r8-3000.asse.devtunnels.ms/api/dokter/";
-
 // Mengambil data dari API pasien
 $responsePasien = file_get_contents($apiUrlPasien);
 $dataPasien = json_decode($responsePasien, true);
 $totalPasien = isset($dataPasien['items']) ? count($dataPasien['items']) : 0;
+?>
 
-// Mengambil data dari API dokter
-$responseDokter = file_get_contents($apiUrlDokter);
-$dataDokter = json_decode($responseDokter, true);
-$totalDokter = isset($dataDokter['items']) ? count($dataDokter['items']) : 0;
+<?php
+// URL endpoint API untuk data dokter
+$apiUrlDokter = "https://0sr024r8-3000.asse.devtunnels.ms/api/dokter/";
+
+// Mengambil data dari API dokter dengan penanganan error
+$responseDokter = @file_get_contents($apiUrlDokter);
+
+// Memeriksa apakah respons berhasil diambil
+if ($responseDokter === false) {
+    echo '<div>Error: Tidak dapat mengakses API dokter. Pastikan URL API benar atau server aktif.</div>';
+    $itemsDokter = []; // Kosongkan array untuk menghindari error di bagian berikutnya
+} else {
+    // Mengonversi JSON response dokter menjadi array PHP
+    $dataDokter = json_decode($responseDokter, true);
+
+    // Memastikan data dokter valid dan payload tersedia
+    if (isset($dataDokter['payload']) && is_array($dataDokter['payload'])) {
+        $itemsDokter = $dataDokter['payload'];
+    } else {
+        echo '<div>Error: Format data API dokter tidak sesuai.</div>';
+        $itemsDokter = []; // Kosongkan array untuk menghindari error di bagian berikutnya
+    }
+}
+
+// Menghitung total dokter
+$totalDokter = count($itemsDokter);
 ?>
 
 <!DOCTYPE html>
