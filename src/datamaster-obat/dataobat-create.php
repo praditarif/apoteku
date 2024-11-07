@@ -100,9 +100,11 @@
                         class="mt-1 block w-full p-3 text-lg rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 </div>
 
+            
+
                 <!-- Tombol Submit -->
                 <div class="sm:col-span-2 flex justify-end">
-                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Create</button>
+                    <button type="submit" name="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Create</button>
                 </div>
             </div>
         </form>
@@ -111,7 +113,12 @@
     <?php
     if (isset($_POST['submit'])) {
         include('../database/database.php');
-
+    
+        // Debugging untuk melihat data yang masuk
+        echo '<pre>';
+        var_dump($_POST);
+        echo '</pre>';
+    
         $Nama_Obat = $_POST['Nama_Obat'];
         $Code = $_POST['Code'];
         $Formulasi = $_POST['Formulasi'];
@@ -122,21 +129,22 @@
         $Package = $_POST['Package'];
         $Harga_Beli = $_POST['Harga_Beli'];
         $Harga_Jual = $_POST['Harga_Jual'];
-
+    
         if (empty($Nama_Obat) || empty($Code) || empty($Formulasi) || empty($Tanggal_Kadaluarsa) || empty($Stok) || empty($ID_Supplier) || empty($Status) || empty($Package) || empty($Harga_Beli) || empty($Harga_Jual)) {
             echo "<script>alert('Please fill all the fields')</script>";
         } else {
             $sql = "INSERT INTO obat(Nama_Obat, Code, Formulasi, Tanggal_Kadaluarsa, Stok, ID_Supplier, Status, Package, Harga_Beli, Harga_Jual) 
                     VALUES ('$Nama_Obat', '$Code', '$Formulasi', '$Tanggal_Kadaluarsa', '$Stok', '$ID_Supplier', '$Status', '$Package', '$Harga_Beli', '$Harga_Jual')";
-
+    
             if (mysqli_query($conn, $sql)) {
                 echo "<script>alert('Obat has been created successfully'); window.location.href = '/apoteku/src/datamaster-obat/dataobat.php';</script>";
             } else {
-                echo 'Error: ' . $sql . '<br>' . mysqli_error($conn);
+                echo 'Error: ' . mysqli_error($conn);
             }
             mysqli_close($conn);
         }
     }
+    
     ?>
 
 </body>
