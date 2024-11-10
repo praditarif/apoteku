@@ -58,11 +58,11 @@ if ($responseDokter === false) {
             dropdown.classList.toggle('hidden');
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             let totalHarga = 0; // Total harga transaksi
 
             // Add an item to the list of drugs (cards)
-            $('#add-obat').click(function () {
+            $('#add-obat').click(function() {
                 const obatID = $('#select-obat').val();
                 const obatName = $('#select-obat option:selected').text();
                 const jumlah = $('#Jumlah').val();
@@ -96,7 +96,7 @@ if ($responseDokter === false) {
             });
 
             // Function to remove a drug from the list
-            $('#obat-list').on('click', '.remove-obat', function () {
+            $('#obat-list').on('click', '.remove-obat', function() {
                 const obatHarga = parseInt($(this).closest('.card').find('input[name="obat_harga[]"]').val());
                 $(this).closest('.card').remove();
                 totalHarga -= obatHarga;
@@ -117,7 +117,7 @@ if ($responseDokter === false) {
 
     if (isset($_POST['submit'])) {
         // Collect the form data
-    
+
         $ID_Pasien = $_POST['ID_Pasien'];
         $ID_Dokter = $_POST['ID_Dokter'];
         $ID_karyawan = $_POST['ID_Karyawan'];
@@ -244,12 +244,16 @@ if ($responseDokter === false) {
                 <select id="select-obat"
                     class="select2 p-3 text-lg w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     <?php
-                    $sql = "SELECT * FROM obat";
+                    // Query hanya untuk obat dengan status 'tersedia'
+                    $sql = "SELECT * FROM obat WHERE Status = 'tersedia'";
                     $result = mysqli_query($conn, $sql);
+
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<option value="' . $row['ID_Obat'] . '" data-harga="' . $row['Harga_Jual'] . '">' . $row['Nama_Obat'] . " | " . $row['Status'] . '</option>';
                         }
+                    } else {
+                        echo '<option value="">Tidak ada obat tersedia</option>';
                     }
                     ?>
                 </select>
@@ -275,24 +279,64 @@ if ($responseDokter === false) {
             <div class="mt-4 flex justify-between">
                 <label for="Total_Harga" class="block text-sm font-medium text-gray-700">Total Harga</label>
                 <span id="total-harga" class="text-lg font-bold">Rp 0</span>
-                <!-- Input hidden untuk menyimpan total harga yang dikirim ke server -->
-                <input type="hidden" name="Total_Harga" id="total-harga-input">
+                <input type="hidden" name="Total_Harga" id="total-harga-input" value="0">
             </div>
-
-
 
             <div class="mt-4">
                 <label for="Total_Bayar" class="block text-sm font-medium text-gray-700">Total Bayar</label>
-                <input type="number" name="Total_Bayar"
+                <input type="number" name="Total_Bayar" id="total-bayar"
                     class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     required>
             </div>
 
             <div>
                 <label for="Kembali" class="block text-sm font-medium text-gray-700">Kembalian</label>
-                <input type="number" name="Kembali"
+                <input type="number" name="Kembali" id="kembali" readonly
                     class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
             </div>
+
+            <!-- JavaScript untuk perhitungan otomatis -->
+            <script>
+                let totalHarga = 0;
+
+                // Event listener untuk tombol tambah obat
+                document.getElementById('add-obat').addEventListener('click', function() {
+                    const selectObat = document.getElementById('select-obat');
+                    const jumlah = parseInt(document.getElementById('Jumlah').value) || 0;
+                    const hargaObat = parseInt(selectObat.options[selectObat.selectedIndex].getAttribute('data-harga')) || 0;
+                    const namaObat = selectObat.options[selectObat.selectedIndex].text;
+
+                    // Validasi jika obat dan jumlah dipilih
+                    if (selectObat.value !== "" && jumlah > 0) {
+                        const subTotal = hargaObat * jumlah;
+                        totalHarga += subTotal;
+
+                        // Tambahkan ke daftar obat
+                        const obatList = document.getElementById('obat-list');
+                        const newItem = document.createElement('div');
+                        newItem.className = "border p-2 rounded shadow";
+                        newItem.textContent = `${namaObat} x${jumlah} = Rp ${subTotal.toLocaleString()}`;
+                        obatList.appendChild(newItem);
+
+                        // Update total harga
+                        document.getElementById('total-harga').textContent = `Rp ${totalHarga.toLocaleString()}`;
+                        document.getElementById('total-harga-input').value = totalHarga;
+                    } else {
+                        alert('Silakan pilih obat dan masukkan jumlah yang valid.');
+                    }
+
+                    // Reset jumlah setelah menambahkan
+                    document.getElementById('Jumlah').value = '';
+                });
+
+                // Event listener untuk input Total Bayar
+                document.getElementById('total-bayar').addEventListener('input', function() {
+                    const totalBayar = parseInt(this.value) || 0; // Ambil nilai Total Bayar
+                    const kembali = totalBayar - totalHarga; // Hitung Kembalian
+                    document.getElementById('kembali').value = kembali >= 0 ? kembali : 0; // Tampilkan Kembalian
+                });
+            </script>
+
             <div>
                 <label for="Sumber_Pembayaran" class="block text-sm font-medium text-gray-700">Sumber Pembayaran</label>
                 <select name="Sumber_Pembayaran" id="select-pembayaran"
@@ -315,7 +359,7 @@ if ($responseDokter === false) {
 
 <!-- Skrip untuk menambahkan fungsi Select2 -->
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#select-pasien').select2();
         $('#select-dokter').select2();
         $('#select-apoteker').select2();

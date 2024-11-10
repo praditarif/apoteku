@@ -33,8 +33,8 @@
         </div>
 
         <!-- Tabel dengan overflow-x-auto -->
-        <div class="bg-white shadow-md rounded-lg mt-4 ">
-            <table class="w-full text-left border border-gray-300 overflow-x-auto">
+        <div class="bg-white shadow-md rounded-lg w-full mt-4 overflow-x-auto">
+            <table class="w-full text-left border border-gray-300">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
