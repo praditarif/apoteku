@@ -178,7 +178,7 @@ if ($responseDokter === false) {
                         // Memeriksa apakah data berhasil diambil
                         if ($data) {
                             foreach ($items as $item) {
-                                echo '<option value="' . $item['id'] . '">' . $item['nama_lengkap'] . ' | ' . $item['id_eksternal'] . '</option>';
+                                echo '<option value="' . $item['nama_lengkap'] . '">' . $item['nama_lengkap'] . ' | ' . $item['id_eksternal'] . '</option>';
                             }
                         } else {
                             echo '<option>Error mengambil data dari API</option>';
@@ -201,7 +201,7 @@ if ($responseDokter === false) {
                             foreach ($itemsDokter as $dokter) {
                                 // Memastikan 'id' dan 'Nama' ada di setiap item
                                 if (isset($dokter['ID_Dokter']) && isset($dokter['Nama'])) {
-                                    echo '<option value="' . htmlspecialchars($dokter['ID_Dokter']) . '">' . htmlspecialchars($dokter['Nama']) . '</option>';
+                                    echo '<option value="' . htmlspecialchars($dokter['Nama']) . '">' . htmlspecialchars($dokter['Nama']) . '</option>';
                                 } else {
                                     echo '<option>Error: Data dokter tidak lengkap.</option>';
                                 }

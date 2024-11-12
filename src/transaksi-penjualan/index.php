@@ -52,19 +52,17 @@
                 <tbody>
                     <?php
                     include('../../src/database/database.php');
-                    $sql = "SELECT t.ID_Transaksi, p.Nama_Lengkap, d.Nama_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
+                    $sql = "SELECT t.ID_Transaksi, t.ID_Pasien, t.ID_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
                             FROM transaksi t
-                            JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
-                            JOIN dokter d ON t.ID_Dokter = d.ID_Dokter
-                            JOIN pasien p ON p.ID_Pasien = t.ID_Pasien;";
+                            JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan;";
                     
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr class="border-b hover:bg-gray-100">
                                 <th class="px-6 py-4">' . $row['ID_Transaksi'] . '</th>
-                                <td class="px-6 py-4">' . $row['Nama_Lengkap'] . '</td>
-                                <td class="px-6 py-4">' . $row['Nama_Dokter'] . '</td>
+                                <td class="px-6 py-4">' . $row['ID_Pasien'] . '</td>
+                                <td class="px-6 py-4">' . $row['ID_Dokter'] . '</td>
                                 <td class="px-6 py-4">' . $row['Nama'] . '</td>
                                 <td class="px-6 py-4">' . $row['Tanggal_Transaksi'] . '</td>
                                 <td class="px-6 py-4">' . $row['Total_Harga'] . '</td>
