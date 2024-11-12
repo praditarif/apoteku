@@ -24,8 +24,17 @@
         <!-- Header -->
         <h1 class="text-2xl font-bold mb-4">Transaksi</h1>
 
-        <!-- Tombol Tambah Data diposisikan di bawah teks Transaksi -->
-        <div class="mb-6">
+        <!-- Form Pencarian di kiri dan Tombol Tambah Data di kanan -->
+        <div class="mb-6 flex justify-between items-center">
+            <!-- Form Pencarian di kiri -->
+            <form action="" method="GET" class="flex items-center space-x-2">
+                <input type="text" name="search" placeholder="Cari Transaksi..." class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+                    <i class="bi bi-search"></i> Cari
+                </button>
+            </form>
+
+            <!-- Tombol Tambah Data di kanan -->
             <a href="/apoteku/src/transaksi-penjualan/create.php"
                 class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 text-sm transition duration-300 ease-in-out transform hover:scale-105">
                 Tambah Data
@@ -33,59 +42,75 @@
         </div>
 
         <!-- Tabel dengan overflow-x-auto -->
-        <div class="bg-white shadow-md rounded-lg w-full mt-4 overflow-x-auto">
-            <table class="w-full text-left border border-gray-300">
-                <thead class="bg-gray-100">
+        <div class="bg-white shadow-md rounded-lg w-full mt-6 overflow-x-auto">
+            <table class="table-auto w-full text-left border border-gray-200">
+                <thead class="bg-grey-100 text-black">
                     <tr>
-                        <th class="px-4 py-2 min-w-[100px]">ID Transaksi</th>
-                        <th class="px-4 py-2 min-w-[120px]">Nama Pasien</th>
-                        <th class="px-4 py-2">Nama Dokter</th>
-                        <th class="px-4 py-2">Nama Karyawan</th>
-                        <th class="px-4 py-2 min-w-[130px]">Tanggal Transaksi</th>
-                        <th class="px-4 py-2 min-w-[150px]">Total harga</th>
-                        <th class="px-4 py-2">Total Bayar</th>
-                        <th class="px-4 py-2 min-w-[150px] text-center">Kembali</th>
-                        <th class="px-4 py-2 min-w-[150px] text-center">Sumber pembayaran</th>
-                        <th class="px-4 py-2 text-center">Aksi</th>
+                        <th class="px-4 py-3 border-b">ID Transaksi</th>
+                        <th class="px-4 py-3 border-b">Nama Pasien</th>
+                        <th class="px-4 py-3 border-b">Nama Dokter</th>
+                        <th class="px-4 py-3 border-b">Nama Karyawan</th>
+                        <th class="px-4 py-3 border-b">Tanggal Transaksi</th>
+                        <th class="px-4 py-3 border-b">Total Harga</th>
+                        <th class="px-4 py-3 border-b">Total Bayar</th>
+                        <th class="px-4 py-3 border-b">Kembali</th>
+                        <th class="px-4 py-3 border-b">Sumber Pembayaran</th>
+                        <th class="px-4 py-3 border-b text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-gray-600">
                     <?php
                     include('../../src/database/database.php');
+                    
+                    // Mendapatkan kata kunci pencarian
+                    $search = isset($_GET['search']) ? $_GET['search'] : '';
+
+                    // Query untuk menampilkan data transaksi dengan pencarian di seluruh kolom
                     $sql = "SELECT t.ID_Transaksi, t.ID_Pasien, t.ID_Dokter, k.Nama, t.Tanggal_Transaksi, t.Total_Harga, t.Total_Bayar, t.Kembali, t.Sumber_Pembayaran
                             FROM transaksi t
-                            JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan;";
-                    
+                            JOIN karyawan k ON t.ID_Karyawan = k.ID_Karyawan
+                            WHERE t.ID_Transaksi LIKE '%$search%' 
+                            OR t.ID_Pasien LIKE '%$search%' 
+                            OR t.ID_Dokter LIKE '%$search%' 
+                            OR k.Nama LIKE '%$search%' 
+                            OR t.Tanggal_Transaksi LIKE '%$search%' 
+                            OR t.Total_Harga LIKE '%$search%' 
+                            OR t.Total_Bayar LIKE '%$search%' 
+                            OR t.Kembali LIKE '%$search%' 
+                            OR t.Sumber_Pembayaran LIKE '%$search%'";
+
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<tr class="border-b hover:bg-gray-100">
-                                <th class="px-6 py-4">' . $row['ID_Transaksi'] . '</th>
-                                <td class="px-6 py-4">' . $row['ID_Pasien'] . '</td>
-                                <td class="px-6 py-4">' . $row['ID_Dokter'] . '</td>
-                                <td class="px-6 py-4">' . $row['Nama'] . '</td>
-                                <td class="px-6 py-4">' . $row['Tanggal_Transaksi'] . '</td>
-                                <td class="px-6 py-4">' . $row['Total_Harga'] . '</td>
-                                <td class="px-6 py-4">' . $row['Total_Bayar'] . '</td>
-                                <td class="px-6 py-4">' . $row['Kembali'] . '</td>
-                                <td class="px-6 py-4">' . $row['Sumber_Pembayaran'] . '</td>
-                                <td class="px-6 py-4 text-center">
-                                    <div class="flex justify-center gap-x-4">
+                            echo '<tr class="hover:bg-gray-50 border-b transition duration-300">
+                                <td class="px-4 py-3 whitespace-nowrap">' . $row['ID_Transaksi'] . '</td>
+                                <td class="px-4 py-3 whitespace-nowrap">' . $row['ID_Pasien'] . '</td>
+                                <td class="px-4 py-3 whitespace-nowrap">' . $row['ID_Dokter'] . '</td>
+                                <td class="px-4 py-3 whitespace-nowrap">' . $row['Nama'] . '</td>
+                                <td class="px-4 py-3 whitespace-nowrap">' . date('d M Y', strtotime($row['Tanggal_Transaksi'])) . '</td>
+                                <td class="px-4 py-3 whitespace-nowrap text-green-600 font-semibold">Rp ' . number_format($row['Total_Harga'], 0, ',', '.') . '</td>
+                                <td class="px-4 py-3 whitespace-nowrap text-blue-600 font-semibold">Rp ' . number_format($row['Total_Bayar'], 0, ',', '.') . '</td>
+                                <td class="px-4 py-3 whitespace-nowrap text-red-600 font-semibold">Rp ' . number_format($row['Kembali'], 0, ',', '.') . '</td>
+                                <td class="px-4 py-3 whitespace-nowrap">' . $row['Sumber_Pembayaran'] . '</td>
+                                <td class="px-4 py-3 text-center">
+                                    <div class="flex justify-center gap-2">
                                         <!-- Tombol Edit -->
                                         <a href="/apoteku/src/transaksi-penjualan/edit.php?id=' . $row['ID_Transaksi'] . '" 
-                                           class="bg-yellow-500 text-white p-2 rounded-md hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105">
+                                           class="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transform hover:scale-105 transition duration-200">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        
                                         <!-- Tombol Delete -->
-                                        <a onclick="return confirm(\'Are you sure you want to delete this Data?\');" href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" 
-                                           class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105">
+                                        <a onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\');" 
+                                           href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" 
+                                           class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition duration-200">
                                             <i class="bi bi-trash-fill"></i>
                                         </a>
                                     </div>
                                 </td>
                             </tr>';
                         }
+                    } else {
+                        echo '<tr><td colspan="10" class="text-center py-4 text-gray-500">Tidak ada data transaksi</td></tr>';
                     }
                     ?>
                 </tbody>
