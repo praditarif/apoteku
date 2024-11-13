@@ -19,24 +19,19 @@
 <body class="bg-blue-100 text-gray-900">
     <?php include('../template/sidebar.php'); ?>
 
-    <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
     <div class="flex-grow ml-64 mx-auto p-6">
         <!-- Header -->
         <h1 class="text-2xl font-bold mb-4">Transaksi</h1>
 
         <!-- Form Pencarian di kiri dan Tombol Tambah Data di kanan -->
         <div class="mb-6 flex justify-between items-center">
-            <!-- Form Pencarian di kiri -->
             <form action="" method="GET" class="flex items-center space-x-2">
                 <input type="text" name="search" placeholder="Cari Transaksi..." class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
                 <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
                     <i class="bi bi-search"></i> Cari
                 </button>
             </form>
-
-            <!-- Tombol Tambah Data di kanan -->
-            <a href="/apoteku/src/transaksi-penjualan/create.php"
-                class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 text-sm transition duration-300 ease-in-out transform hover:scale-105">
+            <a href="/apoteku/src/transaksi-penjualan/create.php" class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 text-sm transition duration-300 ease-in-out transform hover:scale-105">
                 Tambah Data
             </a>
         </div>
@@ -56,6 +51,7 @@
                         <th class="px-4 py-3 border-b">Kembali</th>
                         <th class="px-4 py-3 border-b">Sumber Pembayaran</th>
                         <th class="px-4 py-3 border-b text-center">Aksi</th>
+                        <th class="px-4 py-3 border-b text-center">Detail Transaksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600">
@@ -94,23 +90,23 @@
                                 <td class="px-4 py-3 whitespace-nowrap">' . $row['Sumber_Pembayaran'] . '</td>
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex justify-center gap-2">
-                                        <!-- Tombol Edit -->
-                                        <a href="/apoteku/src/transaksi-penjualan/edit.php?id=' . $row['ID_Transaksi'] . '" 
-                                           class="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transform hover:scale-105 transition duration-200">
+                                        <a href="/apoteku/src/transaksi-penjualan/edit.php?id=' . $row['ID_Transaksi'] . '" class="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transform hover:scale-105 transition duration-200">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <!-- Tombol Delete -->
-                                        <a onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\');" 
-                                           href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" 
-                                           class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition duration-200">
+                                        <a onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\');" href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition duration-200">
                                             <i class="bi bi-trash-fill"></i>
                                         </a>
                                     </div>
                                 </td>
+                                <td class="px-4 py-3 text-center">
+                                    <a href="/apoteku/src/transaksi-penjualan/detail_transaksi.php?id=' . $row['ID_Transaksi'] . '" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transform hover:scale-105 transition duration-300">
+                                        Detail
+                                    </a>
+                                </td>
                             </tr>';
                         }
                     } else {
-                        echo '<tr><td colspan="10" class="text-center py-4 text-gray-500">Tidak ada data transaksi</td></tr>';
+                        echo '<tr><td colspan="11" class="text-center py-4 text-gray-500">Tidak ada data transaksi</td></tr>';
                     }
                     ?>
                 </tbody>
