@@ -52,123 +52,132 @@ if ($responseDokter === false) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"
         integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script defer>
-        function toggleDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId);
-            dropdown.classList.toggle('hidden');
+
+        <script>
+function toggleDropdown(dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    dropdown.classList.toggle('hidden');
+}
+
+$(document).ready(function() {
+    let totalHarga = 0; // Total harga transaksi
+    let detailResep = [];
+
+    // Add an item to the list of drugs (cards)
+    $('#add-obat').click(function() {
+        const obatID = $('#select-obat').val();
+        const jumlah = $('#Jumlah').val();
+        const hargaObat = parseInt($('#select-obat option:selected').data('harga')) || 0;
+        const obatName = $('#select-obat option:selected').text().split(' ')[0];
+
+        if (!obatID || !jumlah || jumlah <= 0) {
+            alert('Please select a valid drug and quantity.');
+            return;
         }
 
-        $(document).ready(function() {
-            let totalHarga = 0; // Total harga transaksi
+        // Calculate the price for this drug
+        const totalObatHarga = hargaObat * jumlah;
 
-            // Add an item to the list of drugs (cards)
-            $('#add-obat').click(function() {
-                const obatID = $('#select-obat').val();
-                const obatName = $('#select-obat option:selected').text();
-                const jumlah = $('#Jumlah').val();
-                const hargaObat = parseInt($('#select-obat option:selected').data('harga')); // Get the price of the selected drug
+        // Add the drug to the card list
+        $('#obat-list').append(`
+            <div class="card mb-2 flex flex-row items-center justify-between p-2 bg-gray-200 rounded">
+                <span>${obatName} - ${jumlah} x Rp ${hargaObat.toLocaleString()} = Rp ${totalObatHarga.toLocaleString()}</span>
+                <button class="remove-obat bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Hapus</button>
+                <input type="hidden" name="obat_ids[]" value="${obatID}">
+                <input type="hidden" name="obat_jumlah[]" value="${jumlah}">
+                <input type="hidden" name="obat_harga[]" value="${totalObatHarga}">
+            </div>
+        `);
 
-                if (!obatID || !jumlah || jumlah <= 0) {
-                    alert('Please select a valid drug and quantity.');
-                    return;
-                }
+        // Update the total transaction price
+        totalHarga += totalObatHarga;
+        $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
+        $('#total-harga-input').val(totalHarga);
 
-                // Calculate the price for this drug
-                const totalObatHarga = hargaObat * jumlah;
+        // Update detail resep
+        if (!detailResep.includes(obatName)) {
+            detailResep.push(obatName);
+            $('#detail-resep').val(
+                detailResep.map((drugName) => `${drugName}:`).join('\n')
+            );
+        }
+    });
 
-                // Add the drug to the card list
-                $('#obat-list').append(`
-                    <div class="card mb-2 flex items-center justify-between p-2 bg-gray-200 rounded">
-                        <span>${obatName} - ${jumlah} x Rp ${hargaObat.toLocaleString()} = Rp ${totalObatHarga.toLocaleString()}</span>
-                        <button class="remove-obat bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Hapus</button>
-                        <input type="hidden" name="obat_ids[]" value="${obatID}">
-                        <input type="hidden" name="obat_jumlah[]" value="${jumlah}">
-                        <input type="hidden" name="obat_harga[]" value="${totalObatHarga}">
-                    </div>
-                `);
+    // Function to remove a drug from the list
+    $('#obat-list').on('click', '.remove-obat', function() {
+        const obatHarga = parseInt($(this).closest('.card').find('input[name="obat_harga[]"]').val()) || 0;
+        $(this).closest('.card').remove();
+        totalHarga -= obatHarga;
+        $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
+        $('#total-harga-input').val(totalHarga);
+    });
 
-                // Update the total transaction price
-                totalHarga += totalObatHarga;
-                $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
+    // Event listener untuk input Total Bayar
+    document.getElementById('total-bayar').addEventListener('input', function() {
+                        const totalBayar = parseInt(this.value) || 0; // Ambil nilai Total Bayar
+                        const kembali = totalBayar - totalHarga; // Hitung Kembalian
+                        document.getElementById('kembali').value = kembali >= 0 ? kembali : 0; // Tampilkan Kembalian
 
-                // Update hidden input to store total price
-                $('#total-harga-input').val(totalHarga);
-            });
+    });
+});
+</script>
 
-            // Function to remove a drug from the list
-            $('#obat-list').on('click', '.remove-obat', function() {
-                const obatHarga = parseInt($(this).closest('.card').find('input[name="obat_harga[]"]').val());
-                $(this).closest('.card').remove();
-                totalHarga -= obatHarga;
-                $('#total-harga').text(`Rp ${totalHarga.toLocaleString()}`);
-
-                // Update hidden input to store total price
-                $('#total-harga-input').val(totalHarga);
-            });
-        });
-    </script>
 </head>
 
 <body class="bg-blue-100">
-<?php
-// Include koneksi database dan sidebar
-include('../template/sidebar.php');
-include('../database/database.php');
+    <?php
+    // Include the database connection and sidebar
+    include('../template/sidebar.php');
+    include('../database/database.php');
 
-if (isset($_POST['submit'])) {
-    // Mengambil data dari form
-    $ID_Pasien = $_POST['ID_Pasien'];
-    $ID_Dokter = $_POST['ID_Dokter'];
-    $ID_karyawan = $_POST['ID_Karyawan'];
-    $Tanggal_Transaksi = $_POST['Tanggal_Transaksi'];
-    $Total_Harga = $_POST['Total_Harga'];
-    $Total_Bayar = $_POST['Total_Bayar'];
-    $Kembali = $_POST['Kembali'];
-    $Sumber_Pembayaran = $_POST['Sumber_Pembayaran'];
+    if (isset($_POST['submit'])) {
+        // Collect the form data
 
-    // Validasi input
-    if (empty($ID_karyawan) || empty($ID_Pasien) || empty($Tanggal_Transaksi) || empty($Total_Bayar) || empty($Kembali) || empty($Sumber_Pembayaran) || empty($ID_Dokter)) {
-        echo "<script>alert('Please fill all the fields');</script>";
-    } else {
-        // Cek ID_Karyawan ada di tabel karyawan
-        $check_karyawan = "SELECT * FROM karyawan WHERE ID_Karyawan = '$ID_karyawan'";
-        $result_karyawan = mysqli_query($conn, $check_karyawan);
+        $ID_Pasien = $_POST['ID_Pasien'];
+        $ID_Dokter = $_POST['ID_Dokter'];
+        $ID_karyawan = $_POST['ID_Karyawan'];
+        $Tanggal_Transaksi = $_POST['Tanggal_Transaksi'];
+        $Total_Harga = $_POST['Total_Harga'];
+        $Total_Bayar = $_POST['Total_Bayar'];
+        $Kembali = $_POST['Kembali'];
+        $Sumber_Pembayaran = $_POST['Sumber_Pembayaran'];
+        $Detail_Resep = $_POST['Detail_Resep'];
 
-        if (mysqli_num_rows($result_karyawan) == 0) {
-            echo "<script>alert('ID Karyawan tidak valid!');</script>";
+        // Ensure all required fields are filled
+        if (empty($ID_karyawan) || empty($ID_Pasien) || empty($Tanggal_Transaksi) || empty($Total_Bayar) || empty($Kembali) || empty($Sumber_Pembayaran) || empty($ID_Dokter) || empty($Detail_Resep)) {
+            echo "<script>alert('Please fill all the fields');</script>";
         } else {
-            // Insert ke tabel `transaksi`
-            $sql = "INSERT INTO transaksi (ID_Karyawan, ID_Pasien, ID_Dokter, Tanggal_Transaksi, Total_Harga, Total_Bayar, Kembali, Sumber_Pembayaran)
-                            VALUES ('$ID_karyawan', '$ID_Pasien', '$ID_Dokter', '$Tanggal_Transaksi', '$Total_Harga', '$Total_Bayar', '$Kembali', '$Sumber_Pembayaran')";
+            // Check if the ID_Karyawan exists in the karyawan table
+            $check_karyawan = "SELECT * FROM karyawan WHERE ID_Karyawan = '$ID_karyawan'";
+            $result_karyawan = mysqli_query($conn, $check_karyawan);
 
-            if (mysqli_query($conn, $sql)) {
-                // Log data yang diterima untuk debugging
-                error_log("Obat IDs: " . print_r($_POST['obat_ids'], true));
-                error_log("Obat Jumlah: " . print_r($_POST['obat_jumlah'], true));
-
-                // Kurangi stok untuk setiap obat
-                if (isset($_POST['obat_ids']) && isset($_POST['obat_jumlah'])) {
-                    foreach ($_POST['obat_ids'] as $key => $obatID) {
-                        $jumlah = $_POST['obat_jumlah'][$key];
-                        $update_stock = "UPDATE obat SET Stok = Stok - $jumlah WHERE ID_Obat = '$obatID'";
-                        if (!mysqli_query($conn, $update_stock)) {
-                            echo "<script>alert('Error: Gagal mengurangi stok untuk obat ID: $obatID');</script>";
-                        }
-                    }
-                    echo "<script>alert('Transaksi berhasil ditambahkan dan stok diperbarui!');</script>";
-                } else {
-                    echo "<script>alert('Tidak ada obat yang ditambahkan untuk pengurangan stok');</script>";
-                }
+            if (mysqli_num_rows($result_karyawan) == 0) {
+                echo "<script>alert('ID Karyawan tidak valid!');</script>";
             } else {
-                echo 'Error: ' . $sql . '<br>' . mysqli_error($conn);
+                // Insert the data into the `transaksi` table
+                $sql = "INSERT INTO transaksi (ID_Karyawan, ID_Pasien, ID_Dokter, Tanggal_Transaksi, Total_Harga, Total_Bayar, Kembali, Sumber_Pembayaran, Detail_Resep)
+                                VALUES ('$ID_karyawan', '$ID_Pasien', '$ID_Dokter', '$Tanggal_Transaksi', '$Total_Harga', '$Total_Bayar', '$Kembali', '$Sumber_Pembayaran', '$Detail_Resep')";
+
+                if (mysqli_query($conn, $sql)) {
+                    // Reduce stock for each drug in the transaction
+                    for ($i = 0; $i < count($_POST['obat_ids']); $i++) {
+                        $obatID = $_POST['obat_ids'][$i];
+                        $jumlah = $_POST['obat_jumlah'][$i];
+
+                        // Reduce stock in the obat table
+                        $update_stock = "UPDATE obat SET Stok = Stok - $jumlah WHERE ID_Obat = '$obatID'";
+                        mysqli_query($conn, $update_stock);
+                    }
+
+                    echo "<script>alert('Transaction successfully added and stock updated!');</script>";
+                } else {
+                    echo 'Error: ' . $sql . '<br>' . mysqli_error($conn);
+                }
             }
+            mysqli_close($conn);
         }
-        mysqli_close($conn);
     }
-}
-?>
-
-
+    ?>
 
     <div class="flex-grow ml-64 mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6 text-gray-800 p-4 rounded-lg shadow">Tambah Transaksi Penjualan</h1>
@@ -191,9 +200,6 @@ if (isset($_POST['submit'])) {
                             echo '<option>Error mengambil data dari API</option>';
                         }
                         ?>
-                        <script>
-
-                        </script>
                     </select>
                 </div>
 
@@ -296,51 +302,6 @@ if (isset($_POST['submit'])) {
         placeholder="Obat yang diresepkan akan muncul di sini..."></textarea>
 </div>
 
-<!-- JavaScript untuk perhitungan otomatis dan update detail resep -->
-<script>
-
-    // Event listener untuk tombol tambah obat
-    document.getElementById('add-obat').addEventListener('click', function () {
-        const selectObat = document.getElementById('select-obat');
-        const jumlah = parseInt(document.getElementById('Jumlah').value) || 0;
-        const hargaObat = parseInt(selectObat.options[selectObat.selectedIndex].getAttribute('data-harga')) || 0;
-        const namaObat = selectObat.options[selectObat.selectedIndex].text;
-
-        // Validasi jika obat dan jumlah dipilih
-        if (selectObat.value !== "" && jumlah > 0) {
-            const subTotal = hargaObat * jumlah;
-            totalHarga += subTotal;
-
-            // Tambahkan ke daftar obat
-            const obatList = document.getElementById('obat-list');
-            const newItem = document.createElement('div');
-            newItem.className = "border p-2 rounded shadow";
-            newItem.textContent = `${namaObat} x${jumlah} = Rp ${subTotal.toLocaleString()}`;
-            obatList.appendChild(newItem);
-
-            // Update total harga
-            document.getElementById('total-harga').textContent = `Rp ${totalHarga.toLocaleString()}`;
-            document.getElementById('total-harga-input').value = totalHarga;
-
-            // Update textarea detail resep dengan template kosong
-            const detailResepTextarea = document.getElementById('detail-resep');
-            detailResepTextarea.value += `${namaObat}: \n`;
-
-        } else {
-            alert('Silakan pilih obat dan masukkan jumlah yang valid.');
-        }
-
-        // Reset jumlah setelah menambahkan
-        document.getElementById('Jumlah').value = '';
-    });
-
-    // Event listener untuk input Total Bayar
-    document.getElementById('total-bayar').addEventListener('input', function () {
-        const totalBayar = parseInt(this.value) || 0; // Ambil nilai Total Bayar
-        const kembali = totalBayar - totalHarga; // Hitung Kembalian
-        document.getElementById('kembali').value = kembali >= 0 ? kembali : 0; // Tampilkan Kembalian
-    });
-</script>
 
             <div class="mt-4">
                 <label for="Total_Bayar" class="block text-sm font-medium text-gray-700">Total Bayar</label>
@@ -355,56 +316,7 @@ if (isset($_POST['submit'])) {
                     class="mt-1 block w-full p-3 text-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
             </div>
 
-            <!-- JavaScript untuk perhitungan otomatis -->
-            <script>
-                let totalHarga = 0;
 
-                // Event listener untuk tombol tambah obat
-                document.getElementById('add-obat').addEventListener('click', function () {
-    const selectObat = document.getElementById('select-obat');
-    const jumlah = parseInt(document.getElementById('Jumlah').value) || 0;
-    const hargaObat = parseInt(selectObat.options[selectObat.selectedIndex].getAttribute('data-harga')) || 0;
-    const namaObat = selectObat.options[selectObat.selectedIndex].text;
-
-    // Validasi jika obat dan jumlah dipilih
-    if (selectObat.value !== "" && jumlah > 0) {
-        const subTotal = hargaObat * jumlah;
-        totalHarga += subTotal;
-
-        // Tambahkan elemen input tersembunyi untuk menyimpan data obat dan jumlah
-        document.querySelector('#obat-list').insertAdjacentHTML('beforeend', `
-            <div class="card mb-2 flex items-center justify-between p-2 bg-gray-200 rounded">
-                <span>${namaObat} - ${jumlah} x Rp ${hargaObat.toLocaleString()} = Rp ${subTotal.toLocaleString()}</span>
-                <button class="remove-obat bg-red-500 text-white rounded px-2 py-1 hover:bg-red-600">Hapus</button>
-                <input type="hidden" name="obat_ids[]" value="${selectObat.value}">
-                <input type="hidden" name="obat_jumlah[]" value="${jumlah}">
-            </div>
-        `);
-
-        // Update total harga
-        document.getElementById('total-harga').textContent = `Rp ${totalHarga.toLocaleString()}`;
-        document.getElementById('total-harga-input').value = totalHarga;
-
-        // Update detail resep
-        const detailResepTextarea = document.getElementById('detail-resep');
-        detailResepTextarea.value += `${namaObat}: ${jumlah} unit\n`;
-
-    } else {
-        alert('Silakan pilih obat dan masukkan jumlah yang valid.');
-    }
-
-    // Reset jumlah setelah menambahkan
-    document.getElementById('Jumlah').value = '';
-});
-
-
-                // Event listener untuk input Total Bayar
-                document.getElementById('total-bayar').addEventListener('input', function() {
-                    const totalBayar = parseInt(this.value) || 0; // Ambil nilai Total Bayar
-                    const kembali = totalBayar - totalHarga; // Hitung Kembalian
-                    document.getElementById('kembali').value = kembali >= 0 ? kembali : 0; // Tampilkan Kembalian
-                });
-            </script>
 
             <div>
                 <label for="Sumber_Pembayaran" class="block text-sm font-medium text-gray-700">Sumber Pembayaran</label>
