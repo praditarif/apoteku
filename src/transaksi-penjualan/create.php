@@ -125,59 +125,64 @@ $(document).ready(function() {
 </head>
 
 <body class="bg-blue-100">
-    <?php
-    // Include the database connection and sidebar
-    include('../template/sidebar.php');
-    include('../database/database.php');
+<?php
+// Include the database connection and sidebar
+include('../template/sidebar.php');
+include('../database/database.php');
 
-    if (isset($_POST['submit'])) {
-        // Collect the form data
+if (isset($_POST['submit'])) {
+    // Collect the form data
+    $ID_Pasien = $_POST['ID_Pasien'];
+    $ID_Dokter = $_POST['ID_Dokter'];
+    $ID_Karyawan = $_POST['ID_Karyawan'];
+    $Tanggal_Transaksi = $_POST['Tanggal_Transaksi'];
+    $Total_Harga = $_POST['Total_Harga'];
+    $Total_Bayar = $_POST['Total_Bayar'];
+    $Kembali = $_POST['Kembali'];
+    $Sumber_Pembayaran = $_POST['Sumber_Pembayaran'];
+    $Detail_Resep = $_POST['Detail_Resep'];
 
-        $ID_Pasien = $_POST['ID_Pasien'];
-        $ID_Dokter = $_POST['ID_Dokter'];
-        $ID_karyawan = $_POST['ID_Karyawan'];
-        $Tanggal_Transaksi = $_POST['Tanggal_Transaksi'];
-        $Total_Harga = $_POST['Total_Harga'];
-        $Total_Bayar = $_POST['Total_Bayar'];
-        $Kembali = $_POST['Kembali'];
-        $Sumber_Pembayaran = $_POST['Sumber_Pembayaran'];
-        $Detail_Resep = $_POST['Detail_Resep'];
+    // Ensure all required fields are filled
+    if (empty($ID_Karyawan) || empty($ID_Pasien) || empty($Tanggal_Transaksi) || empty($Total_Bayar) || empty($Kembali) || empty($Sumber_Pembayaran) || empty($ID_Dokter) || empty($Detail_Resep)) {
+        echo "<script>alert('Please fill all the fields');</script>";
+    } else {
+        // Check if the ID_Karyawan exists in the karyawan table
+        $check_karyawan = "SELECT * FROM karyawan WHERE ID_Karyawan = '$ID_Karyawan'";
+        $result_karyawan = mysqli_query($conn, $check_karyawan);
 
-        // Ensure all required fields are filled
-        if (empty($ID_karyawan) || empty($ID_Pasien) || empty($Tanggal_Transaksi) || empty($Total_Bayar) || empty($Kembali) || empty($Sumber_Pembayaran) || empty($ID_Dokter) || empty($Detail_Resep)) {
-            echo "<script>alert('Please fill all the fields');</script>";
+        if (mysqli_num_rows($result_karyawan) == 0) {
+            echo "<script>alert('ID Karyawan tidak valid!');</script>";
         } else {
-            // Check if the ID_Karyawan exists in the karyawan table
-            $check_karyawan = "SELECT * FROM karyawan WHERE ID_Karyawan = '$ID_karyawan'";
-            $result_karyawan = mysqli_query($conn, $check_karyawan);
+            // Insert the data into the `transaksi` table
+            $sql = "INSERT INTO transaksi (ID_Karyawan, ID_Pasien, ID_Dokter, Tanggal_Transaksi, Total_Harga, Total_Bayar, Kembali, Sumber_Pembayaran, Detail_Resep)
+                            VALUES ('$ID_Karyawan', '$ID_Pasien', '$ID_Dokter', '$Tanggal_Transaksi', '$Total_Harga', '$Total_Bayar', '$Kembali', '$Sumber_Pembayaran', '$Detail_Resep')";
 
-            if (mysqli_num_rows($result_karyawan) == 0) {
-                echo "<script>alert('ID Karyawan tidak valid!');</script>";
-            } else {
-                // Insert the data into the `transaksi` table
-                $sql = "INSERT INTO transaksi (ID_Karyawan, ID_Pasien, ID_Dokter, Tanggal_Transaksi, Total_Harga, Total_Bayar, Kembali, Sumber_Pembayaran, Detail_Resep)
-                                VALUES ('$ID_karyawan', '$ID_Pasien', '$ID_Dokter', '$Tanggal_Transaksi', '$Total_Harga', '$Total_Bayar', '$Kembali', '$Sumber_Pembayaran', '$Detail_Resep')";
+            if (mysqli_query($conn, $sql)) {
+                // Reduce stock for each drug in the transaction
+                for ($i = 0; $i < count($_POST['obat_ids']); $i++) {
+                    $obatID = $_POST['obat_ids'][$i];
+                    $jumlah = $_POST['obat_jumlah'][$i];
 
-                if (mysqli_query($conn, $sql)) {
-                    // Reduce stock for each drug in the transaction
-                    for ($i = 0; $i < count($_POST['obat_ids']); $i++) {
-                        $obatID = $_POST['obat_ids'][$i];
-                        $jumlah = $_POST['obat_jumlah'][$i];
-
-                        // Reduce stock in the obat table
-                        $update_stock = "UPDATE obat SET Stok = Stok - $jumlah WHERE ID_Obat = '$obatID'";
-                        mysqli_query($conn, $update_stock);
-                    }
-
-                    echo "<script>alert('Transaction successfully added and stock updated!');</script>";
-                } else {
-                    echo 'Error: ' . $sql . '<br>' . mysqli_error($conn);
+                    // Reduce stock in the obat table
+                    $update_stock = "UPDATE obat SET Stok = Stok - $jumlah WHERE ID_Obat = '$obatID'";
+                    mysqli_query($conn, $update_stock);
                 }
+
+                // If transaction and stock update succeed, redirect to index.php
+                echo "<script>
+                        alert('Transaction successfully added and stock updated!');
+                        window.location.href = 'index.php';
+                      </script>";
+            } else {
+                echo "<script>alert('Error: " . mysqli_error($conn) . "');</script>";
             }
-            mysqli_close($conn);
         }
     }
-    ?>
+
+    // Close the database connection
+    mysqli_close($conn);
+}
+?>
 
     <div class="flex-grow ml-64 mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6 text-gray-800 p-4 rounded-lg shadow">Tambah Transaksi Penjualan</h1>
