@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 01:15 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Nov 21, 2024 at 07:45 AM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,7 +33,7 @@ CREATE TABLE `detail_resep` (
   `ID_Resep` int(11) DEFAULT NULL,
   `ID_Obat` int(11) DEFAULT NULL,
   `Jumlah` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `detail_resep`
@@ -55,12 +56,12 @@ CREATE TABLE `dokter` (
   `Tanggal_Lahir` date DEFAULT NULL,
   `No_Telepon` varchar(20) DEFAULT NULL,
   `Email` varchar(100) DEFAULT NULL,
-  `Alamat` text DEFAULT NULL,
+  `Alamat` text,
   `Spesialisasi` varchar(50) DEFAULT NULL,
   `Status_Lisensi` varchar(20) DEFAULT NULL,
   `Tanggal_Lisensi` date DEFAULT NULL,
   `Nama_Institusi` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `dokter`
@@ -102,7 +103,7 @@ CREATE TABLE `karyawan` (
   `Jabatan` varchar(50) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `karyawan`
@@ -131,52 +132,52 @@ CREATE TABLE `obat` (
   `Package` varchar(20) DEFAULT NULL,
   `Harga_Beli` decimal(10,2) DEFAULT NULL,
   `Harga_Jual` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `obat`
 --
 
 INSERT INTO `obat` (`ID_Obat`, `Nama_Obat`, `Code`, `Formulasi`, `Tanggal_Kadaluarsa`, `Stok`, `ID_Supplier`, `Status`, `Package`, `Harga_Beli`, `Harga_Jual`) VALUES
-(2, 'Amoxicillin', 'A001', 'Kapsul', '2024-11-30', 190, 2, 'Tersedia', 'Botol', 2500.00, 5000.00),
-(8, 'Ibuprofen', 'I001', 'Kapsul', '2024-10-16', 150, 2, 'Kadaluarsa', 'Dus', 2000.00, 4000.00),
-(9, 'Aspirin', 'A002', 'Tablet', '2026-03-10', 96, 3, 'Tersedia', 'Strip', 1200.00, 2400.00),
-(11, 'Loratadine', 'L001', 'Tablet', '2026-12-25', 78, 2, 'Tersedia', 'Botol', 1400.00, 2800.00),
-(12, 'Omeprazole', 'O001', 'Kapsul', '2025-11-20', 300, 3, 'Tersedia', 'Strip', 1700.00, 3400.00),
-(15, 'Levothyroxine', 'L002', 'Tablet', '2026-08-15', 130, 2, 'Tersedia', 'Strip', 1600.00, 3200.00),
-(16, 'Metformin', 'M001', 'Tablet', '2025-07-05', 200, 3, 'Tersedia', 'Dus', 1100.00, 2200.00),
-(19, 'Lisinopril', 'L003', 'Tablet', '2026-11-30', 300, 2, 'Tersedia', 'Dus', 1900.00, 3800.00),
-(20, 'Furosemide', 'F001', 'Tablet', '2025-10-15', 150, 3, 'Tersedia', 'Botol', 1700.00, 3400.00),
-(21, 'Metoprolol', 'M002', 'Tablet', '2024-10-17', 110, 1, 'Kadaluarsa', 'Strip', 1300.00, 2600.00),
-(23, 'Losartan', 'L004', 'Tablet', '2026-07-05', 250, 2, 'Habis', 'Botol', 1800.00, 3600.00),
-(24, 'Diclofenac', 'D001', 'Kapsul', '2025-06-15', 200, 1, 'Tersedia', 'Strip', 2000.00, 4000.00),
-(25, 'Ranitidine', 'R001', 'Tablet', '2026-05-30', 180, 3, 'Tersedia', 'Dus', 1600.00, 3200.00),
-(27, 'Sertraline', 'S002', 'Tablet', '2027-03-10', 130, 2, 'Tersedia', 'Strip', 1700.00, 3400.00),
-(28, 'Citalopram', 'C002', 'Tablet', '2026-02-15', 90, 1, 'Tersedia', 'Dus', 1500.00, 3000.00),
-(29, 'Metronidazole', 'M003', 'Tablet', '2025-01-01', 300, 3, 'Tersedia', 'Botol', 1100.00, 2200.00),
-(31, 'Tramadol', 'T001', 'Tablet', '2026-12-10', 210, 1, 'Tersedia', 'Dus', 1900.00, 3800.00),
-(32, 'Codeine', 'C004', 'Tablet', '2025-12-30', 150, 2, 'Tersedia', 'Botol', 1500.00, 3000.00),
-(33, 'Prednisone', 'P002', 'Tablet', '2027-06-15', 300, 3, 'Tersedia', 'Strip', 2200.00, 4400.00),
-(35, 'Lansoprazole', 'L005', 'Tablet', '2025-08-20', 200, 2, 'Habis', 'Botol', 1600.00, 3200.00),
-(36, 'Celecoxib', 'C005', 'Kapsul', '2027-01-05', 175, 1, 'Tersedia', 'Strip', 2000.00, 4000.00),
-(37, 'Duloxetine', 'D003', 'Kapsul', '2026-12-25', 130, 3, 'Tersedia', 'Dus', 1900.00, 3800.00),
-(39, 'Tadalafil', 'T002', 'Tablet', '2027-03-15', 220, 2, 'Tersedia', 'Strip', 1400.00, 2800.00),
-(40, 'Finasteride', 'F004', 'Tablet', '2025-04-05', 300, 1, 'Tersedia', 'Dus', 1600.00, 3200.00),
-(41, 'Risperidone', 'R002', 'Tablet', '2026-05-30', 190, 3, 'Tersedia', 'Botol', 1200.00, 2400.00),
-(43, 'Aripiprazole', 'A006', 'Tablet', '2026-08-20', 210, 2, 'Habis', 'Dus', 1700.00, 3400.00),
-(44, 'Zolpidem', 'Z001', 'Tablet', '2025-12-15', 80, 1, 'Tersedia', 'Botol', 1300.00, 2600.00),
-(45, 'Lithium', 'L006', 'Tablet', '2027-05-10', 120, 3, 'Tersedia', 'Strip', 1600.00, 3200.00),
-(47, 'Bupropion', 'B001', 'Tablet', '2027-04-10', 150, 2, 'Tersedia', 'Botol', 1400.00, 2800.00),
-(48, 'Buspirone', 'B002', 'Tablet', '2025-03-20', 90, 1, 'Tersedia', 'Strip', 1500.00, 3000.00),
-(49, 'Varenicline', 'V002', 'Tablet', '2026-02-05', 200, 3, 'Tersedia', 'Dus', 1700.00, 3400.00),
-(51, 'Rivastigmine', 'R003', 'Kapsul', '2027-11-01', 80, 2, 'Tersedia', 'Strip', 1800.00, 3600.00),
-(52, 'Memantine', 'M005', 'Tablet', '2026-12-12', 250, 1, 'Tersedia', 'Dus', 1500.00, 3000.00),
-(53, 'Dopamine', 'D004', 'Kapsul', '2025-09-09', 150, 3, 'Tersedia', 'Botol', 1700.00, 3400.00),
-(55, 'Oxytocin', 'O002', 'Kapsul', '2025-07-22', 200, 2, 'Tersedia', 'Dus', 1400.00, 2800.00),
-(56, 'Insulin', 'I002', 'Kapsul', '2027-05-30', 90, 1, 'Habis', 'Botol', 1900.00, 3800.00),
-(57, 'Ketorolac', 'K002', 'Tablet', '2026-04-05', 20, 3, 'Tersedia', 'Strip', 1700.00, 3400.00),
-(59, 'Colchicine', 'C007', 'Tablet', '2026-02-10', 90, 2, 'Tersedia', 'Botol', 1500.00, 3000.00),
-(60, 'Hydrochlorothiazide', 'H001', 'Tablet', '2025-01-15', 300, 1, 'Habis', 'Strip', 1100.00, 2200.00);
+(2, 'Amoxicillin', 'A001', 'Kapsul', '2024-11-30', 190, 2, 'Tersedia', 'Botol', '2500.00', '5000.00'),
+(8, 'Ibuprofen', 'I001', 'Kapsul', '2024-10-16', 150, 2, 'Kadaluarsa', 'Dus', '2000.00', '4000.00'),
+(9, 'Aspirin', 'A002', 'Tablet', '2026-03-10', 96, 3, 'Tersedia', 'Strip', '1200.00', '2400.00'),
+(11, 'Loratadine', 'L001', 'Tablet', '2026-12-25', 78, 2, 'Tersedia', 'Botol', '1400.00', '2800.00'),
+(12, 'Omeprazole', 'O001', 'Kapsul', '2025-11-20', 300, 3, 'Tersedia', 'Strip', '1700.00', '3400.00'),
+(15, 'Levothyroxine', 'L002', 'Tablet', '2026-08-15', 130, 2, 'Tersedia', 'Strip', '1600.00', '3200.00'),
+(16, 'Metformin', 'M001', 'Tablet', '2025-07-05', 200, 3, 'Tersedia', 'Dus', '1100.00', '2200.00'),
+(19, 'Lisinopril', 'L003', 'Tablet', '2026-11-30', 300, 2, 'Tersedia', 'Dus', '1900.00', '3800.00'),
+(20, 'Furosemide', 'F001', 'Tablet', '2025-10-15', 150, 3, 'Tersedia', 'Botol', '1700.00', '3400.00'),
+(21, 'Metoprolol', 'M002', 'Tablet', '2024-10-17', 110, 1, 'Kadaluarsa', 'Strip', '1300.00', '2600.00'),
+(23, 'Losartan', 'L004', 'Tablet', '2026-07-05', 250, 2, 'Habis', 'Botol', '1800.00', '3600.00'),
+(24, 'Diclofenac', 'D001', 'Kapsul', '2025-06-15', 200, 1, 'Tersedia', 'Strip', '2000.00', '4000.00'),
+(25, 'Ranitidine', 'R001', 'Tablet', '2026-05-30', 180, 3, 'Tersedia', 'Dus', '1600.00', '3200.00'),
+(27, 'Sertraline', 'S002', 'Tablet', '2027-03-10', 130, 2, 'Tersedia', 'Strip', '1700.00', '3400.00'),
+(28, 'Citalopram', 'C002', 'Tablet', '2026-02-15', 90, 1, 'Tersedia', 'Dus', '1500.00', '3000.00'),
+(29, 'Metronidazole', 'M003', 'Tablet', '2025-01-01', 300, 3, 'Tersedia', 'Botol', '1100.00', '2200.00'),
+(31, 'Tramadol', 'T001', 'Tablet', '2026-12-10', 210, 1, 'Tersedia', 'Dus', '1900.00', '3800.00'),
+(32, 'Codeine', 'C004', 'Tablet', '2025-12-30', 150, 2, 'Tersedia', 'Botol', '1500.00', '3000.00'),
+(33, 'Prednisone', 'P002', 'Tablet', '2027-06-15', 300, 3, 'Tersedia', 'Strip', '2200.00', '4400.00'),
+(35, 'Lansoprazole', 'L005', 'Tablet', '2025-08-20', 200, 2, 'Habis', 'Botol', '1600.00', '3200.00'),
+(36, 'Celecoxib', 'C005', 'Kapsul', '2027-01-05', 175, 1, 'Tersedia', 'Strip', '2000.00', '4000.00'),
+(37, 'Duloxetine', 'D003', 'Kapsul', '2026-12-25', 130, 3, 'Tersedia', 'Dus', '1900.00', '3800.00'),
+(39, 'Tadalafil', 'T002', 'Tablet', '2027-03-15', 220, 2, 'Tersedia', 'Strip', '1400.00', '2800.00'),
+(40, 'Finasteride', 'F004', 'Tablet', '2025-04-05', 300, 1, 'Tersedia', 'Dus', '1600.00', '3200.00'),
+(41, 'Risperidone', 'R002', 'Tablet', '2026-05-30', 190, 3, 'Tersedia', 'Botol', '1200.00', '2400.00'),
+(43, 'Aripiprazole', 'A006', 'Tablet', '2026-08-20', 210, 2, 'Habis', 'Dus', '1700.00', '3400.00'),
+(44, 'Zolpidem', 'Z001', 'Tablet', '2025-12-15', 80, 1, 'Tersedia', 'Botol', '1300.00', '2600.00'),
+(45, 'Lithium', 'L006', 'Tablet', '2027-05-10', 120, 3, 'Tersedia', 'Strip', '1600.00', '3200.00'),
+(47, 'Bupropion', 'B001', 'Tablet', '2027-04-10', 150, 2, 'Tersedia', 'Botol', '1400.00', '2800.00'),
+(48, 'Buspirone', 'B002', 'Tablet', '2025-03-20', 90, 1, 'Tersedia', 'Strip', '1500.00', '3000.00'),
+(49, 'Varenicline', 'V002', 'Tablet', '2026-02-05', 200, 3, 'Tersedia', 'Dus', '1700.00', '3400.00'),
+(51, 'Rivastigmine', 'R003', 'Kapsul', '2027-11-01', 80, 2, 'Tersedia', 'Strip', '1800.00', '3600.00'),
+(52, 'Memantine', 'M005', 'Tablet', '2026-12-12', 250, 1, 'Tersedia', 'Dus', '1500.00', '3000.00'),
+(53, 'Dopamine', 'D004', 'Kapsul', '2025-09-09', 150, 3, 'Tersedia', 'Botol', '1700.00', '3400.00'),
+(55, 'Oxytocin', 'O002', 'Kapsul', '2025-07-22', 200, 2, 'Tersedia', 'Dus', '1400.00', '2800.00'),
+(56, 'Insulin', 'I002', 'Kapsul', '2027-05-30', 90, 1, 'Habis', 'Botol', '1900.00', '3800.00'),
+(57, 'Ketorolac', 'K002', 'Tablet', '2026-04-05', 20, 3, 'Tersedia', 'Strip', '1700.00', '3400.00'),
+(59, 'Colchicine', 'C007', 'Tablet', '2026-02-10', 90, 2, 'Tersedia', 'Botol', '1500.00', '3000.00'),
+(60, 'Hydrochlorothiazide', 'H001', 'Tablet', '2025-01-15', 300, 1, 'Habis', 'Strip', '1100.00', '2200.00');
 
 -- --------------------------------------------------------
 
@@ -192,7 +193,7 @@ CREATE TABLE `pasien` (
   `Jenis_Kelamin` varchar(10) DEFAULT NULL,
   `Tanggal_Lahir` date DEFAULT NULL,
   `Ras` varchar(50) DEFAULT NULL,
-  `Alamat` text DEFAULT NULL,
+  `Alamat` text,
   `Kode_Negara` varchar(10) DEFAULT NULL,
   `No_Telp` varchar(20) DEFAULT NULL,
   `Bahasa_Utama` varchar(20) DEFAULT NULL,
@@ -200,7 +201,7 @@ CREATE TABLE `pasien` (
   `No_Rekening` varchar(30) DEFAULT NULL,
   `Kewarganegaraan` varchar(20) DEFAULT NULL,
   `Indikator_Meninggal` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pasien`
@@ -290,8 +291,8 @@ CREATE TABLE `resep` (
   `ID_Karyawan` int(11) DEFAULT NULL,
   `ID_Dokter` int(11) DEFAULT NULL,
   `Tanggal_Resep` date DEFAULT NULL,
-  `Catatan_Resep` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Catatan_Resep` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `resep`
@@ -311,8 +312,8 @@ CREATE TABLE `supplier` (
   `ID_Supplier` int(11) NOT NULL,
   `Nama_Supplier` varchar(100) NOT NULL,
   `Kontak` varchar(50) DEFAULT NULL,
-  `Alamat` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Alamat` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `supplier`
@@ -338,30 +339,44 @@ CREATE TABLE `transaksi` (
   `Tanggal_Transaksi` datetime DEFAULT NULL,
   `Total_Harga` decimal(10,2) DEFAULT NULL,
   `Total_Bayar` decimal(10,2) DEFAULT NULL,
-  `Kembali` decimal(10,2) GENERATED ALWAYS AS (`Total_Bayar` - `Total_Harga`) VIRTUAL,
-  `Sumber_Pembayaran` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Kembali` decimal(10,2) AS (`Total_Bayar` - `Total_Harga`) VIRTUAL,
+  `Sumber_Pembayaran` varchar(50) DEFAULT NULL,
+  `Detail_Resep` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`ID_Transaksi`, `ID_Pasien`, `ID_Dokter`, `ID_Karyawan`, `Tanggal_Transaksi`, `Total_Harga`, `Total_Bayar`, `Sumber_Pembayaran`) VALUES
-(65, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 20000.00, 100000.00, 'Cash'),
-(66, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 30000.00, 50000.00, 'Cash'),
-(67, 'Yogi Indigo', 'Dr. Yuli Astuti', 1, '2024-11-12 00:00:00', 13000.00, 15000.00, 'BPJS'),
-(68, 'Adit_as', 'Dr. Chika Amelia', 1, '2024-11-12 00:00:00', 950000.00, 1000000.00, 'Cash'),
-(69, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 36000.00, 50000.00, 'Cash'),
-(70, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 36000.00, 50000.00, 'Cash'),
-(71, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 50000.00, 100000.00, 'Cash'),
-(72, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 25000.00, 50000.00, 'Cash'),
-(73, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-12 00:00:00', 8400.00, 10000.00, 'Cash'),
-(74, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-12 00:00:00', 8400.00, 10000.00, 'Cash'),
-(75, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-12 00:00:00', 15000.00, 20000.00, 'Cash'),
-(76, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 15000.00, 20000.00, 'Cash'),
-(77, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 15000.00, 20000.00, 'Cash'),
-(78, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 20000.00, 30000.00, 'Cash'),
-(79, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', 20000.00, 30000.00, 'Cash');
+INSERT INTO `transaksi` (`ID_Transaksi`, `ID_Pasien`, `ID_Dokter`, `ID_Karyawan`, `Tanggal_Transaksi`, `Total_Harga`, `Total_Bayar`, `Sumber_Pembayaran`, `Detail_Resep`) VALUES
+(65, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '20000.00', '100000.00', 'Cash', ''),
+(66, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '30000.00', '50000.00', 'Cash', ''),
+(67, 'Yogi Indigo', 'Dr. Yuli Astuti', 1, '2024-11-12 00:00:00', '13000.00', '15000.00', 'BPJS', ''),
+(68, 'Adit_as', 'Dr. Chika Amelia', 1, '2024-11-12 00:00:00', '950000.00', '1000000.00', 'Cash', ''),
+(69, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '36000.00', '50000.00', 'Cash', ''),
+(70, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '36000.00', '50000.00', 'Cash', ''),
+(71, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '50000.00', '100000.00', 'Cash', ''),
+(72, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '25000.00', '50000.00', 'Cash', ''),
+(73, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-12 00:00:00', '8400.00', '10000.00', 'Cash', ''),
+(74, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-12 00:00:00', '8400.00', '10000.00', 'Cash', ''),
+(75, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-12 00:00:00', '15000.00', '20000.00', 'Cash', ''),
+(76, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '15000.00', '20000.00', 'Cash', ''),
+(77, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '15000.00', '20000.00', 'Cash', ''),
+(78, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '20000.00', '30000.00', 'Cash', ''),
+(79, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '20000.00', '30000.00', 'Cash', ''),
+(80, 'Bagus Alfian', 'Dr. Hari Wijaya', 2, '2024-11-12 00:00:00', '13600.00', '15000.00', 'Cash', ''),
+(81, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-12 00:00:00', '8400.00', '10000.00', 'Cash', ''),
+(82, 'P001', 'D001', 101, NULL, '40.00', '50.00', 'Cash', ''),
+(83, 'P002', 'D002', 102, NULL, '45.00', '50.00', 'Transfer', ''),
+(84, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-13 00:00:00', '10000.00', '343434.00', 'Cash', ''),
+(85, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-13 00:00:00', '10000.00', '343434.00', 'Cash', ''),
+(86, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-13 00:00:00', '20000.00', '22222.00', 'Cash', ''),
+(87, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-13 00:00:00', '20000.00', '22222.00', 'Cash', ''),
+(88, 'Ahmad Fauzan', 'Dr. Dani Kurniawa', 1, '2024-11-13 00:00:00', '20000.00', '22222.00', 'Cash', ''),
+(89, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-13 00:00:00', '25000.00', '50000.00', 'Cash', ''),
+(90, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-13 00:00:00', '20000.00', '50000.00', 'Cash', ''),
+(91, 'Ahmad Fauzan', 'Error: Data dokter tidak tersedia.', 1, '2024-11-13 00:00:00', '20000.00', '50000.00', 'Cash', ''),
+(92, 'Yogi Indigo', 'Dr. Hari Wijaya', 2, '2024-11-13 00:00:00', '20000.00', '30000.00', 'Cash', 'Amoxicillin | Tersedia: Setelah makan 3 x 1\r\n');
 
 --
 -- Indexes for dumped tables
@@ -472,7 +487,7 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `ID_Transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `ID_Transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- Constraints for dumped tables
