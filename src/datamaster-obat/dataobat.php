@@ -8,32 +8,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="../assets/css/output.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
-    <script defer>
-        function toggleDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId);
-            dropdown.classList.toggle('hidden');
+    <style>
+        .button-click {
+            transform: scale(0.95);
+            transition: transform 0.15s ease;
         }
-    </script>
+    </style>
 </head>
 
 <body class="bg-blue-100 text-gray-900">
     <?php include('../template/sidebar.php'); ?>
 
-    <!-- Container utama dengan margin kiri untuk menghindari tumpang tindih dengan sidebar -->
     <div class="flex-grow ml-64 mx-auto p-6">
-        <!-- Header -->
         <h1 class="text-2xl font-bold mb-4">Data Obat</h1>
 
-        <!-- Bar pencarian dan tombol tambah data -->
+        <!-- Bar pencarian -->
         <div class="flex justify-between items-center mb-6">
-            <form action="" method="GET" class="flex items-center space-x-2">
-                <input type="text" name="search" placeholder="Cari Obat..." class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
-                    <i class="bi bi-search"></i> Cari
-                </button>
-            </form>
-
-            <!-- Tombol Tambah Data -->
+            <input id="searchInput" type="text" placeholder="Cari Obat..."
+                class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
             <a href="/apoteku/src/datamaster-obat/dataobat-create.php"
                 class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 text-sm transition duration-300 ease-in-out transform hover:scale-105">
                 Tambah Data
@@ -59,40 +51,20 @@
                         <th class="px-4 py-3 border-b text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-gray-600">
+                <tbody id="employeeTable" class="text-gray-600">
                     <?php
                     include('../database/database.php');
 
-                    // Mengupdate status jika tanggal kadaluarsa lebih kecil atau sama dengan tanggal sekarang
                     $updateStatusSQL = "UPDATE obat 
                                         SET Status = 'Kadaluarsa' 
                                         WHERE Tanggal_Kadaluarsa <= CURDATE() AND Status != 'Kadaluarsa'";
                     mysqli_query($conn, $updateStatusSQL);
 
-                    // Menangani pencarian jika ada input
-                    $search = isset($_GET['search']) ? $_GET['search'] : '';
-                    // Query untuk menampilkan data obat, pencarian di seluruh kolom
                     $sql = "SELECT t.ID_Obat, t.Nama_Obat, t.Code, t.Formulasi, t.Tanggal_Kadaluarsa, t.Stok, k.Nama_Supplier, t.Status, t.Package, t.Harga_Beli, t.Harga_Jual
                             FROM obat t 
-                            JOIN supplier k ON t.ID_Supplier = k.ID_Supplier
-                            WHERE t.ID_Obat LIKE '%$search%' 
-                            OR t.Nama_Obat LIKE '%$search%' 
-                            OR t.Code LIKE '%$search%' 
-                            OR t.Formulasi LIKE '%$search%' 
-                            OR t.Tanggal_Kadaluarsa LIKE '%$search%' 
-                            OR t.Stok LIKE '%$search%' 
-                            OR k.Nama_Supplier LIKE '%$search%' 
-                            OR t.Status LIKE '%$search%' 
-                            OR t.Package LIKE '%$search%' 
-                            OR t.Harga_Beli LIKE '%$search%' 
-                            OR t.Harga_Jual LIKE '%$search%'";
-
+                            JOIN supplier k ON t.ID_Supplier = k.ID_Supplier";
                     $result = mysqli_query($conn, $sql);
-                    if (!$result) {
-                        die("Query failed: " . mysqli_error($conn));
-                    }
 
-                    // Menampilkan data obat
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr class="hover:bg-gray-50 border-b transition duration-300">
@@ -109,12 +81,10 @@
                                 <td class="px-4 py-3 whitespace-nowrap text-blue-600 font-semibold">Rp ' . number_format($row['Harga_Jual'], 0, ',', '.') . '</td>
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex justify-center gap-2">
-                                        <!-- Tombol Edit -->
                                         <a href="/apoteku/src/datamaster-obat/dataobat-edit.php?id=' . $row['ID_Obat'] . '" 
                                            class="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transform hover:scale-105 transition duration-200">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <!-- Tombol Delete -->
                                         <a onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\');" 
                                            href="/apoteku/src/datamaster-obat/dataobat-delete.php?id=' . $row['ID_Obat'] . '" 
                                            class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition duration-200">
@@ -132,6 +102,27 @@
             </table>
         </div>
     </div>
+
+    <script>
+        // Search filter for table
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            const input = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#employeeTable tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const rowText = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                row.style.display = rowText.includes(input) ? '' : 'none';
+            });
+        });
+
+        // Add click animation to buttons
+        document.querySelectorAll('button, a').forEach(button => {
+            button.addEventListener('click', function () {
+                this.classList.add('button-click');
+                setTimeout(() => this.classList.remove('button-click'), 150);
+            });
+        });
+    </script>
 </body>
 
 </html>
