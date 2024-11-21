@@ -29,18 +29,37 @@
         <!-- Header -->
         <h1 class="text-2xl font-bold mb-4">Transaksi</h1>
 
-        <!-- Form Pencarian di kiri dan Tombol Tambah Data di kanan -->
         <div class="mb-6 flex justify-between items-center">
-            <form action="" method="GET" class="flex items-center space-x-2">
-                <input type="text" name="search" placeholder="Cari Transaksi..." class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
-                    <i class="bi bi-search"></i> Cari
-                </button>
-            </form>
-            <a href="/apoteku/src/transaksi-penjualan/create.php" class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 text-sm transition duration-300 ease-in-out transform hover:scale-105">
-                Tambah Data
-            </a>
-        </div>
+    <!-- Search Form -->
+    <div class="flex items-center space-x-2 w-full max-w-lg relative">
+        <input id="searchInput" 
+               type="text" 
+               name="search" 
+               placeholder="Cari Transaksi..." 
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white transition duration-300"
+               oninput="handleSearch()"
+               value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+
+        <!-- Clear Button -->
+        <button id="clearSearch" 
+                class="hidden bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 ml-2"
+                onclick="clearSearch()">Clear</button>
+
+        <!-- Search Button -->
+        <button onclick="performServerSearch()" 
+                class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 flex items-center gap-2">
+            <i class="bi bi-search"></i> Cari
+        </button>
+    </div>
+
+    <!-- Button Tambah Data -->
+    <a href="/apoteku/src/transaksi-penjualan/create.php" 
+       class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 text-sm transition duration-300 ease-in-out transform hover:scale-105">
+        Tambah Data
+    </a>
+</div>
+
+
 
         <!-- Tabel dengan overflow-x-auto -->
         <div class="bg-white shadow-md rounded-lg w-full mt-6 overflow-x-auto">
@@ -115,14 +134,143 @@
         </div>
     </div>
 
-    <!-- Modal Popup untuk Detail Resep -->
-    <div id="detailModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-            <h2 class="text-xl font-bold mb-4">Detail Resep</h2>
-            <div id="modalContent"></div>
-            <button onclick="closeModal()" class="mt-4 bg-red-500 text-white py-2 px-4 rounded-lg">Tutup</button>
+<!-- Modal Popup untuk Detail Resep -->
+<div id="detailModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+    <!-- Background Blur -->
+    <div id="modalBackdrop" class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-500 ease-out"></div>
+
+    <!-- Modal Box -->
+    <div id="modalBox" class="relative bg-white bg-opacity-90 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-gray-200 max-w-lg w-10/12 transform scale-90 opacity-0 transition-all duration-700 ease-in-out">
+        <!-- Close Button -->
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-700 hover:text-red-600 transition duration-300">
+            <i class="bi bi-x-circle-fill text-2xl"></i>
+        </button>
+
+        <!-- Header Modal -->
+        <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
+            <h2 class="text-3xl font-bold text-black">Detail Resep</h2>
         </div>
+
+        <!-- Konten Modal -->
+        <div id="modalContent" class="text-black font-bold leading-relaxed max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"></div>
+
+       <!-- Footer Modal -->
+<div class="mt-8 flex justify-end gap-4">
+    <button onclick="closeModal()" class="bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-2 px-6 rounded-full shadow-lg hover:shadow-xl hover:from-blue-500 hover:to-cyan-400 focus:outline-none focus:ring-4 focus:ring-blue-300 transform transition-all duration-300 ease-in-out hover:scale-105 relative overflow-hidden">
+        <span class="absolute inset-0 bg-blue-400 opacity-30 blur-lg rounded-full transition-opacity duration-500 ease-out hover:opacity-60"></span>
+        <span class="relative">Tutup</span>
+    </button>
+</div>
+
     </div>
+</div>
+
+<script>
+    // Function untuk menampilkan modal with animation
+    function showModal(detailContent) {
+        const modal = document.getElementById('detailModal');
+        const modalBox = document.getElementById('modalBox');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        
+        // Update modal content
+        document.getElementById('modalContent').innerHTML = detailContent;
+
+        // Tampilkan modal and animation
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modalBackdrop.classList.add('opacity-100');
+            modalBox.classList.remove('opacity-0', 'scale-90');
+            modalBox.classList.add('scale-100', 'opacity-100');
+        }, 100); // animation delay
+    }
+
+    // Function untuk menutup modal dengan animasi
+    function closeModal() {
+        const modal = document.getElementById('detailModal');
+        const modalBox = document.getElementById('modalBox');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+
+        // Animasi keluar
+        modalBackdrop.classList.remove('opacity-100');
+        modalBox.classList.remove('scale-100', 'opacity-100');
+        modalBox.classList.add('scale-90', 'opacity-0');
+
+        // Sembunyikan modal setelah animasi selesai
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 700); // Sesuaikan durasi animasi keluar
+    }
+
+    // Menutup modal jika klik di luar area modal
+    document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+
+    // Menambahkan event listener untuk tombol Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+
+
+    // JavaScript untuk pencarian langsung tanpa refresh
+    const searchInput = document.getElementById('searchInput');
+    const clearButton = document.getElementById('clearSearch');
+    const tableRows = document.querySelectorAll('table tbody tr');
+
+    // Fungsi untuk melakukan pencarian langsung
+    function handleSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+
+        // Tampilkan/ Sembunyikan tombol Clear
+        if (searchTerm) {
+            clearButton.classList.remove('hidden');
+        } else {
+            clearButton.classList.add('hidden');
+        }
+
+        // Filter data tabel
+        tableRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            if (rowText.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Jika semua kosong, tampilkan pesan "Tidak ada data"
+        const visibleRows = Array.from(tableRows).filter(row => row.style.display !== 'none');
+        if (visibleRows.length === 0) {
+            const emptyRow = document.createElement('tr');
+            emptyRow.innerHTML = `<td colspan="11" class="text-center py-4 text-gray-500">Tidak ada data yang sesuai</td>`;
+            document.querySelector('table tbody').appendChild(emptyRow);
+        }
+    }
+
+    // Fungsi untuk menghapus pencarian dan menampilkan semua data
+    function clearSearch() {
+        searchInput.value = '';
+        handleSearch(); // Reset pencarian
+    }
+
+    // Fungsi untuk pencarian server-side
+    function performServerSearch() {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm) {
+            window.location.href = `?search=${encodeURIComponent(searchTerm)}`;
+        }
+    }
+
+    // Shortcut untuk Enter sebagai pencarian
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            performServerSearch();
+        }
+    });
+</script>
+
+    
 </body>
 
 </html>
