@@ -116,7 +116,6 @@
                                 <td class="px-4 py-3 whitespace-nowrap">' . $row['Sumber_Pembayaran'] . '</td>
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex justify-center gap-2">
-                                        <a href="/apoteku/src/transaksi-penjualan/edit.php?id=' . $row['ID_Transaksi'] . '" class="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600"><i class="bi bi-pencil-square"></i></a>
                                         <a onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\');" href="/apoteku/src/transaksi-penjualan/delete.php?id=' . $row['ID_Transaksi'] . '" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600"><i class="bi bi-trash-fill"></i></a>
                                     </div>
                                 </td>

@@ -34,7 +34,6 @@ if ($responseDokter === false) {
 }
 ?>
 
-
 <!DOCTYPE html>
 
 <head>
